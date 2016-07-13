@@ -8,9 +8,6 @@ import com.google.gson.GsonBuilder;
  * JSONFormatter converts objects to JSON representation and vice-versa. This
  * class depends on Google's GSON library to do the transformation. This class
  * is not thread-safe.
- * 
- * @author kjayakumar
- * 
  */
 public final class JSONFormatter {
 

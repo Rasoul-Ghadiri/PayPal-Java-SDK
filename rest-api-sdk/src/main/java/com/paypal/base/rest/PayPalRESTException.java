@@ -1,11 +1,10 @@
 package com.paypal.base.rest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.paypal.base.exception.HttpErrorException;
 import com.google.gson.Gson;
 import com.paypal.api.payments.Error;
+import com.paypal.base.exception.HttpErrorException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PayPalException handles all exceptions related to REST services

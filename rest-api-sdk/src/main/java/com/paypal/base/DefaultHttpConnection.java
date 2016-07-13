@@ -1,23 +1,15 @@
 package com.paypal.base;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.net.Authenticator;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
-import java.net.ProtocolException;
-import java.net.Proxy;
-import java.net.SocketAddress;
-import java.net.URL;
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
+import com.paypal.base.exception.SSLConfigurationException;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-
-import com.paypal.base.exception.SSLConfigurationException;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.net.*;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
 /**
  * Wrapper class used for HttpsURLConnection
@@ -172,8 +164,6 @@ public class DefaultHttpConnection extends HttpConnection {
 	
 	/**
 	 * Private class for password based authentication
-	 * 
-	 * @author kjayakumar
 	 * 
 	 */
 	private static class DefaultPasswordAuthenticator extends Authenticator {

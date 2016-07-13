@@ -1,7 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class AlternatePayment extends PayPalModel {
 
 	/**
@@ -31,53 +37,4 @@ public class AlternatePayment extends PayPalModel {
 	public AlternatePayment(String alternatePaymentAccountId) {
 		this.alternatePaymentAccountId = alternatePaymentAccountId;
 	}
-
-
-	/**
-	 * Setter for alternatePaymentAccountId
-	 */
-	public AlternatePayment setAlternatePaymentAccountId(String alternatePaymentAccountId) {
-		this.alternatePaymentAccountId = alternatePaymentAccountId;
-		return this;
-	}
-
-	/**
-	 * Getter for alternatePaymentAccountId
-	 */
-	public String getAlternatePaymentAccountId() {
-		return this.alternatePaymentAccountId;
-	}
-
-
-	/**
-	 * Setter for externalCustomerId
-	 */
-	public AlternatePayment setExternalCustomerId(String externalCustomerId) {
-		this.externalCustomerId = externalCustomerId;
-		return this;
-	}
-
-	/**
-	 * Getter for externalCustomerId
-	 */
-	public String getExternalCustomerId() {
-		return this.externalCustomerId;
-	}
-
-
-	/**
-	 * Setter for alternatePaymentProviderId
-	 */
-	public AlternatePayment setAlternatePaymentProviderId(String alternatePaymentProviderId) {
-		this.alternatePaymentProviderId = alternatePaymentProviderId;
-		return this;
-	}
-
-	/**
-	 * Getter for alternatePaymentProviderId
-	 */
-	public String getAlternatePaymentProviderId() {
-		return this.alternatePaymentProviderId;
-	}
-
 }

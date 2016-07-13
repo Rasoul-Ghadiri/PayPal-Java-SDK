@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class InvoicingPaymentDetail  extends PayPalModel {
 
 	/**
@@ -47,102 +52,4 @@ public class InvoicingPaymentDetail  extends PayPalModel {
 	public InvoicingPaymentDetail(String method) {
 		this.method = method;
 	}
-
-
-	/**
-	 * Setter for type
-	 */
-	public InvoicingPaymentDetail setType(String type) {
-		this.type = type;
-		return this;
-	}
-
-	/**
-	 * Getter for type
-	 */
-	public String getType() {
-		return this.type;
-	}
-
-
-	/**
-	 * Setter for transactionId
-	 */
-	public InvoicingPaymentDetail setTransactionId(String transactionId) {
-		this.transactionId = transactionId;
-		return this;
-	}
-
-	/**
-	 * Getter for transactionId
-	 */
-	public String getTransactionId() {
-		return this.transactionId;
-	}
-
-
-	/**
-	 * Setter for transactionType
-	 */
-	public InvoicingPaymentDetail setTransactionType(String transactionType) {
-		this.transactionType = transactionType;
-		return this;
-	}
-
-	/**
-	 * Getter for transactionType
-	 */
-	public String getTransactionType() {
-		return this.transactionType;
-	}
-
-
-	/**
-	 * Setter for date
-	 */
-	public InvoicingPaymentDetail setDate(String date) {
-		this.date = date;
-		return this;
-	}
-
-	/**
-	 * Getter for date
-	 */
-	public String getDate() {
-		return this.date;
-	}
-
-
-	/**
-	 * Setter for method
-	 */
-	public InvoicingPaymentDetail setMethod(String method) {
-		this.method = method;
-		return this;
-	}
-
-	/**
-	 * Getter for method
-	 */
-	public String getMethod() {
-		return this.method;
-	}
-
-
-	/**
-	 * Setter for note
-	 */
-	public InvoicingPaymentDetail setNote(String note) {
-		this.note = note;
-		return this;
-	}
-
-	/**
-	 * Getter for note
-	 */
-	public String getNote() {
-		return this.note;
-	}
-
-
 }

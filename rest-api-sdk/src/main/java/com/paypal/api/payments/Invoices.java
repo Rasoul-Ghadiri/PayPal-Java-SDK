@@ -1,10 +1,16 @@
 package com.paypal.api.payments;
 
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.paypal.base.rest.PayPalModel;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Invoices  extends PayPalModel {
 
 	/**
@@ -23,38 +29,4 @@ public class Invoices  extends PayPalModel {
 	public Invoices() {
 		invoices = new ArrayList<Invoice>();
 	}
-
-
-	/**
-	 * Setter for totalCount
-	 */
-	public Invoices setTotalCount(int totalCount) {
-		this.totalCount = totalCount;
-		return this;
-	}
-
-	/**
-	 * Getter for totalCount
-	 */
-	public int getTotalCount() {
-		return this.totalCount;
-	}
-
-
-	/**
-	 * Setter for invoices
-	 */
-	public Invoices setInvoices(List<Invoice> invoices) {
-		this.invoices = invoices;
-		return this;
-	}
-
-	/**
-	 * Getter for invoices
-	 */
-	public List<Invoice> getInvoices() {
-		return this.invoices;
-	}
-
-
 }

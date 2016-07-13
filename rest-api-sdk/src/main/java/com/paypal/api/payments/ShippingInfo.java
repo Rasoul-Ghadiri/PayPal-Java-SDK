@@ -1,116 +1,43 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class ShippingInfo  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class ShippingInfo extends PayPalModel {
 
 	/**
-	 * First name of the invoice recipient. 30 characters max.
+	 * The invoice recipient first name. Maximum length is 30 characters.
 	 */
 	private String firstName;
 
 	/**
-	 * Last name of the invoice recipient. 30 characters max.
+	 * The invoice recipient last name. Maximum length is 30 characters.
 	 */
 	private String lastName;
 
 	/**
-	 * Company business name of the invoice recipient. 100 characters max.
+	 * The invoice recipient company business name. Maximum length is 100 characters.
 	 */
 	private String businessName;
 
 	/**
-	 * Address of the invoice recipient.
+	 * The invoice recipient address.
 	 */
 	private InvoiceAddress address;
 
-	private String email;
-	
+	/**
+	 * The invoice recipient phone number.
+	 */
+	private Phone phone;
+
 	/**
 	 * Default Constructor
 	 */
 	public ShippingInfo() {
 	}
-
-
-	/**
-	 * Setter for firstName
-	 */
-	public ShippingInfo setFirstName(String firstName) {
-		this.firstName = firstName;
-		return this;
-	}
-
-	/**
-	 * Getter for firstName
-	 */
-	public String getFirstName() {
-		return this.firstName;
-	}
-
-
-	/**
-	 * Setter for lastName
-	 */
-	public ShippingInfo setLastName(String lastName) {
-		this.lastName = lastName;
-		return this;
-	}
-
-	/**
-	 * Getter for lastName
-	 */
-	public String getLastName() {
-		return this.lastName;
-	}
-
-
-	/**
-	 * Setter for businessName
-	 */
-	public ShippingInfo setBusinessName(String businessName) {
-		this.businessName = businessName;
-		return this;
-	}
-
-	/**
-	 * Getter for businessName
-	 */
-	public String getBusinessName() {
-		return this.businessName;
-	}
-
-
-	/**
-	 * Setter for address
-	 */
-	public ShippingInfo setAddress(InvoiceAddress address) {
-		this.address = address;
-		return this;
-	}
-
-	/**
-	 * Getter for address
-	 */
-	public InvoiceAddress getAddress() {
-		return this.address;
-	}
-
-	/**
-	 * Setter for email
-	 */
-	public ShippingInfo setEmail(String email) {
-		this.email = email;
-		return this;
-	}
-
-	/**
-	 * Getter for email
-	 */
-	public String getEmail() {
-		return this.email;
-	}
-
-
 }

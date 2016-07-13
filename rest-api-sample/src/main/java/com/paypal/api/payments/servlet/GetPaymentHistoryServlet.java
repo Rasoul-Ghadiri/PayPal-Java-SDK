@@ -8,6 +8,10 @@
 // API used: GET /v1/payments/payments
 package com.paypal.api.payments.servlet;
 
+import static com.paypal.api.payments.util.SampleConstants.clientID;
+import static com.paypal.api.payments.util.SampleConstants.clientSecret;
+import static com.paypal.api.payments.util.SampleConstants.mode;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -23,15 +27,12 @@ import org.apache.log4j.Logger;
 
 import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.PaymentHistory;
-import com.paypal.api.payments.util.GenerateAccessToken;
 import com.paypal.api.payments.util.ResultPrinter;
+import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import com.paypal.base.rest.PayPalResource;
 
-/**
- * @author lvairamani
- * 
- */
+
 public class GetPaymentHistoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger
@@ -65,23 +66,22 @@ public class GetPaymentHistoryServlet extends HttpServlet {
 		containerMap.put("count", "10");
 		try {
 
-			// ###AccessToken
-			// Retrieve the access token from
-			// OAuthTokenCredential by passing in
-			// It is not mandatory to generate Access Token on a per call basis.
-			// Typically the access token can be generated once and
-			// reused within the expiry window
-			String accessToken = GenerateAccessToken.getAccessToken();
+			// ### Api Context
+			// Pass in a `ApiContext` object to authenticate
+			// the call and to send a unique request id
+			// (that ensures idempotency). The SDK generates
+			// a request id if you do not pass one explicitly.
+			APIContext apiContext = new APIContext(clientID, clientSecret, mode);
 
 			// ###Retrieve
 			// Retrieve the PaymentHistory object by calling the
 			// static `get` method
 			// on the Payment class, and pass the
-			// AccessToken and a ContainerMap object that contains
+			// APIContext and a ContainerMap object that contains
 			// query parameters for paginations and filtering.
 			// Refer the API documentation
 			// for valid values for keys
-			PaymentHistory paymentHistory = Payment.list(accessToken,
+			PaymentHistory paymentHistory = Payment.list(apiContext,
 					containerMap);
 			LOGGER.info("Payment History = " + paymentHistory.toString());
 			ResultPrinter.addResult(req, resp, "Got Payment History", Payment.getLastRequest(), Payment.getLastResponse(), null);

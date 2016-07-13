@@ -1,6 +1,14 @@
 package com.paypal.api.payments;
 
-public class Measurement {
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class Measurement extends PayPalModel {
 	
 	/**
 	 * Value this measurement represents.
@@ -11,20 +19,4 @@ public class Measurement {
 	 * Unit in which the value is represented.
 	 */
 	private String unit;
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public String getUnit() {
-		return unit;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
 }

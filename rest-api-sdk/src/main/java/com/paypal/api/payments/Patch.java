@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Patch  extends PayPalModel {
 
 	/**
@@ -32,53 +37,4 @@ public class Patch  extends PayPalModel {
 		this.op = op;
 		this.path = path;
 	}
-
-
-	/**
-	 * Setter for op
-	 */
-	public Patch setOp(String op) {
-		this.op = op;
-		return this;
-	}
-
-	/**
-	 * Getter for op
-	 */
-	public String getOp() {
-		return this.op;
-	}
-
-
-	/**
-	 * Setter for path
-	 */
-	public Patch setPath(String path) {
-		this.path = path;
-		return this;
-	}
-
-	/**
-	 * Getter for path
-	 */
-	public String getPath() {
-		return this.path;
-	}
-
-	public Object getValue() {
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-	
 }

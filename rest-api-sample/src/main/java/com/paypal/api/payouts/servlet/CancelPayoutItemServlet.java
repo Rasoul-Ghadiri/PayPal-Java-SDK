@@ -5,6 +5,10 @@
 
 package com.paypal.api.payouts.servlet;
 
+import static com.paypal.api.payments.util.SampleConstants.clientID;
+import static com.paypal.api.payments.util.SampleConstants.clientSecret;
+import static com.paypal.api.payments.util.SampleConstants.mode;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,7 +23,6 @@ import org.apache.log4j.Logger;
 import com.paypal.api.payments.PayoutBatch;
 import com.paypal.api.payments.PayoutItem;
 import com.paypal.api.payments.PayoutItemDetails;
-import com.paypal.api.payments.util.GenerateAccessToken;
 import com.paypal.api.payments.util.ResultPrinter;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -31,21 +34,6 @@ public class CancelPayoutItemServlet extends HttpServlet {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(CancelPayoutItemServlet.class);
-
-	public void init(ServletConfig servletConfig) throws ServletException {
-		// ##Load Configuration
-		// Load SDK configuration for
-		// the resource. This intialization code can be
-		// done as Init Servlet.
-		InputStream is = CancelPayoutItemServlet.class
-				.getResourceAsStream("/sdk_config.properties");
-		try {
-			PayPalResource.initConfig(is);
-		} catch (PayPalRESTException e) {
-			LOGGER.fatal(e.getMessage());
-		}
-
-	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -83,28 +71,12 @@ public class CancelPayoutItemServlet extends HttpServlet {
 		PayoutItemDetails response = null;
 		try {
 
-			// ###AccessToken
-			// Retrieve the access token from
-			// OAuthTokenCredential by passing in
-			// ClientID and ClientSecret
-			// It is not mandatory to generate Access Token on a per call basis.
-			// Typically the access token can be generated once and
-			// reused within the expiry window
-			String accessToken = GenerateAccessToken.getAccessToken();
-
 			// ### Api Context
 			// Pass in a `ApiContext` object to authenticate
 			// the call and to send a unique request id
 			// (that ensures idempotency). The SDK generates
 			// a request id if you do not pass one explicitly.
-			APIContext apiContext = new APIContext(accessToken);
-			// Use this variant if you want to pass in a request id
-			// that is meaningful in your application, ideally
-			// a order id.
-			/*
-			 * String requestId = Long.toString(System.nanoTime(); APIContext
-			 * apiContext = new APIContext(accessToken, requestId ));
-			 */
+			APIContext apiContext = new APIContext(clientID, clientSecret, mode);
 
 			// ###Cancel Payout Item if it is unclaimed
 			if (itemDetails.getTransactionStatus().equalsIgnoreCase("UNCLAIMED")) {

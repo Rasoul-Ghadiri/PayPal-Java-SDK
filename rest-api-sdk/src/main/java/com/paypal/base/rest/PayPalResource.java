@@ -1,29 +1,17 @@
 package com.paypal.base.rest;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
+import com.paypal.base.*;
+import com.paypal.base.exception.BaseException;
+import com.paypal.base.exception.ClientActionRequiredException;
+import com.paypal.base.exception.HttpErrorException;
+import com.paypal.base.sdk.info.SDKVersionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.paypal.base.APICallPreHandler;
-import com.paypal.base.ClientCredentials;
-import com.paypal.base.ConfigManager;
-import com.paypal.base.ConnectionManager;
-import com.paypal.base.Constants;
-import com.paypal.base.HttpConfiguration;
-import com.paypal.base.HttpConnection;
-import com.paypal.base.SDKUtil;
-import com.paypal.base.SDKVersion;
-import com.paypal.base.exception.ClientActionRequiredException;
-import com.paypal.base.exception.HttpErrorException;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * PayPalResource acts as a base class for REST enabled resources.
@@ -192,7 +180,9 @@ public abstract class PayPalResource extends PayPalModel{
 	/**
 	 * Configures and executes REST call: Supports JSON
 	 * 
-	 * @deprecated
+	 * @deprecated Please use {@link #configureAndExecute(APIContext, HttpMethod, String, String, Class)} instead.
+	 * Passing APIContext gives us better information than just raw access token.
+	 *
 	 * @param <T>
 	 *            Response Type for de-serialization
 	 * @param accessToken
@@ -211,13 +201,12 @@ public abstract class PayPalResource extends PayPalModel{
 	public static <T> T configureAndExecute(String accessToken,
 			HttpMethod httpMethod, String resourcePath, String payLoad,
 			Class<T> clazz) throws PayPalRESTException {
-		return configureAndExecute(null, accessToken, httpMethod, resourcePath,
-				null, payLoad, null, clazz);
+		return configureAndExecute(new APIContext(accessToken), httpMethod, resourcePath, payLoad, clazz);
 	}
 
 	/**
-	 * Configures and executes REST call: Supports JSON
-	 * 
+	 * Configures and executes REST call
+	 *
 	 * @param <T>
 	 *            Response Type for de-serialization
 	 * @param apiContext
@@ -236,12 +225,44 @@ public abstract class PayPalResource extends PayPalModel{
 	public static <T> T configureAndExecute(APIContext apiContext,
 			HttpMethod httpMethod, String resourcePath, String payLoad,
 			Class<T> clazz) throws PayPalRESTException {
+		return configureAndExecute(apiContext, httpMethod, resourcePath, payLoad, clazz, null);
+	}
+
+	/**
+	 * Configures and executes REST call: Supports JSON
+	 * 
+	 * @param <T>
+	 *            Response Type for de-serialization
+	 * @param apiContext
+	 *            {@link APIContext} to be used for the call.
+	 * @param httpMethod
+	 *            Http Method verb
+	 * @param resourcePath
+	 *            Resource URI path
+	 * @param payLoad
+	 *            Payload to Service
+	 * @param clazz
+	 *            {@link Class} object used in De-serialization
+	 * @param accessToken
+	 * 			  Access Token to be used instead of apiContext
+	 * @return T
+	 * @throws PayPalRESTException
+	 */
+	public static <T> T configureAndExecute(APIContext apiContext,
+			HttpMethod httpMethod, String resourcePath, String payLoad,
+			Class<T> clazz, String accessToken) throws PayPalRESTException {
 		T t = null;
-		Map<String, String> cMap = null;
-		String accessToken = null;
-		String requestId = null;
-		Map<String, String> headersMap = null;
+		Map<String, String> cMap;
+		String requestId;
+		Map<String, String> headersMap;
 		if (apiContext != null) {
+			if (apiContext.getHTTPHeader(Constants.HTTP_CONTENT_TYPE_HEADER) == null) {
+				apiContext.addHTTPHeader(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
+			}
+			if (apiContext.getSdkVersion() != null) {
+				apiContext.setSdkVersion(new SDKVersionImpl());
+			}
+
 			if (apiContext.getConfigurationMap() != null) {
 				cMap = SDKUtil.combineDefaultMap(apiContext
 						.getConfigurationMap());
@@ -257,7 +278,13 @@ public abstract class PayPalResource extends PayPalModel{
 						configurationMap);
 			}
 			headersMap = apiContext.getHTTPHeaders();
-			accessToken = apiContext.getAccessToken();
+			if (accessToken == null) {
+				accessToken = apiContext.fetchAccessToken();
+			}
+			// If it is still null, throw the exception.
+			if (accessToken == null) {
+				throw new IllegalArgumentException("AccessToken cannot be null or empty");
+			}
 			requestId = apiContext.getRequestId();
 
 			APICallPreHandler apiCallPreHandler = createAPICallPreHandler(cMap,
@@ -272,8 +299,10 @@ public abstract class PayPalResource extends PayPalModel{
 
 	/**
 	 * Configures and executes REST call: Supports JSON
-	 * 
-	 * @deprecated
+	 *
+	 * @deprecated Please use {@link #configureAndExecute(APIContext, HttpMethod, String, String, Class)} instead. Headers could be passed directly
+	 * to #APIContext itself.
+	 *
 	 * @param <T>
 	 * @param apiContext
 	 *            {@link APIContext} to be used for the call.
@@ -294,48 +323,10 @@ public abstract class PayPalResource extends PayPalModel{
 			HttpMethod httpMethod, String resourcePath,
 			Map<String, String> headersMap, String payLoad, Class<T> clazz)
 			throws PayPalRESTException {
-		Map<String, String> cMap = null;
-		String accessToken = null;
-		String requestId = null;
 		if (apiContext != null) {
-			cMap = apiContext.getConfigurationMap();
-			accessToken = apiContext.getAccessToken();
-			requestId = apiContext.getRequestId();
+			apiContext.addHTTPHeaders(headersMap);
 		}
-		return configureAndExecute(cMap, accessToken, httpMethod, resourcePath,
-				headersMap, payLoad, requestId, clazz);
-	}
-
-	private static <T> T configureAndExecute(
-			Map<String, String> configurationMap, String accessToken,
-			HttpMethod httpMethod, String resourcePath,
-			Map<String, String> headersMap, String payLoad, String requestId,
-			Class<T> clazz) throws PayPalRESTException {
-		T t = null;
-		Map<String, String> cMap = null;
-
-		/*
-		 * Check for null before combining with default
-		 */
-		if (configurationMap != null) {
-			cMap = SDKUtil.combineDefaultMap(configurationMap);
-		} else {
-			if (!configInitialized) {
-				initializeToDefault();
-			}
-
-			/*
-			 * The Map returned here is already combined with default values
-			 */
-			cMap = new HashMap<String, String>(configurationMap);
-		}
-
-		APICallPreHandler apiCallPreHandler = createAPICallPreHandler(cMap,
-				payLoad, resourcePath, headersMap, accessToken, requestId, null);
-		HttpConfiguration httpConfiguration = createHttpConfiguration(cMap,
-				httpMethod, apiCallPreHandler);
-		t = execute(apiCallPreHandler, httpConfiguration, clazz);
-		return t;
+		return configureAndExecute(apiContext, httpMethod, resourcePath, payLoad, clazz);
 	}
 
 	/**
@@ -455,12 +446,18 @@ public abstract class PayPalResource extends PayPalModel{
 	 * @param apiCallPreHandler
 	 *            {@link APICallPreHandler} for retrieving EndPoint
 	 * @return
+	 * @throws BaseException 
+	 * @throws PayPalRESTException 
 	 */
 	private static HttpConfiguration createHttpConfiguration(
 			Map<String, String> configurationMap, HttpMethod httpMethod,
-			APICallPreHandler apiCallPreHandler) {
+			APICallPreHandler apiCallPreHandler) throws PayPalRESTException {
 		HttpConfiguration httpConfiguration = new HttpConfiguration();
 		httpConfiguration.setHttpMethod(httpMethod.toString());
+		String endpoint = apiCallPreHandler.getEndPoint();
+		if (endpoint == null || endpoint.isEmpty()) {
+			throw new PayPalRESTException("The endpoint could not be fetched properly. You may be missing `mode` in your configuration.");
+		}
 		httpConfiguration.setEndPointUrl(apiCallPreHandler.getEndPoint());
 		httpConfiguration
 				.setGoogleAppEngine(Boolean.parseBoolean(configurationMap

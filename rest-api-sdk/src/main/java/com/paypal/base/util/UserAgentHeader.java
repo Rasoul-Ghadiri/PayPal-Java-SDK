@@ -1,9 +1,9 @@
 package com.paypal.base.util;
 
+import com.paypal.base.Constants;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.paypal.base.Constants;
 
 public class UserAgentHeader {
 

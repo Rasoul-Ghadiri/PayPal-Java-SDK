@@ -1,17 +1,22 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class PaymentTerm  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class PaymentTerm extends PayPalModel {
 
 	/**
-	 * Terms by which the invoice payment is due.
+	 * The terms by which the invoice payment is due.
 	 */
 	private String termType;
 
 	/**
-	 * Date on which invoice payment is due. It must be always a future date. Date format: yyyy-MM-dd z. For example, 2014-02-27 PST
+	 * The date when the invoice payment is due. This date must be a future date. Date format is *yyyy*-*MM*-*dd* *z*, as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String dueDate;
 
@@ -20,38 +25,4 @@ public class PaymentTerm  extends PayPalModel {
 	 */
 	public PaymentTerm() {
 	}
-
-
-	/**
-	 * Setter for termType
-	 */
-	public PaymentTerm setTermType(String termType) {
-		this.termType = termType;
-		return this;
-	}
-
-	/**
-	 * Getter for termType
-	 */
-	public String getTermType() {
-		return this.termType;
-	}
-
-
-	/**
-	 * Setter for dueDate
-	 */
-	public PaymentTerm setDueDate(String dueDate) {
-		this.dueDate = dueDate;
-		return this;
-	}
-
-	/**
-	 * Getter for dueDate
-	 */
-	public String getDueDate() {
-		return this.dueDate;
-	}
-
-
 }

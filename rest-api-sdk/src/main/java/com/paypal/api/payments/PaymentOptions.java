@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class PaymentOptions  extends PayPalModel {
 
 	/**
@@ -25,54 +30,4 @@ public class PaymentOptions  extends PayPalModel {
 	 */
 	public PaymentOptions() {
 	}
-
-
-	/**
-	 * Setter for allowedPaymentMethod
-	 */
-	public PaymentOptions setAllowedPaymentMethod(String allowedPaymentMethod) {
-		this.allowedPaymentMethod = allowedPaymentMethod;
-		return this;
-	}
-
-	/**
-	 * Getter for allowedPaymentMethod
-	 */
-	public String getAllowedPaymentMethod() {
-		return this.allowedPaymentMethod;
-	}
-
-
-	/**
-	 * Setter for recurringFlag
-	 */
-	public PaymentOptions setRecurringFlag(Boolean recurringFlag) {
-		this.recurringFlag = recurringFlag;
-		return this;
-	}
-
-	/**
-	 * Getter for recurringFlag
-	 */
-	public Boolean getRecurringFlag() {
-		return this.recurringFlag;
-	}
-
-
-	/**
-	 * Setter for skipFmf
-	 */
-	public PaymentOptions setSkipFmf(Boolean skipFmf) {
-		this.skipFmf = skipFmf;
-		return this;
-	}
-
-	/**
-	 * Getter for skipFmf
-	 */
-	public Boolean getSkipFmf() {
-		return this.skipFmf;
-	}
-
-
 }

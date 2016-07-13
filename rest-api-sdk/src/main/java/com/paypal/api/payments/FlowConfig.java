@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class FlowConfig  extends PayPalModel {
 
 	/**
@@ -20,37 +25,4 @@ public class FlowConfig  extends PayPalModel {
 	 */
 	public FlowConfig() {
 	}
-
-
-	/**
-	 * Setter for landingPageType
-	 */
-	public FlowConfig setLandingPageType(String landingPageType) {
-		this.landingPageType = landingPageType;
-		return this;
-	}
-
-	/**
-	 * Getter for landingPageType
-	 */
-	public String getLandingPageType() {
-		return this.landingPageType;
-	}
-
-
-	/**
-	 * Setter for bankTxnPendingUrl
-	 */
-	public FlowConfig setBankTxnPendingUrl(String bankTxnPendingUrl) {
-		this.bankTxnPendingUrl = bankTxnPendingUrl;
-		return this;
-	}
-
-	/**
-	 * Getter for bankTxnPendingUrl
-	 */
-	public String getBankTxnPendingUrl() {
-		return this.bankTxnPendingUrl;
-	}
-	
 }

@@ -1,6 +1,24 @@
 CHANGELOG
 =========
 
+v1.9.0
+------
+   * Updated Invoicing APIs [#215](https://github.com/paypal/PayPal-Java-SDK/pull/215).
+   * `toString` now returns a JSON response [#213](https://github.com/paypal/PayPal-Java-SDK/pull/213).
+
+v1.8.1
+------
+   * Improved OpenID integration[#209](https://github.com/paypal/PayPal-Java-SDK/pull/209).
+   * Fixed javadocs warnings [#206](https://github.com/paypal/PayPal-Java-SDK/pull/206).
+
+v1.8.0
+------
+   * Updated APIContext for ease of integration.
+   * General code improvements [#199](https://github.com/paypal/PayPal-Java-SDK/pull/199).
+   * Removed unused code, and minor refactoring.
+   * Removed the need for sdk_config.properties file.
+   * Set headers properly in HTTPConnection [#201](https://github.com/paypal/PayPal-Java-SDK/pull/201).
+
 v1.7.0
 ------
    * Updated README.md documentations [#190](https://github.com/paypal/PayPal-Java-SDK/pull/190).

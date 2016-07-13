@@ -31,7 +31,7 @@ def build_method
   # to run Unit tests 
   CommandProcessor.command("./gradlew clean build", live_output=true)
   # to run Functional tests. at present functional tests are failing , so we are skipping functional test execution temporally 
-  #CommandProcessor.command("mvn clean install -DsuiteFile=src/test/resources/functional.xml", live_output=true)
+  #CommandProcessor.command("./gradlew functionalTest", live_output=true)
 end
 
 # The command that builds the sdk.  Required.

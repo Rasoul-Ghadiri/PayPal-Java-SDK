@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class InvoicingRefundDetail  extends PayPalModel {
 
 	/**
@@ -32,54 +37,4 @@ public class InvoicingRefundDetail  extends PayPalModel {
 	public InvoicingRefundDetail(String type) {
 		this.type = type;
 	}
-
-
-	/**
-	 * Setter for type
-	 */
-	public InvoicingRefundDetail setType(String type) {
-		this.type = type;
-		return this;
-	}
-
-	/**
-	 * Getter for type
-	 */
-	public String getType() {
-		return this.type;
-	}
-
-
-	/**
-	 * Setter for date
-	 */
-	public InvoicingRefundDetail setDate(String date) {
-		this.date = date;
-		return this;
-	}
-
-	/**
-	 * Getter for date
-	 */
-	public String getDate() {
-		return this.date;
-	}
-
-
-	/**
-	 * Setter for note
-	 */
-	public InvoicingRefundDetail setNote(String note) {
-		this.note = note;
-		return this;
-	}
-
-	/**
-	 * Getter for note
-	 */
-	public String getNote() {
-		return this.note;
-	}
-
-
 }

@@ -1,5 +1,10 @@
 package com.paypal.api.payments;
 
+import com.paypal.base.rest.*;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,15 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.paypal.base.Constants;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.HttpMethod;
-import com.paypal.base.rest.JSONFormatter;
-import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
-import com.paypal.base.rest.RESTUtil;
-import com.paypal.base.sdk.info.SDKVersionImpl;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Agreement  extends PayPalResource {
 
 	/**
@@ -115,243 +114,9 @@ public class Agreement  extends PayPalResource {
 
 
 	/**
-	 * Setter for id
-	 */
-	public Agreement setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-	/**
-	 * Setter for state
-	 */
-	public Agreement setState(String state) {
-		this.state = state;
-		return this;
-	}
-
-	/**
-	 * Getter for state
-	 */
-	public String getState() {
-		return this.state;
-	}
-
-	/**
-	 * Setter for name
-	 */
-	public Agreement setName(String name) {
-		this.name = name;
-		return this;
-	}
-
-	/**
-	 * Getter for name
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-
-	/**
-	 * Setter for description
-	 */
-	public Agreement setDescription(String description) {
-		this.description = description;
-		return this;
-	}
-
-	/**
-	 * Getter for description
-	 */
-	public String getDescription() {
-		return this.description;
-	}
-
-
-	/**
-	 * Setter for startDate
-	 */
-	public Agreement setStartDate(String startDate) {
-		this.startDate = startDate;
-		return this;
-	}
-
-	/**
-	 * Getter for startDate
-	 */
-	public String getStartDate() {
-		return this.startDate;
-	}
-
-
-	/**
-	 * Setter for agreementDetails
-	 */
-	public Agreement setAgreementDetails(AgreementDetails agreementDetails) {
-		this.agreementDetails = agreementDetails;
-		return this;
-	}
-
-	/**
-	 * Getter for agreementDetails
-	 */
-	public AgreementDetails getAgreementDetails() {
-		return this.agreementDetails;
-	}
-
-
-	/**
-	 * Setter for payer
-	 */
-	public Agreement setPayer(Payer payer) {
-		this.payer = payer;
-		return this;
-	}
-
-	/**
-	 * Getter for payer
-	 */
-	public Payer getPayer() {
-		return this.payer;
-	}
-
-
-	/**
-	 * Setter for shippingAddress
-	 */
-	public Agreement setShippingAddress(Address shippingAddress) {
-		this.shippingAddress = shippingAddress;
-		return this;
-	}
-
-	/**
-	 * Getter for shippingAddress
-	 */
-	public Address getShippingAddress() {
-		return this.shippingAddress;
-	}
-
-
-	/**
-	 * Setter for overrideMerchantPreferences
-	 */
-	public Agreement setOverrideMerchantPreferences(MerchantPreferences overrideMerchantPreferences) {
-		this.overrideMerchantPreferences = overrideMerchantPreferences;
-		return this;
-	}
-
-	/**
-	 * Getter for overrideMerchantPreferences
-	 */
-	public MerchantPreferences getOverrideMerchantPreferences() {
-		return this.overrideMerchantPreferences;
-	}
-
-
-	/**
-	 * Setter for overrideChargeModels
-	 */
-	public Agreement setOverrideChargeModels(List<OverrideChargeModel> overrideChargeModels) {
-		this.overrideChargeModels = overrideChargeModels;
-		return this;
-	}
-
-	/**
-	 * Getter for overrideChargeModels
-	 */
-	public List<OverrideChargeModel> getOverrideChargeModels() {
-		return this.overrideChargeModels;
-	}
-
-
-	/**
-	 * Setter for plan
-	 */
-	public Agreement setPlan(Plan plan) {
-		this.plan = plan;
-		return this;
-	}
-
-	/**
-	 * Getter for plan
-	 */
-	public Plan getPlan() {
-		return this.plan;
-	}
-
-
-	/**
-	 * Setter for createTime
-	 */
-	public Agreement setCreateTime(String createTime) {
-		this.createTime = createTime;
-		return this;
-	}
-
-	/**
-	 * Getter for createTime
-	 */
-	public String getCreateTime() {
-		return this.createTime;
-	}
-
-
-	/**
-	 * Setter for updateTime
-	 */
-	public Agreement setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-		return this;
-	}
-
-	/**
-	 * Getter for updateTime
-	 */
-	public String getUpdateTime() {
-		return this.updateTime;
-	}
-
-	/**
-	 * Setter for token
-	 */
-	public Agreement setToken(String token) {
-		this.token = token;
-		return this;
-	}
-
-	/**
-	 * Getter for token
-	 */
-	public String getToken() {
-		return this.token;
-	}
-
-	/**
-	 * Setter for links
-	 */
-	public Agreement setLinks(List<Links> links) {
-		this.links = links;
-		return this;
-	}
-
-	/**
-	 * Getter for links
-	 */
-	public List<Links> getLinks() {
-		return this.links;
-	}
-
-
-	/**
 	 * Create a new billing agreement by passing the details for the agreement, including the name, description, start date, payer, and billing plan in the request JSON.
+	 * @deprecated Please use {@link #create(APIContext)} instead.
+	 *
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return Agreement
@@ -374,17 +139,7 @@ public class Agreement  extends PayPalResource {
 	 * @throws UnsupportedEncodingException 
 	 */
 	public Agreement create(APIContext apiContext) throws PayPalRESTException, MalformedURLException, UnsupportedEncodingException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		String resourcePath = "v1/payments/billing-agreements";
 		String payLoad = this.toJSON();
 		Agreement agreement = configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, Agreement.class);
@@ -417,9 +172,9 @@ public class Agreement  extends PayPalResource {
 	    return queryPairs;
 	}
 
-
 	/**
 	 * Execute a billing agreement after buyer approval by passing the payment token to the request URI.
+	 * @deprecated Please use {@link #execute(APIContext, String)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return Agreement
@@ -440,17 +195,6 @@ public class Agreement  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static Agreement execute(APIContext apiContext, String token) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		Object[] parameters = new Object[] { token };
 		String pattern = "v1/payments/billing-agreements/{0}/agreement-execute";
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
@@ -461,6 +205,8 @@ public class Agreement  extends PayPalResource {
 
 	/**
 	 * Retrieve details for a particular billing agreement by passing the ID of the agreement to the request URI.
+	 * @deprecated Please use {@link #get(APIContext, String)} instead.
+	 *
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param agreementId
@@ -483,17 +229,7 @@ public class Agreement  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static Agreement get(APIContext apiContext, String agreementId) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (agreementId == null) {
 			throw new IllegalArgumentException("agreementId cannot be null");
 		}
@@ -507,6 +243,7 @@ public class Agreement  extends PayPalResource {
 
 	/**
 	 * Update details of a billing agreement, such as the description, shipping address, and start date, by passing the ID of the agreement to the request URI.
+	 * @deprecated Please use {@link #update(APIContext, List)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param patchRequest
@@ -529,17 +266,7 @@ public class Agreement  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Agreement update(APIContext apiContext, List<Patch> patchRequest) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -556,6 +283,7 @@ public class Agreement  extends PayPalResource {
 
 	/**
 	 * Suspend a particular billing agreement by passing the ID of the agreement to the request URI.
+	 * @deprecated Please use {@link #suspend(APIContext, AgreementStateDescriptor)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param agreementStateDescriptor
@@ -577,17 +305,7 @@ public class Agreement  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public void suspend(APIContext apiContext, AgreementStateDescriptor agreementStateDescriptor) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -605,6 +323,7 @@ public class Agreement  extends PayPalResource {
 
 	/**
 	 * Reactivate a suspended billing agreement by passing the ID of the agreement to the appropriate URI. In addition, pass an agreement_state_descriptor object in the request JSON that includes a note about the reason for changing the state of the agreement and the amount and currency for the agreement.
+	 * @deprecated Please use {@link #reActivate(APIContext, AgreementStateDescriptor)}  instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param agreementStateDescriptor
@@ -626,17 +345,7 @@ public class Agreement  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public void reActivate(APIContext apiContext, AgreementStateDescriptor agreementStateDescriptor) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -654,6 +363,7 @@ public class Agreement  extends PayPalResource {
 
 	/**
 	 * Cancel a billing agreement by passing the ID of the agreement to the request URI. In addition, pass an agreement_state_descriptor object in the request JSON that includes a note about the reason for changing the state of the agreement and the amount and currency for the agreement.
+	 * @deprecated Please use {@link #cancel(APIContext, AgreementStateDescriptor)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param agreementStateDescriptor
@@ -675,17 +385,7 @@ public class Agreement  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public void cancel(APIContext apiContext, AgreementStateDescriptor agreementStateDescriptor) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -703,6 +403,7 @@ public class Agreement  extends PayPalResource {
 
 	/**
 	 * Bill an outstanding amount for an agreement by passing the ID of the agreement to the request URI. In addition, pass an agreement_state_descriptor object in the request JSON that includes a note about the reason for changing the state of the agreement and the amount and currency for the agreement.
+	 * @deprecated Please use {@link #billBalance(APIContext, AgreementStateDescriptor)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param agreementStateDescriptor
@@ -724,17 +425,7 @@ public class Agreement  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public void billBalance(APIContext apiContext, AgreementStateDescriptor agreementStateDescriptor) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -752,6 +443,7 @@ public class Agreement  extends PayPalResource {
 
 	/**
 	 * Set the balance for an agreement by passing the ID of the agreement to the request URI. In addition, pass a common_currency object in the request JSON that specifies the currency type and value of the balance.
+	 * @deprecated  Please use {@link #setBalance(APIContext, Currency)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param currency
@@ -774,17 +466,7 @@ public class Agreement  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public void setBalance(APIContext apiContext, Currency currency) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -799,9 +481,9 @@ public class Agreement  extends PayPalResource {
 		return;
 	}
 
-
 	/**
 	 * List transactions for a billing agreement by passing the ID of the agreement, as well as the start and end dates of the range of transactions to list, to the request URI.
+	 * @deprecated Please use {@link #transactions(APIContext, String, Date, Date)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param agreementId
@@ -824,23 +506,13 @@ public class Agreement  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static AgreementTransactions transactions(APIContext apiContext, String agreementId, Date startDate, Date endDate) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
 		if (startDate == null) {
 			throw new IllegalArgumentException("startDate cannot be null");
 		}
 		if (endDate == null) {
 			throw new IllegalArgumentException("endDate cannot be null");
 		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (agreementId == null) {
 			throw new IllegalArgumentException("agreementId cannot be null");
 		}
@@ -852,9 +524,6 @@ public class Agreement  extends PayPalResource {
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = "";
 		AgreementTransactions transactions = configureAndExecute(apiContext, HttpMethod.GET, resourcePath, payLoad, AgreementTransactions.class);
-//		if (transactions == null) {
-//			transactions = new AgreementTransactions();
-//		}
 		
 		return transactions;
 	}

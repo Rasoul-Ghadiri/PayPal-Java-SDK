@@ -1,6 +1,13 @@
 package com.paypal.api.payments;
 
 
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class ShippingAddress extends Address {
 
 	/**
@@ -30,54 +37,4 @@ public class ShippingAddress extends Address {
 	public ShippingAddress(String recipientName) {
 		this.recipientName = recipientName;
 	}
-
-
-	/**
-	 * Setter for id
-	 */
-	public ShippingAddress setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for recipientName
-	 */
-	public ShippingAddress setRecipientName(String recipientName) {
-		this.recipientName = recipientName;
-		return this;
-	}
-
-	/**
-	 * Getter for recipientName
-	 */
-	public String getRecipientName() {
-		return this.recipientName;
-	}
-
-
-	/**
-	 * Setter for defaultAddress
-	 */
-	public ShippingAddress setDefaultAddress(Boolean defaultAddress) {
-		this.defaultAddress = defaultAddress;
-		return this;
-	}
-
-	/**
-	 * Getter for defaultAddress
-	 */
-	public Boolean getDefaultAddress() {
-		return this.defaultAddress;
-	}
-
-
 }

@@ -1,8 +1,16 @@
 package com.paypal.api.payments;
 
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.List;
 
-public class InstallmentInfo  {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class InstallmentInfo extends PayPalModel {
 
 	/**
 	 * Installment id.
@@ -36,69 +44,4 @@ public class InstallmentInfo  {
 	public InstallmentInfo(List<InstallmentOption> installmentOptions) {
 		this.installmentOptions = installmentOptions;
 	}
-
-
-	/**
-	 * Setter for installmentId
-	 */
-	public InstallmentInfo setInstallmentId(String installmentId) {
-		this.installmentId = installmentId;
-		return this;
-	}
-
-	/**
-	 * Getter for installmentId
-	 */
-	public String getInstallmentId() {
-		return this.installmentId;
-	}
-
-
-	/**
-	 * Setter for network
-	 */
-	public InstallmentInfo setNetwork(String network) {
-		this.network = network;
-		return this;
-	}
-
-	/**
-	 * Getter for network
-	 */
-	public String getNetwork() {
-		return this.network;
-	}
-
-
-	/**
-	 * Setter for issuer
-	 */
-	public InstallmentInfo setIssuer(String issuer) {
-		this.issuer = issuer;
-		return this;
-	}
-
-	/**
-	 * Getter for issuer
-	 */
-	public String getIssuer() {
-		return this.issuer;
-	}
-
-
-	/**
-	 * Setter for installmentOptions
-	 */
-	public InstallmentInfo setInstallmentOptions(List<InstallmentOption> installmentOptions) {
-		this.installmentOptions = installmentOptions;
-		return this;
-	}
-
-	/**
-	 * Getter for installmentOptions
-	 */
-	public List<InstallmentOption> getInstallmentOptions() {
-		return this.installmentOptions;
-	}
-
 }

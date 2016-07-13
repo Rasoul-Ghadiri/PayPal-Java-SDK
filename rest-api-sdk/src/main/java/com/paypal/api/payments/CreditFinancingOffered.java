@@ -1,6 +1,14 @@
 package com.paypal.api.payments;
 
-public class CreditFinancingOffered  {
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class CreditFinancingOffered extends PayPalModel {
 
 	/**
 	 * This is the estimated total payment amount including interest and fees the user will pay during the lifetime of the loan.
@@ -48,101 +56,4 @@ public class CreditFinancingOffered  {
 		this.totalInterest = totalInterest;
 		this.payerAcceptance = payerAcceptance;
 	}
-
-
-	/**
-	 * Setter for totalCost
-	 */
-	public CreditFinancingOffered setTotalCost(Currency totalCost) {
-		this.totalCost = totalCost;
-		return this;
-	}
-
-	/**
-	 * Getter for totalCost
-	 */
-	public Currency getTotalCost() {
-		return this.totalCost;
-	}
-
-
-	/**
-	 * Setter for term
-	 */
-	public CreditFinancingOffered setTerm(float term) {
-		this.term = term;
-		return this;
-	}
-
-	/**
-	 * Getter for term
-	 */
-	public float getTerm() {
-		return this.term;
-	}
-
-
-	/**
-	 * Setter for monthlyPayment
-	 */
-	public CreditFinancingOffered setMonthlyPayment(Currency monthlyPayment) {
-		this.monthlyPayment = monthlyPayment;
-		return this;
-	}
-
-	/**
-	 * Getter for monthlyPayment
-	 */
-	public Currency getMonthlyPayment() {
-		return this.monthlyPayment;
-	}
-
-
-	/**
-	 * Setter for totalInterest
-	 */
-	public CreditFinancingOffered setTotalInterest(Currency totalInterest) {
-		this.totalInterest = totalInterest;
-		return this;
-	}
-
-	/**
-	 * Getter for totalInterest
-	 */
-	public Currency getTotalInterest() {
-		return this.totalInterest;
-	}
-
-
-	/**
-	 * Setter for payerAcceptance
-	 */
-	public CreditFinancingOffered setPayerAcceptance(Boolean payerAcceptance) {
-		this.payerAcceptance = payerAcceptance;
-		return this;
-	}
-
-	/**
-	 * Getter for payerAcceptance
-	 */
-	public Boolean getPayerAcceptance() {
-		return this.payerAcceptance;
-	}
-
-
-	/**
-	 * Setter for cartAmountImmutable
-	 */
-	public CreditFinancingOffered setCartAmountImmutable(Boolean cartAmountImmutable) {
-		this.cartAmountImmutable = cartAmountImmutable;
-		return this;
-	}
-
-	/**
-	 * Getter for cartAmountImmutable
-	 */
-	public Boolean getCartAmountImmutable() {
-		return this.cartAmountImmutable;
-	}
-
 }

@@ -1,7 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Terms  extends PayPalModel {
 
 	/**
@@ -50,101 +56,4 @@ public class Terms  extends PayPalModel {
 		this.amountRange = amountRange;
 		this.buyerEditable = buyerEditable;
 	}
-
-
-	/**
-	 * Setter for id
-	 */
-	public Terms setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for type
-	 */
-	public Terms setType(String type) {
-		this.type = type;
-		return this;
-	}
-
-	/**
-	 * Getter for type
-	 */
-	public String getType() {
-		return this.type;
-	}
-
-
-	/**
-	 * Setter for maxBillingAmount
-	 */
-	public Terms setMaxBillingAmount(Currency maxBillingAmount) {
-		this.maxBillingAmount = maxBillingAmount;
-		return this;
-	}
-
-	/**
-	 * Getter for maxBillingAmount
-	 */
-	public Currency getMaxBillingAmount() {
-		return this.maxBillingAmount;
-	}
-
-
-	/**
-	 * Setter for occurrences
-	 */
-	public Terms setOccurrences(String occurrences) {
-		this.occurrences = occurrences;
-		return this;
-	}
-
-	/**
-	 * Getter for occurrences
-	 */
-	public String getOccurrences() {
-		return this.occurrences;
-	}
-
-
-	/**
-	 * Setter for amountRange
-	 */
-	public Terms setAmountRange(Currency amountRange) {
-		this.amountRange = amountRange;
-		return this;
-	}
-
-	/**
-	 * Getter for amountRange
-	 */
-	public Currency getAmountRange() {
-		return this.amountRange;
-	}
-
-
-	/**
-	 * Setter for buyerEditable
-	 */
-	public Terms setBuyerEditable(String buyerEditable) {
-		this.buyerEditable = buyerEditable;
-		return this;
-	}
-
-	/**
-	 * Getter for buyerEditable
-	 */
-	public String getBuyerEditable() {
-		return this.buyerEditable;
-	}
-	
 }

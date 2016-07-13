@@ -1,6 +1,14 @@
 package com.paypal.api.payments;
 
-public class InstallmentOption  {
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class InstallmentOption extends PayPalModel {
 
 	/**
 	 * Number of installments
@@ -35,69 +43,4 @@ public class InstallmentOption  {
 		this.term = term;
 		this.monthlyPayment = monthlyPayment;
 	}
-
-
-	/**
-	 * Setter for term
-	 */
-	public InstallmentOption setTerm(int term) {
-		this.term = term;
-		return this;
-	}
-
-	/**
-	 * Getter for term
-	 */
-	public int getTerm() {
-		return this.term;
-	}
-
-
-	/**
-	 * Setter for monthlyPayment
-	 */
-	public InstallmentOption setMonthlyPayment(Currency monthlyPayment) {
-		this.monthlyPayment = monthlyPayment;
-		return this;
-	}
-
-	/**
-	 * Getter for monthlyPayment
-	 */
-	public Currency getMonthlyPayment() {
-		return this.monthlyPayment;
-	}
-
-
-	/**
-	 * Setter for discountAmount
-	 */
-	public InstallmentOption setDiscountAmount(Currency discountAmount) {
-		this.discountAmount = discountAmount;
-		return this;
-	}
-
-	/**
-	 * Getter for discountAmount
-	 */
-	public Currency getDiscountAmount() {
-		return this.discountAmount;
-	}
-
-
-	/**
-	 * Setter for discountPercentage
-	 */
-	public InstallmentOption setDiscountPercentage(Percentage discountPercentage) {
-		this.discountPercentage = discountPercentage;
-		return this;
-	}
-
-	/**
-	 * Getter for discountPercentage
-	 */
-	public Percentage getDiscountPercentage() {
-		return this.discountPercentage;
-	}
-
 }

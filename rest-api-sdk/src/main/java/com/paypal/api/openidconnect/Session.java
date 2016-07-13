@@ -1,16 +1,16 @@
 package com.paypal.api.openidconnect;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.paypal.base.ClientCredentials;
 import com.paypal.base.ConfigManager;
 import com.paypal.base.Constants;
 import com.paypal.base.SDKUtil;
 import com.paypal.base.rest.APIContext;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public final class Session {
 

@@ -1,16 +1,15 @@
 package com.paypal.api.payments;
 
-import java.util.HashMap;
+import com.paypal.base.rest.*;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.List;
 
-import com.paypal.base.Constants;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.HttpMethod;
-import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
-import com.paypal.base.rest.RESTUtil;
-import com.paypal.base.sdk.info.SDKVersionImpl;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Sale  extends PayPalResource {
 
 	/**
@@ -124,24 +123,6 @@ public class Sale  extends PayPalResource {
 	private List<Links> links;
 
 	/**
-	 * Returns the last request sent to the Service
-	 *
-	 * @return Last request sent to the server
-	 */
-	public static String getLastRequest() {
-		return PayPalResource.getLastRequest();
-	}
-
-	/**
-	 * Returns the last response returned by the Service
-	 *
-	 * @return Last response got from the Service
-	 */
-	public static String getLastResponse() {
-		return PayPalResource.getLastResponse();
-	}
-
-	/**
 	 * Default Constructor
 	 */
 	public Sale() {
@@ -157,362 +138,11 @@ public class Sale  extends PayPalResource {
 		this.parentPayment = parentPayment;
 		this.createTime = createTime;
 	}
-
-
-	/**
-	 * Setter for id
-	 */
-	public Sale setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for purchaseUnitReferenceId
-	 */
-	public Sale setPurchaseUnitReferenceId(String purchaseUnitReferenceId) {
-		this.purchaseUnitReferenceId = purchaseUnitReferenceId;
-		return this;
-	}
-
-	/**
-	 * Getter for purchaseUnitReferenceId
-	 */
-	public String getPurchaseUnitReferenceId() {
-		return this.purchaseUnitReferenceId;
-	}
-
-
-	/**
-	 * Setter for amount
-	 */
-	public Sale setAmount(Amount amount) {
-		this.amount = amount;
-		return this;
-	}
-
-	/**
-	 * Getter for amount
-	 */
-	public Amount getAmount() {
-		return this.amount;
-	}
-
-
-	/**
-	 * Setter for paymentMode
-	 */
-	public Sale setPaymentMode(String paymentMode) {
-		this.paymentMode = paymentMode;
-		return this;
-	}
-
-	/**
-	 * Getter for paymentMode
-	 */
-	public String getPaymentMode() {
-		return this.paymentMode;
-	}
-
-
-	/**
-	 * Setter for state
-	 */
-	public Sale setState(String state) {
-		this.state = state;
-		return this;
-	}
-
-	/**
-	 * Getter for state
-	 */
-	public String getState() {
-		return this.state;
-	}
-
-
-	/**
-	 * Setter for reasonCode
-	 */
-	public Sale setReasonCode(String reasonCode) {
-		this.reasonCode = reasonCode;
-		return this;
-	}
-
-	/**
-	 * Getter for reasonCode
-	 */
-	public String getReasonCode() {
-		return this.reasonCode;
-	}
-
-
-	/**
-	 * Setter for protectionEligibility
-	 */
-	public Sale setProtectionEligibility(String protectionEligibility) {
-		this.protectionEligibility = protectionEligibility;
-		return this;
-	}
-
-	/**
-	 * Getter for protectionEligibility
-	 */
-	public String getProtectionEligibility() {
-		return this.protectionEligibility;
-	}
-
-
-	/**
-	 * Setter for protectionEligibilityType
-	 */
-	public Sale setProtectionEligibilityType(String protectionEligibilityType) {
-		this.protectionEligibilityType = protectionEligibilityType;
-		return this;
-	}
-
-	/**
-	 * Getter for protectionEligibilityType
-	 */
-	public String getProtectionEligibilityType() {
-		return this.protectionEligibilityType;
-	}
-
-
-	/**
-	 * Setter for clearingTime
-	 */
-	public Sale setClearingTime(String clearingTime) {
-		this.clearingTime = clearingTime;
-		return this;
-	}
-
-	/**
-	 * Getter for clearingTime
-	 */
-	public String getClearingTime() {
-		return this.clearingTime;
-	}
-
-
-	/**
-	 * Setter for paymentHoldStatus
-	 */
-	public Sale setPaymentHoldStatus(String paymentHoldStatus) {
-		this.paymentHoldStatus = paymentHoldStatus;
-		return this;
-	}
-
-	/**
-	 * Getter for paymentHoldStatus
-	 */
-	public String getPaymentHoldStatus() {
-		return this.paymentHoldStatus;
-	}
-
-
-	/**
-	 * Setter for paymentHoldReasons
-	 */
-	public Sale setPaymentHoldReasons(List<String> paymentHoldReasons) {
-		this.paymentHoldReasons = paymentHoldReasons;
-		return this;
-	}
-
-	/**
-	 * Getter for paymentHoldReasons
-	 */
-	public List<String> getPaymentHoldReasons() {
-		return this.paymentHoldReasons;
-	}
-
-
-	/**
-	 * Setter for transactionFee
-	 */
-	public Sale setTransactionFee(Currency transactionFee) {
-		this.transactionFee = transactionFee;
-		return this;
-	}
-
-	/**
-	 * Getter for transactionFee
-	 */
-	public Currency getTransactionFee() {
-		return this.transactionFee;
-	}
-
-
-	/**
-	 * Setter for receivableAmount
-	 */
-	public Sale setReceivableAmount(Currency receivableAmount) {
-		this.receivableAmount = receivableAmount;
-		return this;
-	}
-
-	/**
-	 * Getter for receivableAmount
-	 */
-	public Currency getReceivableAmount() {
-		return this.receivableAmount;
-	}
-
-
-	/**
-	 * Setter for exchangeRate
-	 */
-	public Sale setExchangeRate(String exchangeRate) {
-		this.exchangeRate = exchangeRate;
-		return this;
-	}
-
-	/**
-	 * Getter for exchangeRate
-	 */
-	public String getExchangeRate() {
-		return this.exchangeRate;
-	}
-
-
-	/**
-	 * Setter for fmfDetails
-	 */
-	public Sale setFmfDetails(FmfDetails fmfDetails) {
-		this.fmfDetails = fmfDetails;
-		return this;
-	}
-
-	/**
-	 * Getter for fmfDetails
-	 */
-	public FmfDetails getFmfDetails() {
-		return this.fmfDetails;
-	}
-
-
-	/**
-	 * Setter for receiptId
-	 */
-	public Sale setReceiptId(String receiptId) {
-		this.receiptId = receiptId;
-		return this;
-	}
-
-	/**
-	 * Getter for receiptId
-	 */
-	public String getReceiptId() {
-		return this.receiptId;
-	}
-
-
-	/**
-	 * Setter for parentPayment
-	 */
-	public Sale setParentPayment(String parentPayment) {
-		this.parentPayment = parentPayment;
-		return this;
-	}
-
-	/**
-	 * Getter for parentPayment
-	 */
-	public String getParentPayment() {
-		return this.parentPayment;
-	}
-
-
-	/**
-	 * Setter for processorResponse
-	 */
-	public Sale setProcessorResponse(ProcessorResponse processorResponse) {
-		this.processorResponse = processorResponse;
-		return this;
-	}
-
-	/**
-	 * Getter for processorResponse
-	 */
-	public ProcessorResponse getProcessorResponse() {
-		return this.processorResponse;
-	}
-
-
-	/**
-	 * Setter for billingAgreementId
-	 */
-	public Sale setBillingAgreementId(String billingAgreementId) {
-		this.billingAgreementId = billingAgreementId;
-		return this;
-	}
-
-	/**
-	 * Getter for billingAgreementId
-	 */
-	public String getBillingAgreementId() {
-		return this.billingAgreementId;
-	}
-
-
-	/**
-	 * Setter for createTime
-	 */
-	public Sale setCreateTime(String createTime) {
-		this.createTime = createTime;
-		return this;
-	}
-
-	/**
-	 * Getter for createTime
-	 */
-	public String getCreateTime() {
-		return this.createTime;
-	}
-
-
-	/**
-	 * Setter for updateTime
-	 */
-	public Sale setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-		return this;
-	}
-
-	/**
-	 * Getter for updateTime
-	 */
-	public String getUpdateTime() {
-		return this.updateTime;
-	}
-
-
-	/**
-	 * Setter for links
-	 */
-	public Sale setLinks(List<Links> links) {
-		this.links = links;
-		return this;
-	}
-
-	/**
-	 * Getter for links
-	 */
-	public List<Links> getLinks() {
-		return this.links;
-	}
-
-
+	
 	/**
 	 * Obtain the Sale transaction resource for the given identifier.
+	 * @deprecated Please use {@link #get(APIContext, String)} instead.
+	 *
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param saleId
@@ -535,17 +165,7 @@ public class Sale  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static Sale get(APIContext apiContext, String saleId) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (saleId == null) {
 			throw new IllegalArgumentException("saleId cannot be null");
 		}
@@ -559,6 +179,8 @@ public class Sale  extends PayPalResource {
 
 	/**
 	 * Creates (and processes) a new Refund Transaction added as a related resource.
+	 * @deprecated Please use {@link #refund(APIContext, Refund)} instead.
+	 *
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param refund
@@ -581,17 +203,7 @@ public class Sale  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Refund refund(APIContext apiContext, Refund refund) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}

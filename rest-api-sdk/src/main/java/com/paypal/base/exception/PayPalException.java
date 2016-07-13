@@ -6,7 +6,6 @@ package com.paypal.base.exception;
 
 /**
  * A PayPalException is thrown to signal a problem during SDK execution.
- * @author PayPal DTS
  */
 public abstract class PayPalException extends Exception
 {

@@ -2,8 +2,6 @@ package com.paypal.base.rest;
 
 /**
  * HttpMethod enums used for HTTP method verbs
- * @author kjayakumar
- *
  */
 public enum HttpMethod {
 

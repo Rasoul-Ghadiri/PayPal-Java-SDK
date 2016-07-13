@@ -1,5 +1,15 @@
 package com.paypal.api.payments;
 
+import com.paypal.base.Constants;
+import com.paypal.base.SDKUtil;
+import com.paypal.base.SSLUtil;
+import com.paypal.base.rest.*;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
@@ -9,19 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.paypal.base.Constants;
-import com.paypal.base.SDKUtil;
-import com.paypal.base.SSLUtil;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.HttpMethod;
-import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
-import com.paypal.base.rest.RESTUtil;
-import com.paypal.base.sdk.info.SDKVersionImpl;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Event  extends PayPalResource {
 	
 	private static final Logger log = LoggerFactory.getLogger(Event.class);
@@ -67,121 +67,9 @@ public class Event  extends PayPalResource {
 	public Event() {
 	}
 
-
-	/**
-	 * Setter for id
-	 */
-	public Event setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for createTime
-	 */
-	public Event setCreateTime(String createTime) {
-		this.createTime = createTime;
-		return this;
-	}
-
-	/**
-	 * Getter for createTime
-	 */
-	public String getCreateTime() {
-		return this.createTime;
-	}
-
-
-	/**
-	 * Setter for resourceType
-	 */
-	public Event setResourceType(String resourceType) {
-		this.resourceType = resourceType;
-		return this;
-	}
-
-	/**
-	 * Getter for resourceType
-	 */
-	public String getResourceType() {
-		return this.resourceType;
-	}
-
-
-	/**
-	 * Setter for eventType
-	 */
-	public Event setEventType(String eventType) {
-		this.eventType = eventType;
-		return this;
-	}
-
-	/**
-	 * Getter for eventType
-	 */
-	public String getEventType() {
-		return this.eventType;
-	}
-
-
-	/**
-	 * Setter for summary
-	 */
-	public Event setSummary(String summary) {
-		this.summary = summary;
-		return this;
-	}
-
-	/**
-	 * Getter for summary
-	 */
-	public String getSummary() {
-		return this.summary;
-	}
-
-
-	/**
-	 * Setter for resource
-	 */
-	public Event setResource(Object resource) {
-		this.resource = resource;
-		return this;
-	}
-
-	/**
-	 * Getter for resource
-	 */
-	public Object getResource() {
-		return this.resource;
-	}
-
-
-	/**
-	 * Setter for links
-	 */
-	public Event setLinks(List<Links> links) {
-		this.links = links;
-		return this;
-	}
-
-	/**
-	 * Getter for links
-	 */
-	public List<Links> getLinks() {
-		return this.links;
-	}
-
-
 	/**
 	 * Retrieves the Webhooks event resource identified by event_id. Can be used to retrieve the payload for an event.
+	 * @deprecated Please use {@link #get(APIContext, String)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param eventId
@@ -204,17 +92,7 @@ public class Event  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static Event get(APIContext apiContext, String eventId) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (eventId == null) {
 			throw new IllegalArgumentException("eventId cannot be null");
 		}
@@ -228,6 +106,7 @@ public class Event  extends PayPalResource {
 
 	/**
 	 * Resends the Webhooks event resource identified by event_id.
+	 * @deprecated Please use {@link #resend(APIContext)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return Event
@@ -246,17 +125,7 @@ public class Event  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Event resend(APIContext apiContext) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -270,6 +139,7 @@ public class Event  extends PayPalResource {
 
 	/**
 	 * Retrieves the list of Webhooks events resources for the application associated with token. The developers can use it to see list of past webhooks events.
+	 * @deprecated Please use {@link #list(APIContext, String)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return EventList
@@ -288,17 +158,7 @@ public class Event  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static EventList list(APIContext apiContext, String queryParams) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		String resourcePath = "v1/notifications/webhooks-events" + queryParams;
 		String payLoad = "";
 		return configureAndExecute(apiContext, HttpMethod.GET, resourcePath, payLoad, EventList.class);

@@ -1,9 +1,15 @@
 package com.paypal.api.payments;
 
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.List;
 
-import com.paypal.base.rest.PayPalModel;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class PaymentCard  extends PayPalModel {
 
 	/**
@@ -101,265 +107,10 @@ public class PaymentCard  extends PayPalModel {
 	 */
 	public PaymentCard() {
 	}
-
-
+	
 	/**
-	 * Setter for id
-	 */
-	public PaymentCard setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for number
-	 */
-	public PaymentCard setNumber(String number) {
-		this.number = number;
-		return this;
-	}
-
-	/**
-	 * Getter for number
-	 */
-	public String getNumber() {
-		return this.number;
-	}
-
-
-	/**
-	 * Setter for type
-	 */
-	public PaymentCard setType(String type) {
-		this.type = type;
-		return this;
-	}
-
-	/**
-	 * Getter for type
-	 */
-	public String getType() {
-		return this.type;
-	}
-
-
-	/**
-	 * Setter for expireMonth
-	 */
-	public PaymentCard setExpireMonth(String expireMonth) {
-		this.expireMonth = expireMonth;
-		return this;
-	}
-
-	/**
-	 * Getter for expireMonth
-	 */
-	public String getExpireMonth() {
-		return this.expireMonth;
-	}
-
-
-	/**
-	 * Setter for expireYear
-	 */
-	public PaymentCard setExpireYear(String expireYear) {
-		this.expireYear = expireYear;
-		return this;
-	}
-
-	/**
-	 * Getter for expireYear
-	 */
-	public String getExpireYear() {
-		return this.expireYear;
-	}
-
-
-	/**
-	 * Setter for startMonth
-	 */
-	public PaymentCard setStartMonth(String startMonth) {
-		this.startMonth = startMonth;
-		return this;
-	}
-
-	/**
-	 * Getter for startMonth
-	 */
-	public String getStartMonth() {
-		return this.startMonth;
-	}
-
-
-	/**
-	 * Setter for startYear
-	 */
-	public PaymentCard setStartYear(String startYear) {
-		this.startYear = startYear;
-		return this;
-	}
-
-	/**
-	 * Getter for startYear
-	 */
-	public String getStartYear() {
-		return this.startYear;
-	}
-
-
-	/**
-	 * Setter for cvv2
-	 */
-	public PaymentCard setCvv2(String cvv2) {
-		this.cvv2 = cvv2;
-		return this;
-	}
-
-	/**
-	 * Getter for cvv2
-	 */
-	public String getCvv2() {
-		return this.cvv2;
-	}
-
-
-	/**
-	 * Setter for firstName
-	 */
-	public PaymentCard setFirstName(String firstName) {
-		this.firstName = firstName;
-		return this;
-	}
-
-	/**
-	 * Getter for firstName
-	 */
-	public String getFirstName() {
-		return this.firstName;
-	}
-
-
-	/**
-	 * Setter for lastName
-	 */
-	public PaymentCard setLastName(String lastName) {
-		this.lastName = lastName;
-		return this;
-	}
-
-	/**
-	 * Getter for lastName
-	 */
-	public String getLastName() {
-		return this.lastName;
-	}
-
-
-	/**
-	 * Setter for billingCountry
-	 */
-	public PaymentCard setBillingCountry(String billingCountry) {
-		this.billingCountry = billingCountry;
-		return this;
-	}
-
-	/**
-	 * Getter for billingCountry
-	 */
-	public String getBillingCountry() {
-		return this.billingCountry;
-	}
-
-
-	/**
-	 * Setter for billingAddress
-	 */
-	public PaymentCard setBillingAddress(Address billingAddress) {
-		this.billingAddress = billingAddress;
-		return this;
-	}
-
-	/**
-	 * Getter for billingAddress
-	 */
-	public Address getBillingAddress() {
-		return this.billingAddress;
-	}
-
-
-	/**
-	 * Setter for externalCustomerId
-	 */
-	public PaymentCard setExternalCustomerId(String externalCustomerId) {
-		this.externalCustomerId = externalCustomerId;
-		return this;
-	}
-
-	/**
-	 * Getter for externalCustomerId
-	 */
-	public String getExternalCustomerId() {
-		return this.externalCustomerId;
-	}
-
-
-	/**
-	 * Setter for status
-	 */
-	public PaymentCard setStatus(String status) {
-		this.status = status;
-		return this;
-	}
-
-	/**
-	 * Getter for status
-	 */
-	public String getStatus() {
-		return this.status;
-	}
-
-
-	/**
-	 * Setter for validUntil
-	 */
-	public PaymentCard setValidUntil(String validUntil) {
-		this.validUntil = validUntil;
-		return this;
-	}
-
-	/**
-	 * Getter for validUntil
-	 */
-	public String getValidUntil() {
-		return this.validUntil;
-	}
-
-
-	/**
-	 * Setter for issueNumber
-	 */
-	public PaymentCard setIssueNumber(String issueNumber) {
-		this.issueNumber = issueNumber;
-		return this;
-	}
-
-	/**
-	 * Getter for issueNumber
-	 */
-	public String getIssueNumber() {
-		return this.issueNumber;
-	}
-
-
-	/**
+	 * @deprecated Please use {@link #setCard3dSecureInfo(Card3dSecureInfo)} instead.
+	 * 
 	 * Setter for 3dSecureInfo
 	 */
 	public PaymentCard set3dSecureInfo(Card3dSecureInfo card3dSecureInfo) {
@@ -368,27 +119,11 @@ public class PaymentCard  extends PayPalModel {
 	}
 
 	/**
+	 * @deprecated Please use {@link #getCard3dSecureInfo()} instead.
+	 * 
 	 * Getter for 3dSecureInfo
 	 */
 	public Card3dSecureInfo get3dSecureInfo() {
 		return this.card3dSecureInfo;
 	}
-
-
-	/**
-	 * Setter for links
-	 */
-	public PaymentCard setLinks(List<DefinitionsLinkdescription> links) {
-		this.links = links;
-		return this;
-	}
-
-	/**
-	 * Getter for links
-	 */
-	public List<DefinitionsLinkdescription> getLinks() {
-		return this.links;
-	}
-
-
 }

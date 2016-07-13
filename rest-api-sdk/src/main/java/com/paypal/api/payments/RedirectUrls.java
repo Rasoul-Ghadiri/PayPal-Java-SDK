@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class RedirectUrls  extends PayPalModel {
 
 	/**
@@ -20,38 +25,4 @@ public class RedirectUrls  extends PayPalModel {
 	 */
 	public RedirectUrls() {
 	}
-
-
-	/**
-	 * Setter for returnUrl
-	 */
-	public RedirectUrls setReturnUrl(String returnUrl) {
-		this.returnUrl = returnUrl;
-		return this;
-	}
-
-	/**
-	 * Getter for returnUrl
-	 */
-	public String getReturnUrl() {
-		return this.returnUrl;
-	}
-
-
-	/**
-	 * Setter for cancelUrl
-	 */
-	public RedirectUrls setCancelUrl(String cancelUrl) {
-		this.cancelUrl = cancelUrl;
-		return this;
-	}
-
-	/**
-	 * Getter for cancelUrl
-	 */
-	public String getCancelUrl() {
-		return this.cancelUrl;
-	}
-
-
 }

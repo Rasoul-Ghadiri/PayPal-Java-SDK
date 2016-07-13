@@ -1,10 +1,16 @@
 package com.paypal.api.payments;
 
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.paypal.base.rest.PayPalModel;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class ItemList  extends PayPalModel {
 
 	/**
@@ -27,69 +33,10 @@ public class ItemList  extends PayPalModel {
 	 */
 	private String shippingPhoneNumber;
 
-
-
 	/**
 	 * Default Constructor
 	 */
 	public ItemList() {
 		items = new ArrayList<Item>();
-	}
-
-
-	/**
-	 * Setter for items
-	 */
-	public ItemList setItems(List<Item> items) {
-		this.items = items;
-		return this;
-	}
-
-	/**
-	 * Getter for items
-	 */
-	public List<Item> getItems() {
-		return this.items;
-	}
-
-
-	/**
-	 * Setter for shippingAddress
-	 */
-	public ItemList setShippingAddress(ShippingAddress shippingAddress) {
-		this.shippingAddress = shippingAddress;
-		return this;
-	}
-
-	/**
-	 * Getter for shippingAddress
-	 */
-	public ShippingAddress getShippingAddress() {
-		return this.shippingAddress;
-	}
-
-	public String getShippingMethod() {
-		return shippingMethod;
-	}
-
-
-	public ItemList setShippingMethod(String shippingMethod) {
-		this.shippingMethod = shippingMethod;
-		return this;
-	}
-	
-	/**
-	 * Setter for shippingPhoneNumber
-	 */
-	public ItemList setShippingPhoneNumber(String shippingPhoneNumber) {
-		this.shippingPhoneNumber = shippingPhoneNumber;
-		return this;
-	}
-
-	/**
-	 * Getter for shippingPhoneNumber
-	 */
-	public String getShippingPhoneNumber() {
-		return this.shippingPhoneNumber;
 	}
 }

@@ -8,9 +8,12 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.paypal.api.payments.Patch;
 import com.paypal.api.payments.Plan;
+import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 
 public class SubscriptionSample extends SampleBase<Plan> {
+	public static final String clientID = "AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS";
+	public static final String clientSecret = "EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL";
 
 	public SubscriptionSample() throws PayPalRESTException,
 			JsonSyntaxException, JsonIOException, FileNotFoundException {
@@ -25,10 +28,10 @@ public class SubscriptionSample extends SampleBase<Plan> {
 	 * @return newly created Plan instance
 	 * @throws PayPalRESTException
 	 */
-	public Plan create() throws PayPalRESTException, IOException {
+	public Plan create(APIContext context) throws PayPalRESTException, IOException {
 		// populate Plan object that we are going to play with
 		super.instance = super.load("billingplan_create.json", Plan.class);
-		super.instance = super.instance.create(accessToken);
+		super.instance = super.instance.create(context);
 		return super.instance;
 	}
 
@@ -40,9 +43,9 @@ public class SubscriptionSample extends SampleBase<Plan> {
 	 * @return updated Plan instance
 	 * @throws PayPalRESTException
 	 */
-	public Plan update() throws PayPalRESTException, IOException {
+	public Plan update(APIContext context) throws PayPalRESTException, IOException {
 		Patch[] patch = super.load("billingplan_update.json", Patch[].class);
-		super.instance.update(super.accessToken, Arrays.asList(patch));
+		super.instance.update(context, Arrays.asList(patch));
 		return super.instance;
 	}
 
@@ -54,8 +57,8 @@ public class SubscriptionSample extends SampleBase<Plan> {
 	 * @return the retrieved plan
 	 * @throws PayPalRESTException
 	 */
-	public Plan retrieve() throws PayPalRESTException {
-		return Plan.get(super.accessToken, super.instance.getId());
+	public Plan retrieve(APIContext context) throws PayPalRESTException {
+		return Plan.get(context, super.instance.getId());
 	}
 
 	/**
@@ -67,11 +70,13 @@ public class SubscriptionSample extends SampleBase<Plan> {
 		try {
 			SubscriptionSample subscriptionSample = new SubscriptionSample();
 
-			Plan plan = subscriptionSample.create();
+			APIContext context = new APIContext(clientID, clientSecret, "sandbox");
+			
+			Plan plan = subscriptionSample.create(context);
 			System.out.println("create response:\n" + Plan.getLastResponse());
-			plan = subscriptionSample.update();
+			plan = subscriptionSample.update(context);
 			System.out.println("plan updated");
-			plan = subscriptionSample.retrieve();
+			plan = subscriptionSample.retrieve(context);
 			System.out.println("retrieve response:\n" + Plan.getLastResponse());
 		} catch (JsonSyntaxException e) {
 			e.printStackTrace();

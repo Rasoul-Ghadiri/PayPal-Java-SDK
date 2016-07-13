@@ -1,4 +1,7 @@
 ## PayPal REST API Java SDK [![Build Status](https://travis-ci.org/paypal/PayPal-Java-SDK.svg?branch=master)](https://travis-ci.org/paypal/PayPal-Java-SDK)
+
+![Home Image](https://raw.githubusercontent.com/wiki/paypal/PayPal-Java-SDK/images/homepage.jpg)
+
 This repository contains Java SDK and samples for REST API. For PayPal mobile(Android) SDK, please go to [PayPal Android SDK](https://github.com/paypal/PayPal-Android-SDK)
 
 ## Please Note
@@ -13,7 +16,7 @@ SDK Integration:
 ----------------
 
 #### Maven
-```
+```xml
 <dependency>
 	<groupId>com.paypal.sdk</groupId>
 	<artifactId>rest-api-sdk</artifactId>
@@ -21,12 +24,12 @@ SDK Integration:
 </dependency>
 ```
 #### Gradle
-```js
+```gradle
 repositories {
 	mavenCentral()
 }
 dependencies {
-	compile 'com.paypal.sdk:rest-api-sdk:*'
+	compile 'com.paypal.sdk:rest-api-sdk:+'
 }
 ```
 #### Other
@@ -41,30 +44,20 @@ To make an API call:
 	String clientId = "AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS";
 	String clientSecret = "EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL";
 	```
-2. Set the mode
+2. Create an `ApiContext`
 
 	```java
-	Map<String, String> map = new HashMap<String, String>();
-	map.put("mode", "sandbox");
+	APIContext context = new APIContext(clientId, clientSecret, "sandbox");
 	```
-3. Fetch the Access Token
+3. Fetch a Payment by ID
 
 	```java
-	String accessToken = new OAuthTokenCredential(clientId, clientSecret, map).getAccessToken();
-	```
-4. Create an `ApiContext`
-
-	```java
-	APIContext context = new APIContext(accessToken);
-	context.setConfigurationMap(map);
-	```
-5. Fetch a Payment by ID
-
-	```java
-	Payment payment = Payment.get(apiContext, "PAY-4T698276NC427425EK5QIV7Y");
+	Payment payment = Payment.get(context, "PAY-4T698276NC427425EK5QIV7Y");
 	System.out.println(payment);
 	```
-6. Visit [Developer Docs](https://developer.paypal.com/docs/api/) for more PayPal REST APIs.
+
+4. Visit [Developer Docs](https://developer.paypal.com/docs/api/) for more PayPal REST APIs.
+5. To learn more about Java SDK please follow the [wiki pages](https://github.com/paypal/PayPal-Java-SDK/wiki).
 
 * [Future Payments](https://developer.paypal.com/docs/integration/mobile/make-future-payment/) sample is available [here](https://github.com/paypal/rest-api-sdk-java/blob/master/rest-api-sample/src/main/java/com/paypal/api/sample/FuturePaymentSample.java) for executing future payments for a customer who has granted consent on a mobile device.
 

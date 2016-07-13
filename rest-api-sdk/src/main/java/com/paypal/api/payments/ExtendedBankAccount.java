@@ -1,6 +1,13 @@
 package com.paypal.api.payments;
 
 
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class ExtendedBankAccount extends BankAccount {
 
 	/**
@@ -13,22 +20,4 @@ public class ExtendedBankAccount extends BankAccount {
 	 */
 	public ExtendedBankAccount() {
 	}
-
-
-	/**
-	 * Setter for mandateReferenceNumber
-	 */
-	public ExtendedBankAccount setMandateReferenceNumber(String mandateReferenceNumber) {
-		this.mandateReferenceNumber = mandateReferenceNumber;
-		return this;
-	}
-
-	/**
-	 * Getter for mandateReferenceNumber
-	 */
-	public String getMandateReferenceNumber() {
-		return this.mandateReferenceNumber;
-	}
-
-
 }

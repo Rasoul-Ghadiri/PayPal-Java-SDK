@@ -1,16 +1,15 @@
 package com.paypal.api.payments;
 
-import java.util.HashMap;
+import com.paypal.base.rest.*;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.List;
 
-import com.paypal.base.Constants;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.HttpMethod;
-import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
-import com.paypal.base.rest.RESTUtil;
-import com.paypal.base.sdk.info.SDKVersionImpl;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Order  extends PayPalResource {
 
 	/**
@@ -82,24 +81,6 @@ public class Order  extends PayPalResource {
 	 * 
 	 */
 	private List<Links> links;
-
-	/**
-	 * Returns the last request sent to the Service
-	 *
-	 * @return Last request sent to the server
-	 */
-	public static String getLastRequest() {
-		return PayPalResource.getLastRequest();
-	}
-
-	/**
-	 * Returns the last response returned by the Service
-	 *
-	 * @return Last response got from the Service
-	 */
-	public static String getLastResponse() {
-		return PayPalResource.getLastResponse();
-	}
 	
 	/**
 	 * Default Constructor
@@ -113,234 +94,10 @@ public class Order  extends PayPalResource {
 	public Order(Amount amount) {
 		this.amount = amount;
 	}
-
-
-	/**
-	 * Setter for id
-	 */
-	public Order setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for purchaseUnitReferenceId
-	 */
-	public Order setPurchaseUnitReferenceId(String purchaseUnitReferenceId) {
-		this.purchaseUnitReferenceId = purchaseUnitReferenceId;
-		return this;
-	}
-
-	/**
-	 * Getter for purchaseUnitReferenceId
-	 */
-	public String getPurchaseUnitReferenceId() {
-		return this.purchaseUnitReferenceId;
-	}
-
-
-	/**
-	 * Setter for amount
-	 */
-	public Order setAmount(Amount amount) {
-		this.amount = amount;
-		return this;
-	}
-
-	/**
-	 * Getter for amount
-	 */
-	public Amount getAmount() {
-		return this.amount;
-	}
-
-
-	/**
-	 * Setter for paymentMode
-	 */
-	public Order setPaymentMode(String paymentMode) {
-		this.paymentMode = paymentMode;
-		return this;
-	}
-
-	/**
-	 * Getter for paymentMode
-	 */
-	public String getPaymentMode() {
-		return this.paymentMode;
-	}
-
-
-	/**
-	 * Setter for state
-	 */
-	public Order setState(String state) {
-		this.state = state;
-		return this;
-	}
-
-	/**
-	 * Getter for state
-	 */
-	public String getState() {
-		return this.state;
-	}
-
-
-	/**
-	 * Setter for reasonCode
-	 */
-	public Order setReasonCode(String reasonCode) {
-		this.reasonCode = reasonCode;
-		return this;
-	}
-
-	/**
-	 * Getter for reasonCode
-	 */
-	public String getReasonCode() {
-		return this.reasonCode;
-	}
-
-
-	/**
-	 * Setter for pendingReason
-	 */
-	public Order setPendingReason(String pendingReason) {
-		this.pendingReason = pendingReason;
-		return this;
-	}
-
-	/**
-	 * Getter for pendingReason
-	 */
-	public String getPendingReason() {
-		return this.pendingReason;
-	}
-
-
-	/**
-	 * Setter for protectionEligibility
-	 */
-	public Order setProtectionEligibility(String protectionEligibility) {
-		this.protectionEligibility = protectionEligibility;
-		return this;
-	}
-
-	/**
-	 * Getter for protectionEligibility
-	 */
-	public String getProtectionEligibility() {
-		return this.protectionEligibility;
-	}
-
-
-	/**
-	 * Setter for protectionEligibilityType
-	 */
-	public Order setProtectionEligibilityType(String protectionEligibilityType) {
-		this.protectionEligibilityType = protectionEligibilityType;
-		return this;
-	}
-
-	/**
-	 * Getter for protectionEligibilityType
-	 */
-	public String getProtectionEligibilityType() {
-		return this.protectionEligibilityType;
-	}
-
-
-	/**
-	 * Setter for parentPayment
-	 */
-	public Order setParentPayment(String parentPayment) {
-		this.parentPayment = parentPayment;
-		return this;
-	}
-
-	/**
-	 * Getter for parentPayment
-	 */
-	public String getParentPayment() {
-		return this.parentPayment;
-	}
-
-
-	/**
-	 * Setter for fmfDetails
-	 */
-	public Order setFmfDetails(FmfDetails fmfDetails) {
-		this.fmfDetails = fmfDetails;
-		return this;
-	}
-
-	/**
-	 * Getter for fmfDetails
-	 */
-	public FmfDetails getFmfDetails() {
-		return this.fmfDetails;
-	}
-
-
-	/**
-	 * Setter for createTime
-	 */
-	public Order setCreateTime(String createTime) {
-		this.createTime = createTime;
-		return this;
-	}
-
-	/**
-	 * Getter for createTime
-	 */
-	public String getCreateTime() {
-		return this.createTime;
-	}
-
-
-	/**
-	 * Setter for updateTime
-	 */
-	public Order setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-		return this;
-	}
-
-	/**
-	 * Getter for updateTime
-	 */
-	public String getUpdateTime() {
-		return this.updateTime;
-	}
-
-
-	/**
-	 * Setter for links
-	 */
-	public Order setLinks(List<Links> links) {
-		this.links = links;
-		return this;
-	}
-
-	/**
-	 * Getter for links
-	 */
-	public List<Links> getLinks() {
-		return this.links;
-	}
-
-
+	
 	/**
 	 * Obtain the Order resource for the given identifier.
+	 * @deprecated Please use {@link #get(APIContext, String)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param orderId
@@ -363,17 +120,7 @@ public class Order  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static Order get(APIContext apiContext, String orderId) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (orderId == null) {
 			throw new IllegalArgumentException("orderId cannot be null");
 		}
@@ -387,6 +134,7 @@ public class Order  extends PayPalResource {
 
 	/**
 	 * Creates (and processes) a new Capture Transaction added as a related resource.
+	 * @deprecated Please use {@link #capture(APIContext, Capture)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param capture
@@ -409,17 +157,7 @@ public class Order  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Capture capture(APIContext apiContext, Capture capture) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -436,6 +174,7 @@ public class Order  extends PayPalResource {
 
 	/**
 	 * Voids (cancels) an Order.
+	 * @deprecated Please use {@link #doVoid(APIContext)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return Order
@@ -454,17 +193,7 @@ public class Order  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Order doVoid(APIContext apiContext) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -478,6 +207,7 @@ public class Order  extends PayPalResource {
 
 	/**
 	 * Creates an authorization on an order
+	 * @deprecated Please use {@link #authorize(APIContext)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return Authorization
@@ -496,17 +226,7 @@ public class Order  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Authorization authorize(APIContext apiContext) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}

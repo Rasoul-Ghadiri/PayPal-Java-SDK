@@ -1,17 +1,22 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class PaymentDetail  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class PaymentDetail extends PayPalModel {
 
 	/**
-	 * PayPal payment detail indicating whether payment was made in an invoicing flow via PayPal or externally. In the case of the mark-as-paid API, payment type is EXTERNAL and this is what is now supported. The PAYPAL value is provided for backward compatibility.
+	 * The PayPal payment detail. Indicates whether payment was made in an invoicing flow through PayPal or externally. In the case of the mark-as-paid API, the supported payment type is `EXTERNAL`. For backward compatibility, the `PAYPAL` payment type is still supported.
 	 */
 	private String type;
 
 	/**
-	 * PayPal payment transaction id. Mandatory field in case the type value is PAYPAL.
+	 * The PayPal payment transaction ID. Required with the `PAYPAL` payment type.
 	 */
 	private String transactionId;
 
@@ -21,19 +26,24 @@ public class PaymentDetail  extends PayPalModel {
 	private String transactionType;
 
 	/**
-	 * Date when the invoice was paid. Date format: yyyy-MM-dd z. For example, 2014-02-27 PST.
+	 * The date when the invoice was paid. The date format is *yyyy*-*MM*-*dd* *z* as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String date;
 
 	/**
-	 * Payment mode or method. This field is mandatory if the value of the type field is OTHER.
+	 * The payment mode or method. Required with the `EXTERNAL` payment type.
 	 */
 	private String method;
 
 	/**
-	 * Optional note associated with the payment.
+	 * Optional. A note associated with the payment.
 	 */
 	private String note;
+
+	/**
+	 * The amount to record as payment against invoice. If you omit this parameter, the total invoice amount is recorded as payment.
+	 */
+	private Currency amount;
 
 	/**
 	 * Default Constructor
@@ -47,102 +57,4 @@ public class PaymentDetail  extends PayPalModel {
 	public PaymentDetail(String method) {
 		this.method = method;
 	}
-
-
-	/**
-	 * Setter for type
-	 */
-	public PaymentDetail setType(String type) {
-		this.type = type;
-		return this;
-	}
-
-	/**
-	 * Getter for type
-	 */
-	public String getType() {
-		return this.type;
-	}
-
-
-	/**
-	 * Setter for transactionId
-	 */
-	public PaymentDetail setTransactionId(String transactionId) {
-		this.transactionId = transactionId;
-		return this;
-	}
-
-	/**
-	 * Getter for transactionId
-	 */
-	public String getTransactionId() {
-		return this.transactionId;
-	}
-
-
-	/**
-	 * Setter for transactionType
-	 */
-	public PaymentDetail setTransactionType(String transactionType) {
-		this.transactionType = transactionType;
-		return this;
-	}
-
-	/**
-	 * Getter for transactionType
-	 */
-	public String getTransactionType() {
-		return this.transactionType;
-	}
-
-
-	/**
-	 * Setter for date
-	 */
-	public PaymentDetail setDate(String date) {
-		this.date = date;
-		return this;
-	}
-
-	/**
-	 * Getter for date
-	 */
-	public String getDate() {
-		return this.date;
-	}
-
-
-	/**
-	 * Setter for method
-	 */
-	public PaymentDetail setMethod(String method) {
-		this.method = method;
-		return this;
-	}
-
-	/**
-	 * Getter for method
-	 */
-	public String getMethod() {
-		return this.method;
-	}
-
-
-	/**
-	 * Setter for note
-	 */
-	public PaymentDetail setNote(String note) {
-		this.note = note;
-		return this;
-	}
-
-	/**
-	 * Getter for note
-	 */
-	public String getNote() {
-		return this.note;
-	}
-
-
 }

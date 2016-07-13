@@ -1,6 +1,14 @@
 package com.paypal.api.payments;
 
-public class FundingDetail  {
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class FundingDetail extends PayPalModel {
 
 	/**
 	 * Expected clearing time
@@ -27,69 +35,4 @@ public class FundingDetail  {
 	 */
 	public FundingDetail() {
 	}
-
-
-	/**
-	 * Setter for clearingTime
-	 */
-	public FundingDetail setClearingTime(String clearingTime) {
-		this.clearingTime = clearingTime;
-		return this;
-	}
-
-	/**
-	 * Getter for clearingTime
-	 */
-	public String getClearingTime() {
-		return this.clearingTime;
-	}
-
-
-	/**
-	 * Setter for paymentHoldDate
-	 */
-	public FundingDetail setPaymentHoldDate(String paymentHoldDate) {
-		this.paymentHoldDate = paymentHoldDate;
-		return this;
-	}
-
-	/**
-	 * Getter for paymentHoldDate
-	 */
-	public String getPaymentHoldDate() {
-		return this.paymentHoldDate;
-	}
-
-
-	/**
-	 * Setter for paymentDebitDate
-	 */
-	public FundingDetail setPaymentDebitDate(String paymentDebitDate) {
-		this.paymentDebitDate = paymentDebitDate;
-		return this;
-	}
-
-	/**
-	 * Getter for paymentDebitDate
-	 */
-	public String getPaymentDebitDate() {
-		return this.paymentDebitDate;
-	}
-
-
-	/**
-	 * Setter for processingType
-	 */
-	public FundingDetail setProcessingType(String processingType) {
-		this.processingType = processingType;
-		return this;
-	}
-
-	/**
-	 * Getter for processingType
-	 */
-	public String getProcessingType() {
-		return this.processingType;
-	}
-
 }

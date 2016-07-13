@@ -1,9 +1,14 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class Cost  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class Cost extends PayPalModel {
 
 	/**
 	 * Cost in percent. Range of 0 to 100.
@@ -11,7 +16,7 @@ public class Cost  extends PayPalModel {
 	private float percent;
 
 	/**
-	 * Cost in amount. Range of 0 to 999999.99.
+	 * The cost, as an amount. Valid range is from 0 to 1,000,000.
 	 */
 	private Currency amount;
 
@@ -20,38 +25,4 @@ public class Cost  extends PayPalModel {
 	 */
 	public Cost() {
 	}
-
-
-	/**
-	 * Setter for percent
-	 */
-	public Cost setPercent(float percent) {
-		this.percent = percent;
-		return this;
-	}
-
-	/**
-	 * Getter for percent
-	 */
-	public float getPercent() {
-		return this.percent;
-	}
-
-
-	/**
-	 * Setter for amount
-	 */
-	public Cost setAmount(Currency amount) {
-		this.amount = amount;
-		return this;
-	}
-
-	/**
-	 * Getter for amount
-	 */
-	public Currency getAmount() {
-		return this.amount;
-	}
-
-
 }

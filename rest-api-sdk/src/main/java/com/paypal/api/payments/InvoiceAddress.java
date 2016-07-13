@@ -1,15 +1,23 @@
 package com.paypal.api.payments;
 
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class InvoiceAddress extends BaseAddress {
-	
+
+	/**
+	 * Phone number in E.123 format.
+	 */
 	private Phone phone;
-	
-	public InvoiceAddress setPhone(Phone phone) {
-		this.phone = phone;
-		return this;
+
+	/**
+	 * Default Constructor
+	 */
+	public InvoiceAddress() {
 	}
-	
-	public Phone getPhone() {
-		return this.phone;
-	}
+
 }

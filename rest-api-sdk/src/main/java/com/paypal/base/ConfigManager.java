@@ -1,20 +1,15 @@
 package com.paypal.base;
 
+import com.paypal.base.util.ResourceLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.AccessControlException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.paypal.base.util.ResourceLoader;
+import java.util.*;
 
 /**
  * <code>ConfigManager</code> loads configuration from 'sdk_config.properties'
@@ -164,7 +159,7 @@ public final class ConfigManager {
 	/**
 	 * Loads the internal properties with the passed {@link InputStream}
 	 * 
-	 * @deprecated 
+	 * @deprecated This code was used for older integrations. Not valid anymore. To be removed in the next major release.
 	 * @param is
 	 *            InputStream
 	 * 
@@ -182,7 +177,7 @@ public final class ConfigManager {
 	 * Initializes the internal properties with the passed {@link Properties}
 	 * instance
 	 * 
-	 * @deprecated 
+	 * @deprecated This code was used for older integrations. Not valid anymore. To be removed in the next major release.
 	 * @param properties
 	 *            Properties instance
 	 * 
@@ -223,7 +218,7 @@ public final class ConfigManager {
 	/**
 	 * Returns a value for the corresponding key
 	 * 
-	 * @deprecated
+	 * @deprecated This code was used for older integrations. Not valid anymore. To be removed in the next major release.
 	 * 
 	 * @param key
 	 *            String key
@@ -236,7 +231,7 @@ public final class ConfigManager {
 	/**
 	 * Mimics the call to {@link Properties}.getProperty(key, defaultValue)
 	 * 
-	 * @deprecated
+	 * @deprecated This code was used for older integrations. Not valid anymore. To be removed in the next major release.
 	 * 
 	 * @param key
 	 *            String key to search in properties file
@@ -252,13 +247,13 @@ public final class ConfigManager {
 	 * Gets all the values in the particular category in configuration (eg:
 	 * acct)
 	 * 
-	 * @deprecated
+	 * @deprecated This code was used for older integrations. Not valid anymore. To be removed in the next major release.
 	 * 
 	 * @param category
 	 * @return Map
 	 */
 	public Map<String, String> getValuesByCategory(String category) {
-		String key = Constants.EMPTY_STRING;
+		String key;
 		HashMap<String, String> map = new HashMap<String, String>();
 		for (Object obj : properties.keySet()) {
 			key = (String) obj;
@@ -272,13 +267,13 @@ public final class ConfigManager {
 	/**
 	 * Returns the key prefixes for all configured accounts
 	 * 
-	 * @deprecated
+	 * @deprecated This code is not used anymore. This was used for older sdk_config.properties parsing.
 	 * 
 	 * @return {@link Set} of Accounts
 	 */
 
 	public Set<String> getNumOfAcct() {
-		String key = Constants.EMPTY_STRING;
+		String key;
 		Set<String> set = new HashSet<String>();
 		for (Object obj : properties.keySet()) {
 			key = (String) obj;
@@ -293,7 +288,7 @@ public final class ConfigManager {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated This code was used for older integrations. Not valid anymore. To be removed in the next major release.
 	 * @return boolean
 	 */
 	public boolean isPropertyLoaded() {

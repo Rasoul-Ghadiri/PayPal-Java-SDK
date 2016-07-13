@@ -1,10 +1,16 @@
 package com.paypal.api.payments;
 
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.paypal.base.rest.PayPalModel;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class AgreementTransactions  extends PayPalModel {
 
 	/**
@@ -18,22 +24,4 @@ public class AgreementTransactions  extends PayPalModel {
 	public AgreementTransactions() {
 		agreementTransactionList = new ArrayList<AgreementTransaction>();
 	}
-
-
-	/**
-	 * Setter for agreementTransactionList
-	 */
-	public AgreementTransactions setAgreementTransactionList(List<AgreementTransaction> agreementTransactionList) {
-		this.agreementTransactionList = agreementTransactionList;
-		return this;
-	}
-
-	/**
-	 * Getter for agreementTransactionList
-	 */
-	public List<AgreementTransaction> getAgreementTransactionList() {
-		return this.agreementTransactionList;
-	}
-
-
 }

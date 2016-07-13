@@ -1,9 +1,15 @@
 package com.paypal.api.payments;
 
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.List;
 
-import com.paypal.base.rest.PayPalModel;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class PaymentDefinition  extends PayPalModel {
 
 	/**
@@ -63,133 +69,4 @@ public class PaymentDefinition  extends PayPalModel {
 		this.cycles = cycles;
 		this.amount = amount;
 	}
-
-
-	/**
-	 * Setter for id
-	 */
-	public PaymentDefinition setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for name
-	 */
-	public PaymentDefinition setName(String name) {
-		this.name = name;
-		return this;
-	}
-
-	/**
-	 * Getter for name
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-
-	/**
-	 * Setter for type
-	 */
-	public PaymentDefinition setType(String type) {
-		this.type = type;
-		return this;
-	}
-
-	/**
-	 * Getter for type
-	 */
-	public String getType() {
-		return this.type;
-	}
-
-
-	/**
-	 * Setter for frequencyInterval
-	 */
-	public PaymentDefinition setFrequencyInterval(String frequencyInterval) {
-		this.frequencyInterval = frequencyInterval;
-		return this;
-	}
-
-	/**
-	 * Getter for frequencyInterval
-	 */
-	public String getFrequencyInterval() {
-		return this.frequencyInterval;
-	}
-
-
-	/**
-	 * Setter for frequency
-	 */
-	public PaymentDefinition setFrequency(String frequency) {
-		this.frequency = frequency;
-		return this;
-	}
-
-	/**
-	 * Getter for frequency
-	 */
-	public String getFrequency() {
-		return this.frequency;
-	}
-
-
-	/**
-	 * Setter for cycles
-	 */
-	public PaymentDefinition setCycles(String cycles) {
-		this.cycles = cycles;
-		return this;
-	}
-
-	/**
-	 * Getter for cycles
-	 */
-	public String getCycles() {
-		return this.cycles;
-	}
-
-
-	/**
-	 * Setter for amount
-	 */
-	public PaymentDefinition setAmount(Currency amount) {
-		this.amount = amount;
-		return this;
-	}
-
-	/**
-	 * Getter for amount
-	 */
-	public Currency getAmount() {
-		return this.amount;
-	}
-
-
-	/**
-	 * Setter for chargeModels
-	 */
-	public PaymentDefinition setChargeModels(List<ChargeModels> chargeModels) {
-		this.chargeModels = chargeModels;
-		return this;
-	}
-
-	/**
-	 * Getter for chargeModels
-	 */
-	public List<ChargeModels> getChargeModels() {
-		return this.chargeModels;
-	}
-
 }

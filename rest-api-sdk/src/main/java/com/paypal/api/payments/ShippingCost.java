@@ -1,17 +1,22 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class ShippingCost  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class ShippingCost extends PayPalModel {
 
 	/**
-	 * Shipping cost in amount. Range of 0 to 999999.99.
+	 * The shipping cost, as an amount. Valid range is from 0 to 999999.99.
 	 */
 	private Currency amount;
 
 	/**
-	 * Tax percentage on shipping amount.
+	 * The tax percentage on the shipping amount.
 	 */
 	private Tax tax;
 
@@ -20,38 +25,4 @@ public class ShippingCost  extends PayPalModel {
 	 */
 	public ShippingCost() {
 	}
-
-
-	/**
-	 * Setter for amount
-	 */
-	public ShippingCost setAmount(Currency amount) {
-		this.amount = amount;
-		return this;
-	}
-
-	/**
-	 * Getter for amount
-	 */
-	public Currency getAmount() {
-		return this.amount;
-	}
-
-
-	/**
-	 * Setter for tax
-	 */
-	public ShippingCost setTax(Tax tax) {
-		this.tax = tax;
-		return this;
-	}
-
-	/**
-	 * Getter for tax
-	 */
-	public Tax getTax() {
-		return this.tax;
-	}
-
-
 }

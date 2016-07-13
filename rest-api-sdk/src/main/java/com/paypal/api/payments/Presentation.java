@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Presentation  extends PayPalModel {
 
 	/**
@@ -25,53 +30,4 @@ public class Presentation  extends PayPalModel {
 	 */
 	public Presentation() {
 	}
-
-
-	/**
-	 * Setter for brandName
-	 */
-	public Presentation setBrandName(String brandName) {
-		this.brandName = brandName;
-		return this;
-	}
-
-	/**
-	 * Getter for brandName
-	 */
-	public String getBrandName() {
-		return this.brandName;
-	}
-
-
-	/**
-	 * Setter for logoImage
-	 */
-	public Presentation setLogoImage(String logoImage) {
-		this.logoImage = logoImage;
-		return this;
-	}
-
-	/**
-	 * Getter for logoImage
-	 */
-	public String getLogoImage() {
-		return this.logoImage;
-	}
-
-
-	/**
-	 * Setter for localeCode
-	 */
-	public Presentation setLocaleCode(String localeCode) {
-		this.localeCode = localeCode;
-		return this;
-	}
-
-	/**
-	 * Getter for localeCode
-	 */
-	public String getLocaleCode() {
-		return this.localeCode;
-	}
-	
 }

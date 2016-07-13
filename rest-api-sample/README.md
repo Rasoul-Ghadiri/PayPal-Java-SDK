@@ -17,53 +17,52 @@ Test Account
    * AccessToken are generated once using GenerateAccessToken.java and used for the samples.
 
 ## OpenID Connect Integration
-   * Redirect your buyer to `Authorization.getRedirectUrl(redirectURI, scope, configurationMap);` to obtain authorization.
-   * Capture the authorization code that is available as a query parameter (`code`) in the redirect url
-   * Exchange the authorization code for a access token, refresh token, id token combo
 
+#### Obtain User's Consent
+   * Obtain the redirect URL as shown below:
 ```java
-    Map<String, String> configurationMap = new HashMap<String, String>();
-    configurationMap.put(Constants.CLIENT_ID, "...");
-    configurationMap.put(Constants.CLIENT_SECRET, "...");
-    configurationMap.put(Constants.ENDPOINT, "https://api.paypal.com/");
-    APIContext apiContext = new APIContext();
-    apiContext.setConfigurationMap(configurationMap);
-    ...
-    CreateFromAuthorizationCodeParameters param = new CreateFromAuthorizationCodeParameters();
-    param.setCode(code);
-    Tokeninfo info = Tokeninfo.createFromAuthorizationCode(apiContext, param);
-    String accessToken = info.getAccessToken();
+// Initialize apiContext with proper credentials and environment.
+APIContext context = new APIContext(clientID, clientSecret, "sandbox");
+
+List<String> scopes = new ArrayList<String>() {{
+    /**
+    * 'openid'
+    * 'profile'
+    * 'address'
+    * 'email'
+    * 'phone'
+    * 'https://uri.paypal.com/services/paypalattributes'
+    * 'https://uri.paypal.com/services/expresscheckout'
+    * 'https://uri.paypal.com/services/invoicing'
+    */
+    add("openid");
+    add("profile");
+    add("email");
+}};
+String redirectUrl = Session.getRedirectURL("UserConsent", scopes, context);
+System.out.println(redirectUrl);
 ```
-   * The access token is valid for a predefined duration and can be used for seamless XO or for retrieving user information
+   * Capture the authorization code that is available as a query parameter (`code`) in the redirect url.
+   * Exchange the authorization code for an access token or refresh token.
 
 ```java
-    Map<String, String> configurationMap = new HashMap<String, String>();
-    configurationMap.put(Constants.CLIENT_ID, "...");
-    configurationMap.put(Constants.CLIENT_SECRET, "...");
-    configurationMap.put(Constants.ENDPOINT, "https://api.paypal.com/");
-    APIContext apiContext = new APIContext();
-    apiContext.setConfigurationMap(configurationMap);
-    ...
-    Tokeninfo info = new Tokeninfo();
-    info.setRefreshToken("refreshToken");
-    UserinfoParameters param = new UserinfoParameters();
-    param.setAccessToken(info.getAccessToken());
-    Userinfo userInfo = Userinfo.userinfo(apiContext, param);
+// Initialize apiContext with proper credentials and environment.
+APIContext context = new APIContext(clientID, clientSecret, "sandbox");
+
+// Replace the code with the code value returned from the redirect on previous step.
+Tokeninfo info = Tokeninfo.createFromAuthorizationCode(context, code);
+String accessToken = info.getAccessToken();
+String refreshToken = info.getRefreshToken();
 ```
-   * If the access token has expired, you can obtain a new access token using the refresh token from the 3'rd step.
+   * The refresh token received can be stored permanently in your database, and reused later for fetching user information, or for third party invoicing (with proper scopes).
+
+#### Obtain User Info
+   * The refresh token can be used to retrieve user information as shown below:
 
 ```java
-    Map<String, String> configurationMap = new HashMap<String, String>();
-    configurationMap.put(Constants.CLIENT_ID, "...");
-    configurationMap.put(Constants.CLIENT_SECRET, "...");
-    configurationMap.put(Constants.ENDPOINT, "https://api.paypal.com/");
-    APIContext apiContext = new APIContext();
-    apiContext.setConfigurationMap(configurationMap);
-    ...
-    CreateFromRefreshTokenParameters param = new CreateFromRefreshTokenParameters();
-    param.setScope("openid"); // Optional
-    Tokeninfo info = new Tokeninfo // Create Token info object; setting the refresh token
-    info.setRefreshToken("refreshToken");
+// Initialize apiContext with proper credentials and environment. Also, set the refreshToken retrieved from previous step.
+APIContext userAPIContext = new APIContext(clientID, clientSecret, "sandbox").setRefreshToken(info.getRefreshToken());
 
-    info.createFromRefreshToken(apiContext, param);
+Userinfo userinfo = Userinfo.getUserinfo(userAPIContext);
+System.out.println(userinfo);
 ```

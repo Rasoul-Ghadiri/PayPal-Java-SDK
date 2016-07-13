@@ -1,414 +1,119 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class Search  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class Search extends PayPalModel {
 
 	/**
-	 * Initial letters of the email address.
+	 * The initial letters of the email address.
 	 */
 	private String email;
 
 	/**
-	 * Initial letters of the recipient's first name.
+	 * The initial letters of the recipient's first name.
 	 */
 	private String recipientFirstName;
 
 	/**
-	 * Initial letters of the recipient's last name.
+	 * The initial letters of the recipient's last name.
 	 */
 	private String recipientLastName;
 
 	/**
-	 * Initial letters of the recipient's business name.
+	 * The initial letters of the recipient's business name.
 	 */
 	private String recipientBusinessName;
 
 	/**
-	 * The invoice number that appears on the invoice.
+	 * The invoice number.
 	 */
 	private String number;
 
 	/**
-	 * Status of the invoice.
+	 * The invoice status.
 	 */
 	private String status;
 
 	/**
-	 * Lower limit of total amount.
+	 * The lower limit of the total amount.
 	 */
 	private Currency lowerTotalAmount;
 
 	/**
-	 * Upper limit of total amount.
+	 * The upper limit of total amount.
 	 */
 	private Currency upperTotalAmount;
 
 	/**
-	 * Start invoice date.
+	 * The start date for the invoice. Date format is *yyyy*-*MM*-*dd* *z*, as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String startInvoiceDate;
 
 	/**
-	 * End invoice date.
+	 * The end date for the invoice. Date format is *yyyy*-*MM*-*dd* *z*, as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String endInvoiceDate;
 
 	/**
-	 * Start invoice due date.
+	 * The start due date for the invoice. Date format is *yyyy*-*MM*-*dd* *z*, as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String startDueDate;
 
 	/**
-	 * End invoice due date.
+	 * The end due date for the invoice. Date format is *yyyy*-*MM*-*dd* *z*, as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String endDueDate;
 
 	/**
-	 * Start invoice payment date.
+	 * The start payment date for the invoice. Date format is *yyyy*-*MM*-*dd* *z*, as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String startPaymentDate;
 
 	/**
-	 * End invoice payment date.
+	 * The end payment date for the invoice. Date format is *yyyy*-*MM*-*dd* *z*, as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String endPaymentDate;
 
 	/**
-	 * Start invoice creation date.
+	 * The start creation date for the invoice. Date format is *yyyy*-*MM*-*dd* *z*, as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String startCreationDate;
 
 	/**
-	 * End invoice creation date.
+	 * The end creation date for the invoice. Date format is *yyyy*-*MM*-*dd* *z*, as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String endCreationDate;
 
 	/**
-	 * Offset of the search results.
+	 * The offset for the search results.
 	 */
 	private float page;
 
 	/**
-	 * Page size of the search results.
+	 * The page size for the search results.
 	 */
 	private float pageSize;
 
 	/**
-	 * A flag indicating whether total count is required in the response.
+	 * Indicates whether the total count appears in the response. Default is `false`.
 	 */
 	private Boolean totalCountRequired;
+
+	/**
+	 * A flag indicating whether search is on invoices archived by merchant. true - returns archived / false returns unarchived / null returns all.
+	 */
+	private Boolean archived;
 
 	/**
 	 * Default Constructor
 	 */
 	public Search() {
 	}
-
-
-	/**
-	 * Setter for email
-	 */
-	public Search setEmail(String email) {
-		this.email = email;
-		return this;
-	}
-
-	/**
-	 * Getter for email
-	 */
-	public String getEmail() {
-		return this.email;
-	}
-
-
-	/**
-	 * Setter for recipientFirstName
-	 */
-	public Search setRecipientFirstName(String recipientFirstName) {
-		this.recipientFirstName = recipientFirstName;
-		return this;
-	}
-
-	/**
-	 * Getter for recipientFirstName
-	 */
-	public String getRecipientFirstName() {
-		return this.recipientFirstName;
-	}
-
-
-	/**
-	 * Setter for recipientLastName
-	 */
-	public Search setRecipientLastName(String recipientLastName) {
-		this.recipientLastName = recipientLastName;
-		return this;
-	}
-
-	/**
-	 * Getter for recipientLastName
-	 */
-	public String getRecipientLastName() {
-		return this.recipientLastName;
-	}
-
-
-	/**
-	 * Setter for recipientBusinessName
-	 */
-	public Search setRecipientBusinessName(String recipientBusinessName) {
-		this.recipientBusinessName = recipientBusinessName;
-		return this;
-	}
-
-	/**
-	 * Getter for recipientBusinessName
-	 */
-	public String getRecipientBusinessName() {
-		return this.recipientBusinessName;
-	}
-
-
-	/**
-	 * Setter for number
-	 */
-	public Search setNumber(String number) {
-		this.number = number;
-		return this;
-	}
-
-	/**
-	 * Getter for number
-	 */
-	public String getNumber() {
-		return this.number;
-	}
-
-
-	/**
-	 * Setter for status
-	 */
-	public Search setStatus(String status) {
-		this.status = status;
-		return this;
-	}
-
-	/**
-	 * Getter for status
-	 */
-	public String getStatus() {
-		return this.status;
-	}
-
-
-	/**
-	 * Setter for lowerTotalAmount
-	 */
-	public Search setLowerTotalAmount(Currency lowerTotalAmount) {
-		this.lowerTotalAmount = lowerTotalAmount;
-		return this;
-	}
-
-	/**
-	 * Getter for lowerTotalAmount
-	 */
-	public Currency getLowerTotalAmount() {
-		return this.lowerTotalAmount;
-	}
-
-
-	/**
-	 * Setter for upperTotalAmount
-	 */
-	public Search setUpperTotalAmount(Currency upperTotalAmount) {
-		this.upperTotalAmount = upperTotalAmount;
-		return this;
-	}
-
-	/**
-	 * Getter for upperTotalAmount
-	 */
-	public Currency getUpperTotalAmount() {
-		return this.upperTotalAmount;
-	}
-
-
-	/**
-	 * Setter for startInvoiceDate
-	 */
-	public Search setStartInvoiceDate(String startInvoiceDate) {
-		this.startInvoiceDate = startInvoiceDate;
-		return this;
-	}
-
-	/**
-	 * Getter for startInvoiceDate
-	 */
-	public String getStartInvoiceDate() {
-		return this.startInvoiceDate;
-	}
-
-
-	/**
-	 * Setter for endInvoiceDate
-	 */
-	public Search setEndInvoiceDate(String endInvoiceDate) {
-		this.endInvoiceDate = endInvoiceDate;
-		return this;
-	}
-
-	/**
-	 * Getter for endInvoiceDate
-	 */
-	public String getEndInvoiceDate() {
-		return this.endInvoiceDate;
-	}
-
-
-	/**
-	 * Setter for startDueDate
-	 */
-	public Search setStartDueDate(String startDueDate) {
-		this.startDueDate = startDueDate;
-		return this;
-	}
-
-	/**
-	 * Getter for startDueDate
-	 */
-	public String getStartDueDate() {
-		return this.startDueDate;
-	}
-
-
-	/**
-	 * Setter for endDueDate
-	 */
-	public Search setEndDueDate(String endDueDate) {
-		this.endDueDate = endDueDate;
-		return this;
-	}
-
-	/**
-	 * Getter for endDueDate
-	 */
-	public String getEndDueDate() {
-		return this.endDueDate;
-	}
-
-
-	/**
-	 * Setter for startPaymentDate
-	 */
-	public Search setStartPaymentDate(String startPaymentDate) {
-		this.startPaymentDate = startPaymentDate;
-		return this;
-	}
-
-	/**
-	 * Getter for startPaymentDate
-	 */
-	public String getStartPaymentDate() {
-		return this.startPaymentDate;
-	}
-
-
-	/**
-	 * Setter for endPaymentDate
-	 */
-	public Search setEndPaymentDate(String endPaymentDate) {
-		this.endPaymentDate = endPaymentDate;
-		return this;
-	}
-
-	/**
-	 * Getter for endPaymentDate
-	 */
-	public String getEndPaymentDate() {
-		return this.endPaymentDate;
-	}
-
-
-	/**
-	 * Setter for startCreationDate
-	 */
-	public Search setStartCreationDate(String startCreationDate) {
-		this.startCreationDate = startCreationDate;
-		return this;
-	}
-
-	/**
-	 * Getter for startCreationDate
-	 */
-	public String getStartCreationDate() {
-		return this.startCreationDate;
-	}
-
-
-	/**
-	 * Setter for endCreationDate
-	 */
-	public Search setEndCreationDate(String endCreationDate) {
-		this.endCreationDate = endCreationDate;
-		return this;
-	}
-
-	/**
-	 * Getter for endCreationDate
-	 */
-	public String getEndCreationDate() {
-		return this.endCreationDate;
-	}
-
-
-	/**
-	 * Setter for page
-	 */
-	public Search setPage(float page) {
-		this.page = page;
-		return this;
-	}
-
-	/**
-	 * Getter for page
-	 */
-	public float getPage() {
-		return this.page;
-	}
-
-
-	/**
-	 * Setter for pageSize
-	 */
-	public Search setPageSize(float pageSize) {
-		this.pageSize = pageSize;
-		return this;
-	}
-
-	/**
-	 * Getter for pageSize
-	 */
-	public float getPageSize() {
-		return this.pageSize;
-	}
-
-
-	/**
-	 * Setter for totalCountRequired
-	 */
-	public Search setTotalCountRequired(Boolean totalCountRequired) {
-		this.totalCountRequired = totalCountRequired;
-		return this;
-	}
-
-	/**
-	 * Getter for totalCountRequired
-	 */
-	public Boolean getTotalCountRequired() {
-		return this.totalCountRequired;
-	}
-
 
 }

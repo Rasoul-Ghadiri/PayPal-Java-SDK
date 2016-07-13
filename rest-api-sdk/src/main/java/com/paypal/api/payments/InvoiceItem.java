@@ -1,12 +1,17 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class InvoiceItem  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class InvoiceItem extends PayPalModel {
 
 	/**
-	 * Name of the item. 60 characters max.
+	 * Name of the item. 200 characters max.
 	 */
 	private String name;
 
@@ -16,12 +21,12 @@ public class InvoiceItem  extends PayPalModel {
 	private String description;
 
 	/**
-	 * Quantity of the item. Range of 0 to 9999.999.
+	 * Quantity of the item. Range of -10000 to 10000.
 	 */
 	private float quantity;
 
 	/**
-	 * Unit price of the item. Range of -999999.99 to 999999.99.
+	 * Unit price of the item. Range of -1,000,000 to 1,000,000.
 	 */
 	private Currency unitPrice;
 
@@ -31,14 +36,24 @@ public class InvoiceItem  extends PayPalModel {
 	private Tax tax;
 
 	/**
-	 * Date on which the item or service was provided. Date format: yyyy-MM-dd z. For example, 2014-02-27 PST.
+	 * The date when the item or service was provided. The date format is *yyyy*-*MM*-*dd* *z* as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String date;
 
 	/**
-	 * Item discount in percent or amount.
+	 * The item discount, as a percent or an amount value.
 	 */
 	private Cost discount;
+
+	/**
+	 * The image URL. Maximum length is 4000 characters.
+	 */
+	private String imageUrl;
+
+	/**
+	 * The unit of measure of the item being invoiced.
+	 */
+	private String unitOfMeasure;
 
 	/**
 	 * Default Constructor
@@ -54,118 +69,4 @@ public class InvoiceItem  extends PayPalModel {
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
 	}
-
-
-	/**
-	 * Setter for name
-	 */
-	public InvoiceItem setName(String name) {
-		this.name = name;
-		return this;
-	}
-
-	/**
-	 * Getter for name
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-
-	/**
-	 * Setter for description
-	 */
-	public InvoiceItem setDescription(String description) {
-		this.description = description;
-		return this;
-	}
-
-	/**
-	 * Getter for description
-	 */
-	public String getDescription() {
-		return this.description;
-	}
-
-
-	/**
-	 * Setter for quantity
-	 */
-	public InvoiceItem setQuantity(float quantity) {
-		this.quantity = quantity;
-		return this;
-	}
-
-	/**
-	 * Getter for quantity
-	 */
-	public float getQuantity() {
-		return this.quantity;
-	}
-
-
-	/**
-	 * Setter for unitPrice
-	 */
-	public InvoiceItem setUnitPrice(Currency unitPrice) {
-		this.unitPrice = unitPrice;
-		return this;
-	}
-
-	/**
-	 * Getter for unitPrice
-	 */
-	public Currency getUnitPrice() {
-		return this.unitPrice;
-	}
-
-
-	/**
-	 * Setter for tax
-	 */
-	public InvoiceItem setTax(Tax tax) {
-		this.tax = tax;
-		return this;
-	}
-
-	/**
-	 * Getter for tax
-	 */
-	public Tax getTax() {
-		return this.tax;
-	}
-
-
-	/**
-	 * Setter for date
-	 */
-	public InvoiceItem setDate(String date) {
-		this.date = date;
-		return this;
-	}
-
-	/**
-	 * Getter for date
-	 */
-	public String getDate() {
-		return this.date;
-	}
-
-
-	/**
-	 * Setter for discount
-	 */
-	public InvoiceItem setDiscount(Cost discount) {
-		this.discount = discount;
-		return this;
-	}
-
-	/**
-	 * Getter for discount
-	 */
-	public Cost getDiscount() {
-		return this.discount;
-	}
-
-
 }

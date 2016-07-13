@@ -1,7 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Card3dSecureInfo extends PayPalModel {
 
 	/**
@@ -34,85 +40,4 @@ public class Card3dSecureInfo extends PayPalModel {
 	 */
 	public Card3dSecureInfo() {
 	}
-
-
-	/**
-	 * Setter for authStatus
-	 */
-	public Card3dSecureInfo setAuthStatus(String authStatus) {
-		this.authStatus = authStatus;
-		return this;
-	}
-
-	/**
-	 * Getter for authStatus
-	 */
-	public String getAuthStatus() {
-		return this.authStatus;
-	}
-
-
-	/**
-	 * Setter for eci
-	 */
-	public Card3dSecureInfo setEci(String eci) {
-		this.eci = eci;
-		return this;
-	}
-
-	/**
-	 * Getter for eci
-	 */
-	public String getEci() {
-		return this.eci;
-	}
-
-
-	/**
-	 * Setter for cavv
-	 */
-	public Card3dSecureInfo setCavv(String cavv) {
-		this.cavv = cavv;
-		return this;
-	}
-
-	/**
-	 * Getter for cavv
-	 */
-	public String getCavv() {
-		return this.cavv;
-	}
-
-
-	/**
-	 * Setter for xid
-	 */
-	public Card3dSecureInfo setXid(String xid) {
-		this.xid = xid;
-		return this;
-	}
-
-	/**
-	 * Getter for xid
-	 */
-	public String getXid() {
-		return this.xid;
-	}
-
-
-	/**
-	 * Setter for mpiVendor
-	 */
-	public Card3dSecureInfo setMpiVendor(String mpiVendor) {
-		this.mpiVendor = mpiVendor;
-		return this;
-	}
-
-	/**
-	 * Getter for mpiVendor
-	 */
-	public String getMpiVendor() {
-		return this.mpiVendor;
-	}
-
 }

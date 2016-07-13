@@ -1,204 +1,68 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class Metadata  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class Metadata extends PayPalModel {
 
 	/**
-	 * Date when the resource was created.
+	 * The date and time when the resource was created.
 	 */
 	private String createdDate;
 
 	/**
-	 * Email address of the account that created the resource.
+	 * The email address of the account that created the resource.
 	 */
 	private String createdBy;
 
 	/**
-	 * Date when the resource was cancelled.
+	 * The date and time when the resource was cancelled.
 	 */
 	private String cancelledDate;
 
 	/**
-	 * Actor who cancelled the resource.
+	 * The actor who cancelled the resource.
 	 */
 	private String cancelledBy;
 
 	/**
-	 * Date when the resource was last edited.
+	 * The date and time when the resource was last edited.
 	 */
 	private String lastUpdatedDate;
 
 	/**
-	 * Email address of the account that last edited the resource.
+	 * The email address of the account that last edited the resource.
 	 */
 	private String lastUpdatedBy;
 
 	/**
-	 * Date when the resource was first sent.
+	 * The date and time when the resource was first sent.
 	 */
 	private String firstSentDate;
 
 	/**
-	 * Date when the resource was last sent.
+	 * The date and time when the resource was last sent.
 	 */
 	private String lastSentDate;
 
 	/**
-	 * Email address of the account that last sent the resource.
+	 * The email address of the account that last sent the resource.
 	 */
 	private String lastSentBy;
+
+	/**
+	 * URL representing the payer's view of the invoice.
+	 */
+	private String payerViewUrl;
 
 	/**
 	 * Default Constructor
 	 */
 	public Metadata() {
 	}
-
-
-	/**
-	 * Setter for createdDate
-	 */
-	public Metadata setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-		return this;
-	}
-
-	/**
-	 * Getter for createdDate
-	 */
-	public String getCreatedDate() {
-		return this.createdDate;
-	}
-
-
-	/**
-	 * Setter for createdBy
-	 */
-	public Metadata setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-		return this;
-	}
-
-	/**
-	 * Getter for createdBy
-	 */
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-
-	/**
-	 * Setter for cancelledDate
-	 */
-	public Metadata setCancelledDate(String cancelledDate) {
-		this.cancelledDate = cancelledDate;
-		return this;
-	}
-
-	/**
-	 * Getter for cancelledDate
-	 */
-	public String getCancelledDate() {
-		return this.cancelledDate;
-	}
-
-
-	/**
-	 * Setter for cancelledBy
-	 */
-	public Metadata setCancelledBy(String cancelledBy) {
-		this.cancelledBy = cancelledBy;
-		return this;
-	}
-
-	/**
-	 * Getter for cancelledBy
-	 */
-	public String getCancelledBy() {
-		return this.cancelledBy;
-	}
-
-
-	/**
-	 * Setter for lastUpdatedDate
-	 */
-	public Metadata setLastUpdatedDate(String lastUpdatedDate) {
-		this.lastUpdatedDate = lastUpdatedDate;
-		return this;
-	}
-
-	/**
-	 * Getter for lastUpdatedDate
-	 */
-	public String getLastUpdatedDate() {
-		return this.lastUpdatedDate;
-	}
-
-
-	/**
-	 * Setter for lastUpdatedBy
-	 */
-	public Metadata setLastUpdatedBy(String lastUpdatedBy) {
-		this.lastUpdatedBy = lastUpdatedBy;
-		return this;
-	}
-
-	/**
-	 * Getter for lastUpdatedBy
-	 */
-	public String getLastUpdatedBy() {
-		return this.lastUpdatedBy;
-	}
-
-
-	/**
-	 * Setter for firstSentDate
-	 */
-	public Metadata setFirstSentDate(String firstSentDate) {
-		this.firstSentDate = firstSentDate;
-		return this;
-	}
-
-	/**
-	 * Getter for firstSentDate
-	 */
-	public String getFirstSentDate() {
-		return this.firstSentDate;
-	}
-
-
-	/**
-	 * Setter for lastSentDate
-	 */
-	public Metadata setLastSentDate(String lastSentDate) {
-		this.lastSentDate = lastSentDate;
-		return this;
-	}
-
-	/**
-	 * Getter for lastSentDate
-	 */
-	public String getLastSentDate() {
-		return this.lastSentDate;
-	}
-
-
-	/**
-	 * Setter for lastSentBy
-	 */
-	public Metadata setLastSentBy(String lastSentBy) {
-		this.lastSentBy = lastSentBy;
-		return this;
-	}
-
-	/**
-	 * Getter for lastSentBy
-	 */
-	public String getLastSentBy() {
-		return this.lastSentBy;
-	}
-
-
 }

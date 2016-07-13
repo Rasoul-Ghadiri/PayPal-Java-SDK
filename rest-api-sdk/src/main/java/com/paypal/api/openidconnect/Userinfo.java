@@ -1,13 +1,12 @@
 package com.paypal.api.openidconnect;
 
-import java.util.HashMap;
-
 import com.paypal.base.Constants;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.HttpMethod;
 import com.paypal.base.rest.PayPalRESTException;
 import com.paypal.base.rest.PayPalResource;
-import com.paypal.base.rest.RESTUtil;
+
+import java.util.HashMap;
 
 /**
  * Class Userinfo
@@ -386,6 +385,7 @@ public class Userinfo extends PayPalResource{
 	
 	/**
 	 * Returns user details
+	 * @deprecated Please use {@link #getUserinfo(APIContext)} instead.
 	 * 
 	 * @param accessToken
 	 *            access token
@@ -409,13 +409,13 @@ public class Userinfo extends PayPalResource{
 	public static Userinfo getUserinfo(APIContext apiContext) throws PayPalRESTException {
 		String resourcePath = "v1/identity/openidconnect/userinfo?schema=openid";
 		String payLoad = "";
-		String accessToken = apiContext.getAccessToken();
+		String accessToken = apiContext.fetchAccessToken();
 		HashMap<String, String> httpHeaders = new HashMap<String, String>();
 		if (!accessToken.startsWith("Bearer ")) {
 			accessToken = "Bearer " + accessToken;
 		}
 		httpHeaders.put(Constants.AUTHORIZATION_HEADER, accessToken);
-		apiContext.setHTTPHeaders(httpHeaders);
+		apiContext.addHTTPHeaders(httpHeaders);
 		return configureAndExecute(apiContext, HttpMethod.GET,
 				resourcePath, payLoad, Userinfo.class);
 	}

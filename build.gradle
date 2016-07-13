@@ -1,17 +1,29 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3"
+    }
+}
+apply plugin: 'io.codearte.nexus-staging'
+
 allprojects {
     apply plugin: 'maven'
     apply plugin: 'java'
 
     group = 'com.paypal.sdk'
-    version = '1.7.0'
+    version = '1.9.0'
     sourceCompatibility = 1.6
     targetCompatibility = 1.6
 
     repositories {
         mavenCentral()
     }
-    // Currently disabled javadoc checks
-    tasks.withType(Javadoc).all { enabled = false }
+    // Currently disables doclint
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
 
 }
 
@@ -29,10 +41,18 @@ ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 // ## REST API SDK
 project(':rest-api-sdk') {
     apply plugin: 'signing'
+
+    apply from: 'lombok.gradle'
+
+    nexusStaging {
+        packageGroup = "com.paypal"
+        username = getRepositoryUsername()
+        password = getRepositoryPassword()
+    }
+
     dependencies {
         // General
         compile 'com.google.code.gson:gson:2.2.2'
-        compile 'javax.servlet:servlet-api:2.5'
 
         // Logging
         compile 'org.apache.logging.log4j:log4j-api:2.1'
@@ -64,17 +84,13 @@ project(':rest-api-sdk') {
 
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
-        from sourceSets.main.allSource
+        // Using delomboked as a source
+        from sourceSets.main.ext.delombok
     }
 
     task javadocJar(type: Jar, dependsOn: javadoc) {
         classifier = 'javadoc'
         from javadoc.destinationDir
-    }
-
-    // For including Source inside the main jar itself
-    jar {
-        from sourceSets.main.allSource
     }
 
     artifacts {

@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class InputFields  extends PayPalModel {
 
 	/**
@@ -25,53 +30,4 @@ public class InputFields  extends PayPalModel {
 	 */
 	public InputFields() {
 	}
-
-
-	/**
-	 * Setter for allowNote
-	 */
-	public InputFields setAllowNote(Boolean allowNote) {
-		this.allowNote = allowNote;
-		return this;
-	}
-
-	/**
-	 * Getter for allowNote
-	 */
-	public Boolean getAllowNote() {
-		return this.allowNote;
-	}
-
-
-	/**
-	 * Setter for noShipping
-	 */
-	public InputFields setNoShipping(int noShipping) {
-		this.noShipping = noShipping;
-		return this;
-	}
-
-	/**
-	 * Getter for noShipping
-	 */
-	public int getNoShipping() {
-		return this.noShipping;
-	}
-
-
-	/**
-	 * Setter for addressOverride
-	 */
-	public InputFields setAddressOverride(int addressOverride) {
-		this.addressOverride = addressOverride;
-		return this;
-	}
-
-	/**
-	 * Getter for addressOverride
-	 */
-	public int getAddressOverride() {
-		return this.addressOverride;
-	}
-	
 }

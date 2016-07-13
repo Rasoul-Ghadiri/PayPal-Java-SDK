@@ -1,7 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class PayoutSenderBatchHeader extends PayPalModel  {
 
 	/**
@@ -24,53 +30,4 @@ public class PayoutSenderBatchHeader extends PayPalModel  {
 	 */
 	public PayoutSenderBatchHeader() {
 	}
-
-
-	/**
-	 * Setter for senderBatchId
-	 */
-	public PayoutSenderBatchHeader setSenderBatchId(String senderBatchId) {
-		this.senderBatchId = senderBatchId;
-		return this;
-	}
-
-	/**
-	 * Getter for senderBatchId
-	 */
-	public String getSenderBatchId() {
-		return this.senderBatchId;
-	}
-
-
-	/**
-	 * Setter for emailSubject
-	 */
-	public PayoutSenderBatchHeader setEmailSubject(String emailSubject) {
-		this.emailSubject = emailSubject;
-		return this;
-	}
-
-	/**
-	 * Getter for emailSubject
-	 */
-	public String getEmailSubject() {
-		return this.emailSubject;
-	}
-
-
-	/**
-	 * Setter for recipientType
-	 */
-	public PayoutSenderBatchHeader setRecipientType(String recipientType) {
-		this.recipientType = recipientType;
-		return this;
-	}
-
-	/**
-	 * Getter for recipientType
-	 */
-	public String getRecipientType() {
-		return this.recipientType;
-	}
-	
 }

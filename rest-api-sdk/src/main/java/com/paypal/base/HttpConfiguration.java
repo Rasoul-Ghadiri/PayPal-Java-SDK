@@ -79,7 +79,7 @@ public class HttpConfiguration {
 
 	/**
 	 * HTTP Content Type value, defaulted to 'application/x-www-form-urlencoded'
-	 * @deprecated Set Content-Type in HTTP Headers property of {@link BaseAPIContext}
+	 * @deprecated Set Content-Type in HTTP Headers property of {@link com.paypal.base.rest.APIContext}
 	 */
 	private String contentType;
 
@@ -329,7 +329,7 @@ public class HttpConfiguration {
 	}
 
 	/**
-	 * @deprecated Set/Get Content-Type HTTP Header in {@link BaseAPIContext} HTTPHeaders parameter
+	 * @deprecated Set/Get Content-Type HTTP Header in {@link com.paypal.base.rest.APIContext} HTTPHeaders parameter
 	 * @return the contentType
 	 */
 	public String getContentType() {
@@ -337,7 +337,7 @@ public class HttpConfiguration {
 	}
 
 	/**
-	 * @deprecated Set/Get Content-Type HTTP Header in {@link BaseAPIContext} HTTPHeaders parameter
+	 * @deprecated Set/Get Content-Type HTTP Header in {@link com.paypal.base.rest.APIContext} HTTPHeaders parameter
 	 * @param contentType
 	 *            the contentType to set
 	 */

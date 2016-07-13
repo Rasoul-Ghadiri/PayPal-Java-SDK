@@ -15,7 +15,7 @@ public class SDKVersionImpl implements SDKVersion {
 	/**
 	 * SDK Version used in User-Agent HTTP header
 	 */
-	private static final String SDK_VERSION = "1.7.0";
+	private static final String SDK_VERSION = "1.9.0";
 	
 	public String getSDKId() {
 		return SDK_ID;	

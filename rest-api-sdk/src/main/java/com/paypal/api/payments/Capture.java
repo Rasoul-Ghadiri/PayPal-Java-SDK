@@ -1,16 +1,15 @@
 package com.paypal.api.payments;
 
-import java.util.HashMap;
+import com.paypal.base.rest.*;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.List;
 
-import com.paypal.base.Constants;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.HttpMethod;
-import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
-import com.paypal.base.rest.RESTUtil;
-import com.paypal.base.sdk.info.SDKVersionImpl;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Capture  extends PayPalResource {
 
 	/**
@@ -59,176 +58,14 @@ public class Capture  extends PayPalResource {
 	private List<Links> links;
 
 	/**
-	 * Returns the last request sent to the Service
-	 *
-	 * @return Last request sent to the server
-	 */
-	public static String getLastRequest() {
-		return PayPalResource.getLastRequest();
-	}
-
-	/**
-	 * Returns the last response returned by the Service
-	 *
-	 * @return Last response got from the Service
-	 */
-	public static String getLastResponse() {
-		return PayPalResource.getLastResponse();
-	}
-
-	/**
 	 * Default Constructor
 	 */
 	public Capture() {
 	}
 
-
-	/**
-	 * Setter for id
-	 */
-	public Capture setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for amount
-	 */
-	public Capture setAmount(Amount amount) {
-		this.amount = amount;
-		return this;
-	}
-
-	/**
-	 * Getter for amount
-	 */
-	public Amount getAmount() {
-		return this.amount;
-	}
-
-
-	/**
-	 * Setter for isFinalCapture
-	 */
-	public Capture setIsFinalCapture(Boolean isFinalCapture) {
-		this.isFinalCapture = isFinalCapture;
-		return this;
-	}
-
-	/**
-	 * Getter for isFinalCapture
-	 */
-	public Boolean getIsFinalCapture() {
-		return this.isFinalCapture;
-	}
-
-
-	/**
-	 * Setter for state
-	 */
-	public Capture setState(String state) {
-		this.state = state;
-		return this;
-	}
-
-	/**
-	 * Getter for state
-	 */
-	public String getState() {
-		return this.state;
-	}
-
-
-	/**
-	 * Setter for parentPayment
-	 */
-	public Capture setParentPayment(String parentPayment) {
-		this.parentPayment = parentPayment;
-		return this;
-	}
-
-	/**
-	 * Getter for parentPayment
-	 */
-	public String getParentPayment() {
-		return this.parentPayment;
-	}
-
-
-	/**
-	 * Setter for transactionFee
-	 */
-	public Capture setTransactionFee(Currency transactionFee) {
-		this.transactionFee = transactionFee;
-		return this;
-	}
-
-	/**
-	 * Getter for transactionFee
-	 */
-	public Currency getTransactionFee() {
-		return this.transactionFee;
-	}
-
-
-	/**
-	 * Setter for createTime
-	 */
-	public Capture setCreateTime(String createTime) {
-		this.createTime = createTime;
-		return this;
-	}
-
-	/**
-	 * Getter for createTime
-	 */
-	public String getCreateTime() {
-		return this.createTime;
-	}
-
-
-	/**
-	 * Setter for updateTime
-	 */
-	public Capture setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-		return this;
-	}
-
-	/**
-	 * Getter for updateTime
-	 */
-	public String getUpdateTime() {
-		return this.updateTime;
-	}
-
-
-	/**
-	 * Setter for links
-	 */
-	public Capture setLinks(List<Links> links) {
-		this.links = links;
-		return this;
-	}
-
-	/**
-	 * Getter for links
-	 */
-	public List<Links> getLinks() {
-		return this.links;
-	}
-
-
 	/**
 	 * Obtain the Capture transaction resource for the given identifier.
+	 * @deprecated Please use {@link #get(APIContext, String)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param captureId
@@ -251,17 +88,7 @@ public class Capture  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static Capture get(APIContext apiContext, String captureId) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (captureId == null) {
 			throw new IllegalArgumentException("captureId cannot be null");
 		}
@@ -275,6 +102,7 @@ public class Capture  extends PayPalResource {
 
 	/**
 	 * Creates (and processes) a new Refund Transaction added as a related resource.
+	 * @deprecated Please use {@link #refund(APIContext, Refund)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param refund
@@ -297,17 +125,7 @@ public class Capture  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Refund refund(APIContext apiContext, Refund refund) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}

@@ -1,10 +1,16 @@
 package com.paypal.api.payments;
 
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.List;
 
-import com.paypal.base.rest.PayPalModel;
-
-public class Error  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class Error extends PayPalModel {
 
 	/**
 	 * Human readable, unique name of the error.
@@ -52,7 +58,7 @@ public class Error  extends PayPalModel {
 	private String debugId;
 
 	/**
-	 * 
+	 * Links
 	 */
 	private List<DefinitionsLinkdescription> links;
 
@@ -72,166 +78,6 @@ public class Error  extends PayPalModel {
 		this.debugId = debugId;
 	}
 
-
-	/**
-	 * Setter for name
-	 */
-	public Error setName(String name) {
-		this.name = name;
-		return this;
-	}
-
-	/**
-	 * Getter for name
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-
-	/**
-	 * Setter for purchaseUnitReferenceId
-	 */
-	public Error setPurchaseUnitReferenceId(String purchaseUnitReferenceId) {
-		this.purchaseUnitReferenceId = purchaseUnitReferenceId;
-		return this;
-	}
-
-	/**
-	 * Getter for purchaseUnitReferenceId
-	 */
-	public String getPurchaseUnitReferenceId() {
-		return this.purchaseUnitReferenceId;
-	}
-
-
-	/**
-	 * Setter for message
-	 */
-	public Error setMessage(String message) {
-		this.message = message;
-		return this;
-	}
-
-	/**
-	 * Getter for message
-	 */
-	public String getMessage() {
-		return this.message;
-	}
-
-
-	/**
-	 * Setter for code
-	 */
-	public Error setCode(String code) {
-		this.code = code;
-		return this;
-	}
-
-	/**
-	 * Getter for code
-	 */
-	public String getCode() {
-		return this.code;
-	}
-
-
-	/**
-	 * Setter for details
-	 */
-	public Error setDetails(List<ErrorDetails> details) {
-		this.details = details;
-		return this;
-	}
-
-	/**
-	 * Getter for details
-	 */
-	public List<ErrorDetails> getDetails() {
-		return this.details;
-	}
-
-
-	/**
-	 * Setter for processorResponse
-	 */
-	public Error setProcessorResponse(ProcessorResponse processorResponse) {
-		this.processorResponse = processorResponse;
-		return this;
-	}
-
-	/**
-	 * Getter for processorResponse
-	 */
-	public ProcessorResponse getProcessorResponse() {
-		return this.processorResponse;
-	}
-
-
-	/**
-	 * Setter for fmfDetails
-	 */
-	public Error setFmfDetails(FmfDetails fmfDetails) {
-		this.fmfDetails = fmfDetails;
-		return this;
-	}
-
-	/**
-	 * Getter for fmfDetails
-	 */
-	public FmfDetails getFmfDetails() {
-		return this.fmfDetails;
-	}
-
-
-	/**
-	 * Setter for informationLink
-	 */
-	public Error setInformationLink(String informationLink) {
-		this.informationLink = informationLink;
-		return this;
-	}
-
-	/**
-	 * Getter for informationLink
-	 */
-	public String getInformationLink() {
-		return this.informationLink;
-	}
-
-
-	/**
-	 * Setter for debugId
-	 */
-	public Error setDebugId(String debugId) {
-		this.debugId = debugId;
-		return this;
-	}
-
-	/**
-	 * Getter for debugId
-	 */
-	public String getDebugId() {
-		return this.debugId;
-	}
-
-
-	/**
-	 * Setter for links
-	 */
-	public Error setLinks(List<DefinitionsLinkdescription> links) {
-		this.links = links;
-		return this;
-	}
-
-	/**
-	 * Getter for links
-	 */
-	public List<DefinitionsLinkdescription> getLinks() {
-		return this.links;
-	}
-	
 	public String toString() {
 		return "name: " + this.name + "\tmessage: " + this.message + "\tdetails: " + this.details + "\tdebug-id: " + this.debugId + "\tinformation-link: " + this.informationLink;
 	}

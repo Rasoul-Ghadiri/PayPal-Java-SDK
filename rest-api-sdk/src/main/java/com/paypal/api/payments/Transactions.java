@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Transactions  extends PayPalModel {
 
 	/**
@@ -15,29 +20,4 @@ public class Transactions  extends PayPalModel {
 	 */
 	public Transactions() {
 	}
-
-	/**
-	 * Parameterized Constructor
-	 */
-	public Transactions(Amount amount) {
-		this.amount = amount;
-	}
-
-
-	/**
-	 * Setter for amount
-	 */
-	public Transactions setAmount(Amount amount) {
-		this.amount = amount;
-		return this;
-	}
-
-	/**
-	 * Getter for amount
-	 */
-	public Amount getAmount() {
-		return this.amount;
-	}
-
-
 }

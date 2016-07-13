@@ -29,7 +29,7 @@
     "last_name": "Patient",
     "business_name": "Not applicable",
     "phone": {
-      "country_code": "US",
+      "country_code": "001",
       "national_number": "5039871234"
     },
     "address": {

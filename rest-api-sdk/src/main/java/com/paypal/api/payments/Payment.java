@@ -1,18 +1,16 @@
 package com.paypal.api.payments;
 
-import java.util.HashMap;
+import com.paypal.base.rest.*;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.List;
 import java.util.Map;
 
-import com.paypal.base.Constants;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.HttpMethod;
-import com.paypal.base.rest.JSONFormatter;
-import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
-import com.paypal.base.rest.RESTUtil;
-import com.paypal.base.sdk.info.SDKVersionImpl;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Payment  extends PayPalResource {
 
 	/**
@@ -111,24 +109,6 @@ public class Payment  extends PayPalResource {
 	private List<Links> links;
 
 	/**
-	 * Returns the last request sent to the Service
-	 *
-	 * @return Last request sent to the server
-	 */
-	public static String getLastRequest() {
-		return PayPalResource.getLastRequest();
-	}
-
-	/**
-	 * Returns the last response returned by the Service
-	 *
-	 * @return Last response got from the Service
-	 */
-	public static String getLastResponse() {
-		return PayPalResource.getLastResponse();
-	}
-
-	/**
 	 * Default Constructor
 	 */
 	public Payment() {
@@ -142,313 +122,9 @@ public class Payment  extends PayPalResource {
 		this.payer = payer;
 	}
 
-
-	/**
-	 * Setter for id
-	 */
-	public Payment setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for intent
-	 */
-	public Payment setIntent(String intent) {
-		this.intent = intent;
-		return this;
-	}
-
-	/**
-	 * Getter for intent
-	 */
-	public String getIntent() {
-		return this.intent;
-	}
-
-
-	/**
-	 * Setter for payer
-	 */
-	public Payment setPayer(Payer payer) {
-		this.payer = payer;
-		return this;
-	}
-
-	/**
-	 * Getter for payer
-	 */
-	public Payer getPayer() {
-		return this.payer;
-	}
-
-
-	/**
-	 * Setter for potentialPayerInfo
-	 */
-	public Payment setPotentialPayerInfo(PotentialPayerInfo potentialPayerInfo) {
-		this.potentialPayerInfo = potentialPayerInfo;
-		return this;
-	}
-
-	/**
-	 * Getter for potentialPayerInfo
-	 */
-	public PotentialPayerInfo getPotentialPayerInfo() {
-		return this.potentialPayerInfo;
-	}
-
-
-	/**
-	 * Setter for payee
-	 */
-	public Payment setPayee(Payee payee) {
-		this.payee = payee;
-		return this;
-	}
-
-	/**
-	 * Getter for payee
-	 */
-	public Payee getPayee() {
-		return this.payee;
-	}
-
-
-	/**
-	 * Setter for cart
-	 */
-	public Payment setCart(String cart) {
-		this.cart = cart;
-		return this;
-	}
-
-	/**
-	 * Getter for cart
-	 */
-	public String getCart() {
-		return this.cart;
-	}
-
-
-	/**
-	 * Setter for transactions
-	 */
-	public Payment setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
-		return this;
-	}
-
-	/**
-	 * Getter for transactions
-	 */
-	public List<Transaction> getTransactions() {
-		return this.transactions;
-	}
-
-
-	/**
-	 * Setter for failedTransactions
-	 */
-	public Payment setFailedTransactions(List<Error> failedTransactions) {
-		this.failedTransactions = failedTransactions;
-		return this;
-	}
-
-	/**
-	 * Getter for failedTransactions
-	 */
-	public List<Error> getFailedTransactions() {
-		return this.failedTransactions;
-	}
-
-
-	/**
-	 * Setter for billingAgreementTokens
-	 */
-	public Payment setBillingAgreementTokens(List<BillingAgreementToken> billingAgreementTokens) {
-		this.billingAgreementTokens = billingAgreementTokens;
-		return this;
-	}
-
-	/**
-	 * Getter for billingAgreementTokens
-	 */
-	public List<BillingAgreementToken> getBillingAgreementTokens() {
-		return this.billingAgreementTokens;
-	}
-
-
-	/**
-	 * Setter for creditFinancingOffered
-	 */
-	public Payment setCreditFinancingOffered(CreditFinancingOffered creditFinancingOffered) {
-		this.creditFinancingOffered = creditFinancingOffered;
-		return this;
-	}
-
-	/**
-	 * Getter for creditFinancingOffered
-	 */
-	public CreditFinancingOffered getCreditFinancingOffered() {
-		return this.creditFinancingOffered;
-	}
-
-
-	/**
-	 * Setter for paymentInstruction
-	 */
-	public Payment setPaymentInstruction(PaymentInstruction paymentInstruction) {
-		this.paymentInstruction = paymentInstruction;
-		return this;
-	}
-
-	/**
-	 * Getter for paymentInstruction
-	 */
-	public PaymentInstruction getPaymentInstruction() {
-		return this.paymentInstruction;
-	}
-
-
-	/**
-	 * Setter for state
-	 */
-	public Payment setState(String state) {
-		this.state = state;
-		return this;
-	}
-
-	/**
-	 * Getter for state
-	 */
-	public String getState() {
-		return this.state;
-	}
-
-
-	/**
-	 * Setter for experienceProfileId
-	 */
-	public Payment setExperienceProfileId(String experienceProfileId) {
-		this.experienceProfileId = experienceProfileId;
-		return this;
-	}
-
-	/**
-	 * Getter for experienceProfileId
-	 */
-	public String getExperienceProfileId() {
-		return this.experienceProfileId;
-	}
-
-
-	/**
-	 * Setter for noteToPayer
-	 */
-	public Payment setNoteToPayer(String noteToPayer) {
-		this.noteToPayer = noteToPayer;
-		return this;
-	}
-
-	/**
-	 * Getter for noteToPayer
-	 */
-	public String getNoteToPayer() {
-		return this.noteToPayer;
-	}
-
-
-	/**
-	 * Setter for redirectUrls
-	 */
-	public Payment setRedirectUrls(RedirectUrls redirectUrls) {
-		this.redirectUrls = redirectUrls;
-		return this;
-	}
-
-	/**
-	 * Getter for redirectUrls
-	 */
-	public RedirectUrls getRedirectUrls() {
-		return this.redirectUrls;
-	}
-
-
-	/**
-	 * Setter for failureReason
-	 */
-	public Payment setFailureReason(String failureReason) {
-		this.failureReason = failureReason;
-		return this;
-	}
-
-	/**
-	 * Getter for failureReason
-	 */
-	public String getFailureReason() {
-		return this.failureReason;
-	}
-
-
-	/**
-	 * Setter for createTime
-	 */
-	public Payment setCreateTime(String createTime) {
-		this.createTime = createTime;
-		return this;
-	}
-
-	/**
-	 * Getter for createTime
-	 */
-	public String getCreateTime() {
-		return this.createTime;
-	}
-
-
-	/**
-	 * Setter for updateTime
-	 */
-	public Payment setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-		return this;
-	}
-
-	/**
-	 * Getter for updateTime
-	 */
-	public String getUpdateTime() {
-		return this.updateTime;
-	}
-
-
-	/**
-	 * Setter for links
-	 */
-	public Payment setLinks(List<Links> links) {
-		this.links = links;
-		return this;
-	}
-
-	/**
-	 * Getter for links
-	 */
-	public List<Links> getLinks() {
-		return this.links;
-	}
-
-
 	/**
 	 * Creates (and processes) a new Payment Resource.
+	 * @deprecated Please use {@link #create(APIContext)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return Payment
@@ -467,17 +143,7 @@ public class Payment  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Payment create(APIContext apiContext) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		String resourcePath = "v1/payments/payment";
 		String payLoad = this.toJSON();
 		return configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, Payment.class);
@@ -486,6 +152,7 @@ public class Payment  extends PayPalResource {
 
 	/**
 	 * Obtain the Payment resource for the given identifier.
+	 * @deprecated Please use {@link #get(APIContext, String)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param paymentId
@@ -508,17 +175,6 @@ public class Payment  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static Payment get(APIContext apiContext, String paymentId) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		if (paymentId == null) {
 			throw new IllegalArgumentException("paymentId cannot be null");
 		}
@@ -532,6 +188,7 @@ public class Payment  extends PayPalResource {
 
 	/**
 	 * Executes the payment (after approved by the Payer) associated with this resource when the payment method is PayPal.
+	 * @deprecated Please use {@link #execute(APIContext, PaymentExecution)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param paymentExecution
@@ -554,17 +211,7 @@ public class Payment  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Payment execute(APIContext apiContext, PaymentExecution paymentExecution) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -580,17 +227,17 @@ public class Payment  extends PayPalResource {
 	
 	/**
 	 * Partially update a payment resource by by passing the payment_id in the request URI. In addition, pass a patch_request_object in the body of the request JSON that specifies the operation to perform, path of the target location, and new value to apply. Please note that it is not possible to use patch after execute has been called.
+	 * @deprecated Please use {@link #update(APIContext, List)} instad.
+	 *
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param patchRequest
 	 *            List<Patch>
-	 * @return 
 	 * @throws PayPalRESTException
 	 */
 	public void update(String accessToken, List<Patch> patchRequest) throws PayPalRESTException {
 		APIContext apiContext = new APIContext(accessToken);
 		update(apiContext, patchRequest);
-		return;
 	}
 
 	/**
@@ -599,21 +246,10 @@ public class Payment  extends PayPalResource {
 	 *            {@link APIContext} used for the API call.
 	 * @param patchRequest
 	 *            List<Patch>
-	 * @return 
 	 * @throws PayPalRESTException
 	 */
 	public void update(APIContext apiContext, List<Patch> patchRequest) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -625,12 +261,13 @@ public class Payment  extends PayPalResource {
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = JSONFormatter.toJSON(patchRequest);
 		PayPalResource.configureAndExecute(apiContext, HttpMethod.PATCH, resourcePath, payLoad, null);
-		return;
 	}
 
 
 	/**
 	 * Retrieves a list of Payment resources.
+	 * @deprecated Please use {@link #list(APIContext, Map)} instead.
+	 *
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param containerMap
@@ -645,6 +282,7 @@ public class Payment  extends PayPalResource {
 
 	/**
 	 * Retrieves a list of Payment resources.
+	 *
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @param containerMap
@@ -653,17 +291,7 @@ public class Payment  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static PaymentHistory list(APIContext apiContext, Map<String, String> containerMap) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (containerMap == null) {
 			throw new IllegalArgumentException("containerMap cannot be null");
 		}
@@ -672,10 +300,6 @@ public class Payment  extends PayPalResource {
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = "";
 		PaymentHistory paymentHistory = configureAndExecute(apiContext, HttpMethod.GET, resourcePath, payLoad, PaymentHistory.class);
-//		if (paymentHistory == null) {
-//			paymentHistory = new PaymentHistory();
-//		}
-		
 		return paymentHistory;
 	}
 

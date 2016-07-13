@@ -1,10 +1,16 @@
 package com.paypal.api.payments;
 
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.paypal.base.rest.PayPalModel;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class EventTypeList  extends PayPalModel {
 
 	/**
@@ -18,22 +24,4 @@ public class EventTypeList  extends PayPalModel {
 	public EventTypeList() {
 		eventTypes = new ArrayList<EventType>();
 	}
-
-
-	/**
-	 * Setter for eventTypes
-	 */
-	public EventTypeList setEventTypes(List<EventType> eventTypes) {
-		this.eventTypes = eventTypes;
-		return this;
-	}
-
-	/**
-	 * Getter for eventTypes
-	 */
-	public List<EventType> getEventTypes() {
-		return this.eventTypes;
-	}
-
-
 }

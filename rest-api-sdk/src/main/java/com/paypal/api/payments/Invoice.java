@@ -1,20 +1,21 @@
 package com.paypal.api.payments;
 
-import java.util.HashMap;
+import com.paypal.api.openidconnect.Tokeninfo;
+import com.paypal.base.rest.*;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.List;
+import java.util.Map;
 
-import com.paypal.base.Constants;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.HttpMethod;
-import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
-import com.paypal.base.rest.RESTUtil;
-import com.paypal.base.sdk.info.SDKVersionImpl;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Invoice extends PayPalResource {
 
 	/**
-	 * Unique invoice resource identifier.
+	 * The unique invoice resource identifier.
 	 */
 	private String id;
 
@@ -22,6 +23,11 @@ public class Invoice extends PayPalResource {
 	 * Unique number that appears on the invoice. If left blank will be auto-incremented from the last number. 25 characters max.
 	 */
 	private String number;
+
+	/**
+	 * The template ID used for the invoice. Useful for copy functionality.
+	 */
+	private String templateId;
 
 	/**
 	 * URI of the invoice resource.
@@ -39,52 +45,72 @@ public class Invoice extends PayPalResource {
 	private MerchantInfo merchantInfo;
 
 	/**
-	 * Email address of invoice recipient (required) and optional billing information. (Note: We currently only allow one recipient).
+	 * The required invoice recipient email address and any optional billing information. One recipient is supported.
 	 */
 	private List<BillingInfo> billingInfo;
 
 	/**
-	 * Shipping information for entities to whom items are being shipped.
+	 * For invoices sent by email, one or more email addresses to which to send a Cc: copy of the notification. Supports only email addresses under participant.
+	 */
+	private List<Participant> ccInfo;
+
+	/**
+	 * The shipping information for entities to whom items are being shipped.
 	 */
 	private ShippingInfo shippingInfo;
 
 	/**
-	 * List of items included in the invoice. 100 items max per invoice.
+	 * The list of items to include in the invoice. Maximum value is 100 items per invoice.
 	 */
 	private List<InvoiceItem> items;
 
 	/**
-	 * Date on which the invoice was enabled. Date format: yyyy-MM-dd z. For example, 2014-02-27 PST
+	 * The date when the invoice was enabled. The date format is *yyyy*-*MM*-*dd* *z* as defined in [Internet Date/Time Format](http://tools.ietf.org/html/rfc3339#section-5.6).
 	 */
 	private String invoiceDate;
 
 	/**
-	 * Optional field to pass payment deadline for the invoice. Either term_type or due_date can be passed, but not both.
+	 * Optional. The payment deadline for the invoice. Value is either `term_type` or `due_date` but not both.
 	 */
 	private PaymentTerm paymentTerm;
 
 	/**
-	 * Invoice level discount in percent or amount.
+	 * Reference data, such as PO number, to add to the invoice. Maximum length is 60 characters.
+	 */
+	private String reference;
+
+	/**
+	 * The invoice level discount, as a percent or an amount value.
 	 */
 	private Cost discount;
 
 	/**
-	 * Shipping cost in percent or amount.
+	 * The shipping cost, as a percent or an amount value.
 	 */
 	private ShippingCost shippingCost;
 
 	/**
-	 * Custom amount applied on an invoice. If a label is included then the amount cannot be empty.
+	 * The custom amount to apply on an invoice. If you include a label, the amount cannot be empty.
 	 */
 	private CustomAmount custom;
 
 	/**
-	 * Indicates whether tax is calculated before or after a discount. If false (the default), the tax is calculated before a discount. If true, the tax is calculated after a discount.
+	 * Indicates whether the invoice allows a partial payment. If set to `false`, invoice must be paid in full. If set to `true`, the invoice allows partial payments. Default is `false`.
+	 */
+	private Boolean allowPartialPayment;
+
+	/**
+	 * If `allow_partial_payment` is set to `true`, the minimum amount allowed for a partial payment.
+	 */
+	private Currency minimumAmountDue;
+
+	/**
+	 * Indicates whether tax is calculated before or after a discount. If set to `false`, the tax is calculated before a discount. If set to `true`, the tax is calculated after a discount. Default is `false`.
 	 */
 	private Boolean taxCalculatedAfterDiscount;
 
 	/**
-	 * A flag indicating whether the unit price includes tax. Default is false
+	 * Indicates whether the unit price includes tax. Default is `false`.
 	 */
 	private Boolean taxInclusive;
 
@@ -99,12 +125,12 @@ public class Invoice extends PayPalResource {
 	private String note;
 
 	/**
-	 * Bookkeeping memo that is private to the merchant. 150 characters max.
+	 * A private bookkeeping memo for the merchant. Maximum length is 150 characters.
 	 */
 	private String merchantMemo;
 
 	/**
-	 * Full URL of an external image to use as the logo. 4000 characters max.
+	 * Full URL of an external image to use as the logo. Maximum length is 4000 characters.
 	 */
 	private String logoUrl;
 
@@ -128,7 +154,36 @@ public class Invoice extends PayPalResource {
 	 */
 	private Metadata metadata;
 
-	
+	/**
+	 * Any miscellaneous invoice data. Maximum length is 4000 characters.
+	 */
+	private String additionalData;
+
+	/**
+	 * Gratuity to include with the invoice.
+	 */
+	private Currency gratuity;
+
+	/**
+	 * Payment summary of the invoice including amount paid through PayPal and other sources.
+	 */
+	private PaymentSummary paidAmount;
+
+	/**
+	 * Payment summary of the invoice including amount refunded through PayPal and other sources.
+	 */
+	private PaymentSummary refundedAmount;
+
+	/**
+	 * List of files attached to the invoice.
+	 */
+	private List<FileAttachment> attachments;
+
+	/**
+	 * HATEOS links representing all the actions over the invoice resource based on the current invoice status.
+	 */
+	private List<Links> links;
+
 	/**
 	 * Default Constructor
 	 */
@@ -142,377 +197,9 @@ public class Invoice extends PayPalResource {
 		this.merchantInfo = merchantInfo;
 	}
 
-
 	/**
-	 * Setter for id
-	 */
-	public Invoice setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for number
-	 */
-	public Invoice setNumber(String number) {
-		this.number = number;
-		return this;
-	}
-
-	/**
-	 * Getter for number
-	 */
-	public String getNumber() {
-		return this.number;
-	}
-
-
-	/**
-	 * Setter for uri
-	 */
-	public Invoice setUri(String uri) {
-		this.uri = uri;
-		return this;
-	}
-
-	/**
-	 * Getter for uri
-	 */
-	public String getUri() {
-		return this.uri;
-	}
-
-
-	/**
-	 * Setter for status
-	 */
-	public Invoice setStatus(String status) {
-		this.status = status;
-		return this;
-	}
-
-	/**
-	 * Getter for status
-	 */
-	public String getStatus() {
-		return this.status;
-	}
-
-
-	/**
-	 * Setter for merchantInfo
-	 */
-	public Invoice setMerchantInfo(MerchantInfo merchantInfo) {
-		this.merchantInfo = merchantInfo;
-		return this;
-	}
-
-	/**
-	 * Getter for merchantInfo
-	 */
-	public MerchantInfo getMerchantInfo() {
-		return this.merchantInfo;
-	}
-
-
-	/**
-	 * Setter for billingInfo
-	 */
-	public Invoice setBillingInfo(List<BillingInfo> billingInfo) {
-		this.billingInfo = billingInfo;
-		return this;
-	}
-
-	/**
-	 * Getter for billingInfo
-	 */
-	public List<BillingInfo> getBillingInfo() {
-		return this.billingInfo;
-	}
-
-
-	/**
-	 * Setter for shippingInfo
-	 */
-	public Invoice setShippingInfo(ShippingInfo shippingInfo) {
-		this.shippingInfo = shippingInfo;
-		return this;
-	}
-
-	/**
-	 * Getter for shippingInfo
-	 */
-	public ShippingInfo getShippingInfo() {
-		return this.shippingInfo;
-	}
-
-
-	/**
-	 * Setter for items
-	 */
-	public Invoice setItems(List<InvoiceItem> items) {
-		this.items = items;
-		return this;
-	}
-
-	/**
-	 * Getter for items
-	 */
-	public List<InvoiceItem> getItems() {
-		return this.items;
-	}
-
-
-	/**
-	 * Setter for invoiceDate
-	 */
-	public Invoice setInvoiceDate(String invoiceDate) {
-		this.invoiceDate = invoiceDate;
-		return this;
-	}
-
-	/**
-	 * Getter for invoiceDate
-	 */
-	public String getInvoiceDate() {
-		return this.invoiceDate;
-	}
-
-
-	/**
-	 * Setter for paymentTerm
-	 */
-	public Invoice setPaymentTerm(PaymentTerm paymentTerm) {
-		this.paymentTerm = paymentTerm;
-		return this;
-	}
-
-	/**
-	 * Getter for paymentTerm
-	 */
-	public PaymentTerm getPaymentTerm() {
-		return this.paymentTerm;
-	}
-
-
-	/**
-	 * Setter for discount
-	 */
-	public Invoice setDiscount(Cost discount) {
-		this.discount = discount;
-		return this;
-	}
-
-	/**
-	 * Getter for discount
-	 */
-	public Cost getDiscount() {
-		return this.discount;
-	}
-
-
-	/**
-	 * Setter for shippingCost
-	 */
-	public Invoice setShippingCost(ShippingCost shippingCost) {
-		this.shippingCost = shippingCost;
-		return this;
-	}
-
-	/**
-	 * Getter for shippingCost
-	 */
-	public ShippingCost getShippingCost() {
-		return this.shippingCost;
-	}
-
-
-	/**
-	 * Setter for custom
-	 */
-	public Invoice setCustom(CustomAmount custom) {
-		this.custom = custom;
-		return this;
-	}
-
-	/**
-	 * Getter for custom
-	 */
-	public CustomAmount getCustom() {
-		return this.custom;
-	}
-
-
-	/**
-	 * Setter for taxCalculatedAfterDiscount
-	 */
-	public Invoice setTaxCalculatedAfterDiscount(Boolean taxCalculatedAfterDiscount) {
-		this.taxCalculatedAfterDiscount = taxCalculatedAfterDiscount;
-		return this;
-	}
-
-	/**
-	 * Getter for taxCalculatedAfterDiscount
-	 */
-	public Boolean getTaxCalculatedAfterDiscount() {
-		return this.taxCalculatedAfterDiscount;
-	}
-
-
-	/**
-	 * Setter for taxInclusive
-	 */
-	public Invoice setTaxInclusive(Boolean taxInclusive) {
-		this.taxInclusive = taxInclusive;
-		return this;
-	}
-
-	/**
-	 * Getter for taxInclusive
-	 */
-	public Boolean getTaxInclusive() {
-		return this.taxInclusive;
-	}
-
-
-	/**
-	 * Setter for terms
-	 */
-	public Invoice setTerms(String terms) {
-		this.terms = terms;
-		return this;
-	}
-
-	/**
-	 * Getter for terms
-	 */
-	public String getTerms() {
-		return this.terms;
-	}
-
-
-	/**
-	 * Setter for note
-	 */
-	public Invoice setNote(String note) {
-		this.note = note;
-		return this;
-	}
-
-	/**
-	 * Getter for note
-	 */
-	public String getNote() {
-		return this.note;
-	}
-
-
-	/**
-	 * Setter for merchantMemo
-	 */
-	public Invoice setMerchantMemo(String merchantMemo) {
-		this.merchantMemo = merchantMemo;
-		return this;
-	}
-
-	/**
-	 * Getter for merchantMemo
-	 */
-	public String getMerchantMemo() {
-		return this.merchantMemo;
-	}
-
-
-	/**
-	 * Setter for logoUrl
-	 */
-	public Invoice setLogoUrl(String logoUrl) {
-		this.logoUrl = logoUrl;
-		return this;
-	}
-
-	/**
-	 * Getter for logoUrl
-	 */
-	public String getLogoUrl() {
-		return this.logoUrl;
-	}
-
-
-	/**
-	 * Setter for totalAmount
-	 */
-	public Invoice setTotalAmount(Currency totalAmount) {
-		this.totalAmount = totalAmount;
-		return this;
-	}
-
-	/**
-	 * Getter for totalAmount
-	 */
-	public Currency getTotalAmount() {
-		return this.totalAmount;
-	}
-
-
-	/**
-	 * Setter for paymentDetails
-	 */
-	public Invoice setPaymentDetails(List<PaymentDetail> paymentDetails) {
-		this.paymentDetails = paymentDetails;
-		return this;
-	}
-
-	/**
-	 * Getter for paymentDetails
-	 */
-	public List<PaymentDetail> getPaymentDetails() {
-		return this.paymentDetails;
-	}
-
-
-	/**
-	 * Setter for refundDetails
-	 */
-	public Invoice setRefundDetails(List<RefundDetail> refundDetails) {
-		this.refundDetails = refundDetails;
-		return this;
-	}
-
-	/**
-	 * Getter for refundDetails
-	 */
-	public List<RefundDetail> getRefundDetails() {
-		return this.refundDetails;
-	}
-
-
-	/**
-	 * Setter for metadata
-	 */
-	public Invoice setMetadata(Metadata metadata) {
-		this.metadata = metadata;
-		return this;
-	}
-
-	/**
-	 * Getter for metadata
-	 */
-	public Metadata getMetadata() {
-		return this.metadata;
-	}
-
-
-	/**
-	 * Creates a new invoice Resource.
+	 * Creates an invoice. Include invoice details including merchant information in the request.
+	 * @deprecated Please use {@link #create(APIContext)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return Invoice
@@ -524,32 +211,21 @@ public class Invoice extends PayPalResource {
 	}
 
 	/**
-	 * Creates a new invoice Resource.
+	 * Creates an invoice. Include invoice details including merchant information in the request.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @return Invoice
 	 * @throws PayPalRESTException
 	 */
 	public Invoice create(APIContext apiContext) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		String resourcePath = "v1/invoicing/invoices";
 		String payLoad = this.toJSON();
 		return configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, Invoice.class);
 	}
 
-
 	/**
-	 * Search for invoice resources.
+	 * Searches for an invoice or invoices. Include a search object that specifies your search criteria in the request.
+	 * @deprecated Please use {@link #search(APIContext, Search)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param search
@@ -563,7 +239,7 @@ public class Invoice extends PayPalResource {
 	}
 
 	/**
-	 * Search for invoice resources.
+	 * Searches for an invoice or invoices. Include a search object that specifies your search criteria in the request.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @param search
@@ -572,17 +248,7 @@ public class Invoice extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Invoices search(APIContext apiContext, Search search) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (search == null) {
 			throw new IllegalArgumentException("search cannot be null");
 		}
@@ -593,9 +259,9 @@ public class Invoice extends PayPalResource {
 		return configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, Invoices.class);
 	}
 
-
 	/**
-	 * Sends a legitimate invoice to the payer.
+	 * Sends an invoice, by ID, to a recipient. Optionally, set the `notify_merchant` query parameter to send the merchant an invoice update notification. By default, `notify_merchant` is `true`.
+	 * @deprecated Please use {@link #send(APIContext)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @throws PayPalRESTException
@@ -603,27 +269,15 @@ public class Invoice extends PayPalResource {
 	public void send(String accessToken) throws PayPalRESTException {
 		APIContext apiContext = new APIContext(accessToken);
 		send(apiContext);
-		return;
 	}
 
 	/**
-	 * Sends a legitimate invoice to the payer.
+	 * Sends an invoice, by ID, to a recipient. Optionally, set the `notify_merchant` query parameter to send the merchant an invoice update notification. By default, `notify_merchant` is `true`.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @throws PayPalRESTException
 	 */
 	public void send(APIContext apiContext) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -632,27 +286,24 @@ public class Invoice extends PayPalResource {
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = "";
 		configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, null);
-		return;
 	}
 
-
 	/**
-	 * Reminds the payer to pay the invoice.
+	 * Sends a reminder about a specific invoice, by ID, to a recipient. Include a notification object that defines the reminder subject and other details in the JSON request body.
+	 * @deprecated Please use {@link #remind(APIContext, Notification)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param notification
 	 *            Notification
-	 * @return 
 	 * @throws PayPalRESTException
 	 */
 	public void remind(String accessToken, Notification notification) throws PayPalRESTException {
 		APIContext apiContext = new APIContext(accessToken);
 		remind(apiContext, notification);
-		return;
 	}
 
 	/**
-	 * Reminds the payer to pay the invoice.
+	 * Sends a reminder about a specific invoice, by ID, to a recipient. Include a notification object that defines the reminder subject and other details in the JSON request body.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @param notification
@@ -660,17 +311,6 @@ public class Invoice extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public void remind(APIContext apiContext, Notification notification) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -682,27 +322,24 @@ public class Invoice extends PayPalResource {
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = notification.toJSON();
 		configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, null);
-		return;
 	}
 
-
 	/**
-	 * Cancels an invoice.
+	 * Cancels an invoice, by ID.
+	 * @deprecated Please use {@link #cancel(APIContext, CancelNotification)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param cancelNotification
 	 *            CancelNotification
-	 * @return 
 	 * @throws PayPalRESTException
 	 */
 	public void cancel(String accessToken, CancelNotification cancelNotification) throws PayPalRESTException {
 		APIContext apiContext = new APIContext(accessToken);
 		cancel(apiContext, cancelNotification);
-		return;
 	}
 
 	/**
-	 * Cancels an invoice.
+	 * Cancels an invoice, by ID.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @param cancelNotification
@@ -710,17 +347,6 @@ public class Invoice extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public void cancel(APIContext apiContext, CancelNotification cancelNotification) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -732,12 +358,11 @@ public class Invoice extends PayPalResource {
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = cancelNotification.toJSON();
 		configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, null);
-		return;
 	}
 
-
 	/**
-	 * Mark the status of the invoice as paid.
+	 * Marks the status of a specified invoice, by ID, as paid. Include a payment detail object that defines the payment method and other details in the JSON request body.
+	 * @deprecated Please use {@link #recordPayment(APIContext, PaymentDetail)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param paymentDetail
@@ -747,11 +372,10 @@ public class Invoice extends PayPalResource {
 	public void recordPayment(String accessToken, PaymentDetail paymentDetail) throws PayPalRESTException {
 		APIContext apiContext = new APIContext(accessToken);
 		recordPayment(apiContext, paymentDetail);
-		return;
 	}
 
 	/**
-	 * Mark the status of the invoice as paid.
+	 * Marks the status of a specified invoice, by ID, as paid. Include a payment detail object that defines the payment method and other details in the JSON request body.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @param paymentDetail
@@ -759,17 +383,6 @@ public class Invoice extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public void recordPayment(APIContext apiContext, PaymentDetail paymentDetail) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -781,12 +394,11 @@ public class Invoice extends PayPalResource {
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = paymentDetail.toJSON();
 		configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, null);
-		return;
 	}
 
-
 	/**
-	 * Mark the status of the invoice as refunded.
+	 * Marks the status of a specified invoice, by ID, as refunded. Include a refund detail object that defines the refund type and other details in the JSON request body.
+	 * @deprecated Please use {@link #recordRefund(APIContext, RefundDetail)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param refundDetail
@@ -796,11 +408,10 @@ public class Invoice extends PayPalResource {
 	public void recordRefund(String accessToken, RefundDetail refundDetail) throws PayPalRESTException {
 		APIContext apiContext = new APIContext(accessToken);
 		recordRefund(apiContext, refundDetail);
-		return;
 	}
 
 	/**
-	 * Mark the status of the invoice as refunded.
+	 * Marks the status of a specified invoice, by ID, as refunded. Include a refund detail object that defines the refund type and other details in the JSON request body.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @param refundDetail
@@ -808,17 +419,6 @@ public class Invoice extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public void recordRefund(APIContext apiContext, RefundDetail refundDetail) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -830,12 +430,11 @@ public class Invoice extends PayPalResource {
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = refundDetail.toJSON();
 		configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, null);
-		return;
 	}
 
-
 	/**
-	 * Get the invoice resource for the given identifier.
+	 * Gets the details for a specified invoice, by ID.
+	 * @deprecated Please use {@link #get(APIContext, String)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param invoiceId
@@ -849,7 +448,7 @@ public class Invoice extends PayPalResource {
 	}
 
 	/**
-	 * Get the invoice resource for the given identifier.
+	 * Gets the details for a specified invoice, by ID.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @param invoiceId
@@ -858,17 +457,6 @@ public class Invoice extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static Invoice get(APIContext apiContext, String invoiceId) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		if (invoiceId == null) {
 			throw new IllegalArgumentException("invoiceId cannot be null");
 		}
@@ -881,7 +469,8 @@ public class Invoice extends PayPalResource {
 
 
 	/**
-	 * Get all invoices of a merchant.
+	 * Lists some or all merchant invoices. Filters the response by any specified optional query string parameters.
+	 * @deprecated Please use {@link #getAll(APIContext)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return Invoices
@@ -889,41 +478,40 @@ public class Invoice extends PayPalResource {
 	 */
 	public static Invoices getAll(String accessToken) throws PayPalRESTException {
 		APIContext apiContext = new APIContext(accessToken);
-		return getAll(apiContext);
+		return getAll(apiContext, null);
 	}
 
 	/**
-	 * Get all invoices of a merchant.
+	 * Lists some or all merchant invoices. Filters the response by any specified optional query string parameters.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @return Invoices
 	 * @throws PayPalRESTException
 	 */
 	public static Invoices getAll(APIContext apiContext) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
-		String resourcePath = "v1/invoicing/invoices";
+		return getAll(apiContext, null);
+	}
+
+	/**
+	 * Lists some or all merchant invoices. Filters the response by any specified optional query string parameters.
+	 * @param apiContext
+	 *            {@link APIContext} used for the API call.
+	 * @param options
+	 * 			  {@link Map} of query parameters. Allowed options: page, page_size, total_count_required.
+	 * @return Invoices
+	 * @throws PayPalRESTException
+	 */
+	public static Invoices getAll(APIContext apiContext, Map<String, String> options) throws PayPalRESTException {
+		String pattern = "v1/invoicing/invoices";
+		String resourcePath = RESTUtil.formatURIPath(pattern, null, options);
 		String payLoad = "";
-		Invoices invoices = configureAndExecute(apiContext, HttpMethod.GET, resourcePath, payLoad, Invoices.class);
-//		if (invoices == null) {
-//			invoices = new Invoices();
-//		}
-		
-		return invoices;
+		return configureAndExecute(apiContext, HttpMethod.GET, resourcePath, payLoad, Invoices.class);
 	}
 
 
 	/**
-	 * Full update of the invoice resource for the given identifier.
+	 * Fully updates an invoice by passing the invoice ID to the request URI. In addition, pass a complete invoice object in the request JSON. Does not support partial updates.
+	 * @deprecated Please use {@link #update(APIContext)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return Invoice
@@ -935,24 +523,13 @@ public class Invoice extends PayPalResource {
 	}
 
 	/**
-	 * Full update of the invoice resource for the given identifier.
+	 * Fully updates an invoice by passing the invoice ID to the request URI. In addition, pass a complete invoice object in the request JSON. Does not support partial updates.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @return Invoice
 	 * @throws PayPalRESTException
 	 */
 	public Invoice update(APIContext apiContext) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -965,7 +542,8 @@ public class Invoice extends PayPalResource {
 
 
 	/**
-	 * Delete invoice resource for the given identifier.
+	 * Deletes an invoice, by ID.
+	 * @deprecated Please use {@link #delete(APIContext)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @throws PayPalRESTException
@@ -973,27 +551,15 @@ public class Invoice extends PayPalResource {
 	public void delete(String accessToken) throws PayPalRESTException {
 		APIContext apiContext = new APIContext(accessToken);
 		delete(apiContext);
-		return;
 	}
 
 	/**
-	 * Delete invoice resource for the given identifier.
+	 * Deletes an invoice, by ID.
 	 * @param apiContext
 	 *            {@link APIContext} used for the API call.
 	 * @throws PayPalRESTException
 	 */
 	public void delete(APIContext apiContext) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 		if (this.getId() == null) {
 			throw new IllegalArgumentException("Id cannot be null");
 		}
@@ -1003,6 +569,66 @@ public class Invoice extends PayPalResource {
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = "";
 		configureAndExecute(apiContext, HttpMethod.DELETE, resourcePath, payLoad, null);
-		return;
+	}
+
+	/**
+	 * Generates a QR code for an invoice, by ID. The request generates a QR code that is 500 pixels in width and height. To change the dimensions of the returned code, specify optional query parameters.
+	 * @param apiContext
+	 *            {@link APIContext} used for the API call.
+	 * @param invoiceId
+	 *            String
+	 * @return object
+	 * @throws PayPalRESTException
+	 */
+	public static Image qrCode(APIContext apiContext, String invoiceId) throws PayPalRESTException {
+		return qrCode(apiContext, invoiceId, null);
+	}
+
+	/**
+	 * Generates a QR code for an invoice, by ID. The request generates a QR code that is 500 pixels in width and height. To change the dimensions of the returned code, specify optional query parameters.
+	 * @param apiContext
+	 *            {@link APIContext} used for the API call.
+	 * @param invoiceId
+	 *            String
+	 * @param options
+	 * 			  {@link Map} of options. Valid values are: width, height, action.
+	 * @return object
+	 * @throws PayPalRESTException
+	 */
+	public static Image qrCode(APIContext apiContext, String invoiceId, Map<String, String> options) throws PayPalRESTException {
+		if (invoiceId == null) {
+			throw new IllegalArgumentException("invoiceId cannot be null");
+		}
+		String pattern = "v1/invoicing/invoices/{0}/qr-code";
+		String resourcePath = RESTUtil.formatURIPath(pattern, options, invoiceId);
+		String payLoad = "";
+		return configureAndExecute(apiContext, HttpMethod.GET, resourcePath, payLoad, Image.class);
+	}
+
+	/**
+	 * Generates the next invoice number.
+	 * @param apiContext
+	 *            {@link APIContext} used for the API call.
+	 * @return object
+	 * @throws PayPalRESTException
+	 */
+	public InvoiceNumber generateNumber(APIContext apiContext) throws PayPalRESTException {
+		Object[] parameters = new Object[] {this.getId()};
+		String pattern = "v1/invoicing/invoices/next-invoice-number";
+		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
+		String payLoad = "";
+		return configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, InvoiceNumber.class);
+	}
+
+	/**
+	 * Fetches long lived refresh token from authorization code, for third party merchant invoicing use.
+	 *
+	 * @param context context
+	 * @param authorizationCode authorization code
+	 * @return {@link String} Refresh Token
+	 * @throws PayPalRESTException
+	 */
+	public static String fetchRefreshToken(APIContext context, String authorizationCode) throws PayPalRESTException {
+		return Tokeninfo.createFromAuthorizationCode(context, authorizationCode).getRefreshToken();
 	}
 }

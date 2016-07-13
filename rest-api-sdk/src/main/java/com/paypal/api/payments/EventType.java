@@ -1,15 +1,13 @@
 package com.paypal.api.payments;
 
-import java.util.HashMap;
+import com.paypal.base.rest.*;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-import com.paypal.base.Constants;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.HttpMethod;
-import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
-import com.paypal.base.rest.RESTUtil;
-import com.paypal.base.sdk.info.SDKVersionImpl;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class EventType  extends PayPalResource {
 
 	/**
@@ -35,41 +33,9 @@ public class EventType  extends PayPalResource {
 		this.name = name;
 	}
 
-
-	/**
-	 * Setter for name
-	 */
-	public EventType setName(String name) {
-		this.name = name;
-		return this;
-	}
-
-	/**
-	 * Getter for name
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-
-	/**
-	 * Setter for description
-	 */
-	public EventType setDescription(String description) {
-		this.description = description;
-		return this;
-	}
-
-	/**
-	 * Getter for description
-	 */
-	public String getDescription() {
-		return this.description;
-	}
-
-
 	/**
 	 * Retrieves the list of events-types subscribed by the given Webhook.
+	 * @deprecated Please use {@link #subscribedEventTypes(APIContext, String)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param webhookId
@@ -92,17 +58,7 @@ public class EventType  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static EventTypeList subscribedEventTypes(APIContext apiContext, String webhookId) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		if (webhookId == null) {
 			throw new IllegalArgumentException("webhookId cannot be null");
 		}
@@ -121,6 +77,7 @@ public class EventType  extends PayPalResource {
 
 	/**
 	 * Retrieves the master list of available Webhooks events-types resources for any webhook to subscribe to.
+	 * @deprecated Please use {@link #availableEventTypes(APIContext)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @return EventTypeList
@@ -139,24 +96,10 @@ public class EventType  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public static EventTypeList availableEventTypes(APIContext apiContext) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
+
 		String resourcePath = "v1/notifications/webhooks-event-types";
 		String payLoad = "";
 		EventTypeList eventTypeList = configureAndExecute(apiContext, HttpMethod.GET, resourcePath, payLoad, EventTypeList.class);
-//		if (eventTypeList == null) {
-//			eventTypeList = new EventTypeList();
-//		}
-		
 		return eventTypeList;
 	}
 

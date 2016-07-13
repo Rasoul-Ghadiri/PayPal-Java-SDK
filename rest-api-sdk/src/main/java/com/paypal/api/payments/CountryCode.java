@@ -1,6 +1,14 @@
 package com.paypal.api.payments;
 
-public class CountryCode  {
+import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class CountryCode extends PayPalModel {
 
 	/**
 	 * ISO country code based on 2-character IS0-3166-1 codes.
@@ -19,21 +27,4 @@ public class CountryCode  {
 	public CountryCode(String countryCode) {
 		this.countryCode = countryCode;
 	}
-
-
-	/**
-	 * Setter for countryCode
-	 */
-	public CountryCode setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-		return this;
-	}
-
-	/**
-	 * Getter for countryCode
-	 */
-	public String getCountryCode() {
-		return this.countryCode;
-	}
-
 }

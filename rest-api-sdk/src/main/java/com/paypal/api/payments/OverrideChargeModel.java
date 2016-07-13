@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class OverrideChargeModel  extends PayPalModel {
 
 	/**
@@ -20,46 +25,4 @@ public class OverrideChargeModel  extends PayPalModel {
 	 */
 	public OverrideChargeModel() {
 	}
-
-	/**
-	 * Parameterized Constructor
-	 */
-	public OverrideChargeModel(String chargeId, Currency amount) {
-		this.chargeId = chargeId;
-		this.amount = amount;
-	}
-
-
-	/**
-	 * Setter for chargeId
-	 */
-	public OverrideChargeModel setChargeId(String chargeId) {
-		this.chargeId = chargeId;
-		return this;
-	}
-
-	/**
-	 * Getter for chargeId
-	 */
-	public String getChargeId() {
-		return this.chargeId;
-	}
-
-
-	/**
-	 * Setter for amount
-	 */
-	public OverrideChargeModel setAmount(Currency amount) {
-		this.amount = amount;
-		return this;
-	}
-
-	/**
-	 * Getter for amount
-	 */
-	public Currency getAmount() {
-		return this.amount;
-	}
-
-
 }

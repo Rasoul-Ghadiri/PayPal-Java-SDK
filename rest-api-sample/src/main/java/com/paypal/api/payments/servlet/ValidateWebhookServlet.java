@@ -9,6 +9,10 @@
 // API used: POST /v1/vault/credit-card
 package com.paypal.api.payments.servlet;
 
+import static com.paypal.api.payments.util.SampleConstants.clientID;
+import static com.paypal.api.payments.util.SampleConstants.clientSecret;
+import static com.paypal.api.payments.util.SampleConstants.mode;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +24,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +33,10 @@ import org.apache.log4j.Logger;
 
 import com.paypal.api.payments.CreditCard;
 import com.paypal.api.payments.Event;
-import com.paypal.api.payments.util.GenerateAccessToken;
 import com.paypal.api.payments.util.ResultPrinter;
 import com.paypal.base.Constants;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
 
 public class ValidateWebhookServlet extends HttpServlet {
 
@@ -45,21 +46,6 @@ public class ValidateWebhookServlet extends HttpServlet {
 			.getLogger(ValidateWebhookServlet.class);
 
 	public static final String WebhookId = "4JH86294D6297924G";
-
-	public void init(ServletConfig servletConfig) throws ServletException {
-		// ##Load Configuration
-		// Load SDK configuration for
-		// the resource. This intialization code can be
-		// done as Init Servlet.
-		InputStream is = ValidateWebhookServlet.class
-				.getResourceAsStream("/sdk_config.properties");
-		try {
-			PayPalResource.initConfig(is);
-		} catch (PayPalRESTException e) {
-			LOGGER.fatal(e.getMessage());
-		}
-
-	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -73,29 +59,13 @@ public class ValidateWebhookServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		try{
-			// ###AccessToken
-			// Retrieve the access token from
-			// OAuthTokenCredential by passing in
-			// ClientID and ClientSecret
-			// It is not mandatory to generate Access Token on a per call basis.
-			// Typically the access token can be generated once and
-			// reused within the expiry window
-			String accessToken = GenerateAccessToken.getAccessToken();
-
 			// ### Api Context
-			// Pass in a `ApiContext` object to authenticate 
-			// the call and to send a unique request id 
+			// Pass in a `ApiContext` object to authenticate
+			// the call and to send a unique request id
 			// (that ensures idempotency). The SDK generates
-			// a request id if you do not pass one explicitly. 
-			APIContext apiContext = new APIContext(accessToken);
-			// Use this variant if you want to pass in a request id  
-			// that is meaningful in your application, ideally 
-			// a order id.
-			/* 
-			 * String requestId = Long.toString(System.nanoTime();
-			 * APIContext apiContext = new APIContext(accessToken, requestId ));
-			 */
-
+			// a request id if you do not pass one explicitly.
+			APIContext apiContext = new APIContext(clientID, clientSecret, mode);
+			
 			Map<String, String> map = apiContext.getConfigurationMap() != null ? apiContext.getConfigurationMap() : new HashMap<String, String>();
 			map.put(Constants.PAYPAL_WEBHOOK_ID, WebhookId);
 			apiContext.setConfigurationMap(map);

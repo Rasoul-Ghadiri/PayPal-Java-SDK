@@ -1,17 +1,22 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class Currency  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class Currency extends PayPalModel {
 
 	/**
-	 * 3 letter currency code
+	 * 3 letter currency code as defined by ISO 4217.
 	 */
 	private String currency;
 
 	/**
-	 * amount upto 2 decimals represented as string
+	 * amount up to N digit after the decimals separator as defined in ISO 4217 for the appropriate currency code.
 	 */
 	private String value;
 
@@ -28,37 +33,4 @@ public class Currency  extends PayPalModel {
 		this.currency = currency;
 		this.value = value;
 	}
-
-
-	/**
-	 * Setter for currency
-	 */
-	public Currency setCurrency(String currency) {
-		this.currency = currency;
-		return this;
-	}
-
-	/**
-	 * Getter for currency
-	 */
-	public String getCurrency() {
-		return this.currency;
-	}
-
-
-	/**
-	 * Setter for value
-	 */
-	public Currency setValue(String value) {
-		this.value = value;
-		return this;
-	}
-
-	/**
-	 * Getter for value
-	 */
-	public String getValue() {
-		return this.value;
-	}
-	
 }

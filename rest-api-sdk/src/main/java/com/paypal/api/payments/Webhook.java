@@ -1,16 +1,15 @@
 package com.paypal.api.payments;
 
-import java.util.HashMap;
+import com.paypal.base.rest.*;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
+
 import java.util.List;
 
-import com.paypal.base.Constants;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.HttpMethod;
-import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
-import com.paypal.base.rest.RESTUtil;
-import com.paypal.base.sdk.info.SDKVersionImpl;
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Webhook  extends PayPalResource {
 
 	/**
@@ -46,73 +45,11 @@ public class Webhook  extends PayPalResource {
 		this.url = url;
 		this.eventTypes = eventTypes;
 	}
-
-
-	/**
-	 * Setter for id
-	 */
-	public Webhook setId(String id) {
-		this.id = id;
-		return this;
-	}
-
-	/**
-	 * Getter for id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-
-	/**
-	 * Setter for url
-	 */
-	public Webhook setUrl(String url) {
-		this.url = url;
-		return this;
-	}
-
-	/**
-	 * Getter for url
-	 */
-	public String getUrl() {
-		return this.url;
-	}
-
-
-	/**
-	 * Setter for eventTypes
-	 */
-	public Webhook setEventTypes(List<EventType> eventTypes) {
-		this.eventTypes = eventTypes;
-		return this;
-	}
-
-	/**
-	 * Getter for eventTypes
-	 */
-	public List<EventType> getEventTypes() {
-		return this.eventTypes;
-	}
-
-
-	/**
-	 * Setter for links
-	 */
-	public Webhook setLinks(List<Links> links) {
-		this.links = links;
-		return this;
-	}
-
-	/**
-	 * Getter for links
-	 */
-	public List<Links> getLinks() {
-		return this.links;
-	}
 	
 	/**
 	 * Creates the Webhook for the application associated with the access token.
+	 * @deprecated Please use {@link #create(APIContext, Webhook)} instead.
+	 *
 	 * @param accessToken
 	 *            Access Token used for the API call.	
 	 * @param webhook
@@ -135,20 +72,9 @@ public class Webhook  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Webhook create(APIContext apiContext, Webhook webhook) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
 		if (webhook == null) {
 			throw new IllegalArgumentException("webhook cannot be null");
 		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 
 		Object[] parameters = new Object[] {};
 		String pattern = "v1/notifications/webhooks";
@@ -159,6 +85,8 @@ public class Webhook  extends PayPalResource {
 	
 	/**
 	 * Retrieves the Webhook identified by webhook_id for the application associated with access token.
+	 * @deprecated Please use {@link #get(APIContext, String)} instead.
+	 *
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param webhookId
@@ -177,26 +105,13 @@ public class Webhook  extends PayPalResource {
 	 *            {@link APIContext} used for the API call.
 	 * @param webhookId
 	 *            Identifier of the webhook
-	 * @param patchRequest
-	 *            patchRequest
 	 * @return Webhook
 	 * @throws PayPalRESTException
 	 */
 	public Webhook get(APIContext apiContext, String webhookId) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
 		if (webhookId == null) {
 			throw new IllegalArgumentException("webhookId cannot be null");
 		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 
 		Object[] parameters = new Object[] {webhookId};
 		String pattern = "v1/notifications/webhooks/{0}";
@@ -207,6 +122,7 @@ public class Webhook  extends PayPalResource {
 
 	/**
 	 * Updates the Webhook identified by webhook_id for the application associated with access token.
+	 * @deprecated Please use {@link #update(APIContext, String, String)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param webhookId
@@ -231,23 +147,12 @@ public class Webhook  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Webhook update(APIContext apiContext, String webhookId, String patchRequest) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
 		if (webhookId == null) {
 			throw new IllegalArgumentException("webhookId cannot be null");
 		}
 		if (patchRequest == null) {
 			throw new IllegalArgumentException("patchRequest cannot be null");
 		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 
 		Object[] parameters = new Object[] {webhookId};
 		String pattern = "v1/notifications/webhooks/{0}";
@@ -258,6 +163,7 @@ public class Webhook  extends PayPalResource {
 	
 	/**
 	 * Deletes the Webhook identified by webhook_id for the application associated with access token.
+	 * @deprecated Please use {@link #delete(APIContext, String)} instead.
 	 * @param accessToken
 	 *            Access Token used for the API call.
 	 * @param webhookId
@@ -278,20 +184,9 @@ public class Webhook  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public void delete(APIContext apiContext, String webhookId) throws PayPalRESTException {
-		if (apiContext == null) {
-			throw new IllegalArgumentException("APIContext cannot be null");
-		}
-		if (apiContext.getAccessToken() == null || apiContext.getAccessToken().trim().length() <= 0) {
-			throw new IllegalArgumentException("AccessToken cannot be null or empty");
-		}
-		if (apiContext.getHTTPHeaders() == null) {
-			apiContext.setHTTPHeaders(new HashMap<String, String>());
-		}
 		if (webhookId == null) {
 			throw new IllegalArgumentException("webhookId cannot be null");
 		}
-		apiContext.getHTTPHeaders().put(Constants.HTTP_CONTENT_TYPE_HEADER, Constants.HTTP_CONTENT_TYPE_JSON);
-		apiContext.setSdkVersion(new SDKVersionImpl());
 
 		Object[] parameters = new Object[] {webhookId};
 		String pattern = "v1/notifications/webhooks/{0}";

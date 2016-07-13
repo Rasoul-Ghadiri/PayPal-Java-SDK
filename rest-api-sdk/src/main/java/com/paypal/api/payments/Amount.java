@@ -1,8 +1,13 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Amount  extends PayPalModel {
 
 	/**
@@ -33,54 +38,4 @@ public class Amount  extends PayPalModel {
 		this.currency = currency;
 		this.total = total;
 	}
-
-
-	/**
-	 * Setter for currency
-	 */
-	public Amount setCurrency(String currency) {
-		this.currency = currency;
-		return this;
-	}
-
-	/**
-	 * Getter for currency
-	 */
-	public String getCurrency() {
-		return this.currency;
-	}
-
-
-	/**
-	 * Setter for total
-	 */
-	public Amount setTotal(String total) {
-		this.total = total;
-		return this;
-	}
-
-	/**
-	 * Getter for total
-	 */
-	public String getTotal() {
-		return this.total;
-	}
-
-
-	/**
-	 * Setter for details
-	 */
-	public Amount setDetails(Details details) {
-		this.details = details;
-		return this;
-	}
-
-	/**
-	 * Getter for details
-	 */
-	public Details getDetails() {
-		return this.details;
-	}
-
-
 }

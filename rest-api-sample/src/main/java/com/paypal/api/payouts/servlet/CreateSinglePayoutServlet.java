@@ -7,13 +7,15 @@
 // API used: POST /v1/payments/payouts
 package com.paypal.api.payouts.servlet;
 
+import static com.paypal.api.payments.util.SampleConstants.clientID;
+import static com.paypal.api.payments.util.SampleConstants.clientSecret;
+import static com.paypal.api.payments.util.SampleConstants.mode;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,11 +28,9 @@ import com.paypal.api.payments.Payout;
 import com.paypal.api.payments.PayoutBatch;
 import com.paypal.api.payments.PayoutItem;
 import com.paypal.api.payments.PayoutSenderBatchHeader;
-import com.paypal.api.payments.util.GenerateAccessToken;
 import com.paypal.api.payments.util.ResultPrinter;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
 
 public class CreateSinglePayoutServlet extends HttpServlet {
 
@@ -38,20 +38,6 @@ public class CreateSinglePayoutServlet extends HttpServlet {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(CreateSinglePayoutServlet.class);
-
-	public void init(ServletConfig servletConfig) throws ServletException {
-		// ##Load Configuration
-		// Load SDK configuration for
-		// the resource. This intialization code can be
-		// done as Init Servlet.
-		InputStream is = CreateSinglePayoutServlet.class
-				.getResourceAsStream("/sdk_config.properties");
-		try {
-			PayPalResource.initConfig(is);
-		} catch (PayPalRESTException e) {
-			LOGGER.fatal(e.getMessage());
-		}
-	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -70,6 +56,8 @@ public class CreateSinglePayoutServlet extends HttpServlet {
 	
 	public PayoutBatch createSynchronousSinglePayout(HttpServletRequest req,
 			HttpServletResponse resp) {
+		
+		
 		// ###Payout
 		// A resource representing a payout
 		Payout payout = new Payout();
@@ -110,28 +98,12 @@ public class CreateSinglePayoutServlet extends HttpServlet {
 		PayoutBatch batch = null;
 		try {
 
-			// ###AccessToken
-			// Retrieve the access token from
-			// OAuthTokenCredential by passing in
-			// ClientID and ClientSecret
-			// It is not mandatory to generate Access Token on a per call basis.
-			// Typically the access token can be generated once and
-			// reused within the expiry window
-			String accessToken = GenerateAccessToken.getAccessToken();
-
 			// ### Api Context
 			// Pass in a `ApiContext` object to authenticate
 			// the call and to send a unique request id
 			// (that ensures idempotency). The SDK generates
 			// a request id if you do not pass one explicitly.
-			APIContext apiContext = new APIContext(accessToken);
-			// Use this variant if you want to pass in a request id
-			// that is meaningful in your application, ideally
-			// a order id.
-			/*
-			 * String requestId = Long.toString(System.nanoTime(); APIContext
-			 * apiContext = new APIContext(accessToken, requestId ));
-			 */
+			APIContext apiContext = new APIContext(clientID, clientSecret, mode);
 
 			// ###Create Payout Synchronous
 			batch = payout.createSynchronous(apiContext);

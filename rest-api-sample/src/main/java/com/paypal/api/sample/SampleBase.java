@@ -9,14 +9,11 @@ import java.io.IOException;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.paypal.base.rest.JSONFormatter;
-import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
-import com.paypal.base.rest.PayPalResource;
 
 public class SampleBase<T> {
 
 	protected T instance = null;
-	protected String accessToken = null;
 
 	/**
 	 * Initialize sample base
@@ -29,12 +26,6 @@ public class SampleBase<T> {
 	public SampleBase(T instance) throws PayPalRESTException, JsonSyntaxException,
 			JsonIOException, FileNotFoundException {
 		this.instance = instance;
-
-		// initialize sample credentials. User credentials must be stored
-		// in the file
-		OAuthTokenCredential tokenCredential = PayPalResource.initConfig(new File(
-				getClass().getClassLoader().getResource("sdk_config.properties").getFile()));
-		this.accessToken = tokenCredential.getAccessToken();
 	}
 
 	protected <C> C load(String jsonFile, Class<C> clazz) throws IOException {

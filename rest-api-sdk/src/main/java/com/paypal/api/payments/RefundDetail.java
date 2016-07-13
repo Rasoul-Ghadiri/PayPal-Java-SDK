@@ -1,17 +1,22 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class RefundDetail  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class RefundDetail extends PayPalModel {
 
 	/**
-	 * PayPal refund type indicating whether refund was done in invoicing flow via PayPal or externally. In the case of the mark-as-refunded API, refund type is EXTERNAL and this is what is now supported. The PAYPAL value is provided for backward compatibility.
+	 * The PayPal refund type. Indicates whether refund was paid in invoicing flow through PayPal or externally. In the case of mark-as-refunded API, the supported refund type is `EXTERNAL`. For backward compatability, the `PAYPAL` refund type is still supported.
 	 */
 	private String type;
 
 	/**
-	 * Date when the invoice was marked as refunded. If no date is specified, the current date and time is used as the default. In addition, the date must be after the invoice payment date.
+	 * Date on which the invoice was refunded. Date format: yyyy-MM-dd z. For example, 2014-02-27 PST.
 	 */
 	private String date;
 
@@ -19,6 +24,11 @@ public class RefundDetail  extends PayPalModel {
 	 * Optional note associated with the refund.
 	 */
 	private String note;
+
+	/**
+	 * Amount to be recorded as refund against invoice. If this field is not passed, the total invoice paid amount is recorded as refund.
+	 */
+	private Currency amount;
 
 	/**
 	 * Default Constructor
@@ -32,54 +42,4 @@ public class RefundDetail  extends PayPalModel {
 	public RefundDetail(String type) {
 		this.type = type;
 	}
-
-
-	/**
-	 * Setter for type
-	 */
-	public RefundDetail setType(String type) {
-		this.type = type;
-		return this;
-	}
-
-	/**
-	 * Getter for type
-	 */
-	public String getType() {
-		return this.type;
-	}
-
-
-	/**
-	 * Setter for date
-	 */
-	public RefundDetail setDate(String date) {
-		this.date = date;
-		return this;
-	}
-
-	/**
-	 * Getter for date
-	 */
-	public String getDate() {
-		return this.date;
-	}
-
-
-	/**
-	 * Setter for note
-	 */
-	public RefundDetail setNote(String note) {
-		this.note = note;
-		return this;
-	}
-
-	/**
-	 * Getter for note
-	 */
-	public String getNote() {
-		return this.note;
-	}
-
-
 }

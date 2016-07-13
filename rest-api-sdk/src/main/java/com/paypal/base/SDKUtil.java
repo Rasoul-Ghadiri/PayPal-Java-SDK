@@ -1,13 +1,9 @@
 package com.paypal.base;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-
 import com.paypal.base.rest.PayPalRESTException;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * SDKUtil class holds utility methods for processing data transformation

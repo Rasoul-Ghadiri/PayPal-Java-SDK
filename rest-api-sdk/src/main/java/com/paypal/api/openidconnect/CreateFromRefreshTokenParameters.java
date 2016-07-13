@@ -1,9 +1,9 @@
 package com.paypal.api.openidconnect;
 
+import com.paypal.base.ClientCredentials;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.paypal.base.ClientCredentials;
 
 public class CreateFromRefreshTokenParameters extends ClientCredentials {
 

@@ -1,9 +1,14 @@
 package com.paypal.api.payments;
 
 import com.paypal.base.rest.PayPalModel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import lombok.Getter; import lombok.Setter;
 
-
-public class ErrorDetails  extends PayPalModel {
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+public class ErrorDetails extends PayPalModel {
 
 	/**
 	 * Name of the field that caused the error.
@@ -19,12 +24,12 @@ public class ErrorDetails  extends PayPalModel {
 	 * Reference ID of the purchase_unit associated with this error
 	 */
 	private String purchaseUnitReferenceId;
-	
+
 	/**
 	 * PayPal internal error code.
 	 */
 	private String code;
-	
+
 
 	/**
 	 * Default Constructor
@@ -39,56 +44,4 @@ public class ErrorDetails  extends PayPalModel {
 		this.field = field;
 		this.issue = issue;
 	}
-
-
-	/**
-	 * Setter for field
-	 */
-	public ErrorDetails setField(String field) {
-		this.field = field;
-		return this;
-	}
-
-	/**
-	 * Getter for field
-	 */
-	public String getField() {
-		return this.field;
-	}
-
-
-	/**
-	 * Setter for issue
-	 */
-	public ErrorDetails setIssue(String issue) {
-		this.issue = issue;
-		return this;
-	}
-
-	/**
-	 * Getter for issue
-	 */
-	public String getIssue() {
-		return this.issue;
-	}
-
-
-	public String getPurchaseUnitReferenceId() {
-		return purchaseUnitReferenceId;
-	}
-
-	public ErrorDetails setPurchaseUnitReferenceId(String purchaseUnitReferenceId) {
-		this.purchaseUnitReferenceId = purchaseUnitReferenceId;
-		return this;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public ErrorDetails setCode(String code) {
-		this.code = code;
-		return this;
-	}
-	
 }

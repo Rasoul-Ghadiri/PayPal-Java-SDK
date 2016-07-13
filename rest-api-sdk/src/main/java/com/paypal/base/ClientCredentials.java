@@ -2,9 +2,6 @@ package com.paypal.base;
 
 /**
  * <code>ClientCredentials</code> holds Client ID and Client Secret
- * 
- * @author kjayakumar
- * 
  */
 public class ClientCredentials {
 
