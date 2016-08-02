@@ -132,11 +132,14 @@ public class Capture  extends PayPalResource {
 		if (refund == null) {
 			throw new IllegalArgumentException("refund cannot be null");
 		}
+		apiContext.setRequestId(null);
 		Object[] parameters = new Object[] {this.getId()};
 		String pattern = "v1/payments/capture/{0}/refund";
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = refund.toJSON();
-		return configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, Refund.class);
+		Refund refundResponse = configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, Refund.class);
+		apiContext.setRequestId(null);
+		return refundResponse;
 	}
 
 

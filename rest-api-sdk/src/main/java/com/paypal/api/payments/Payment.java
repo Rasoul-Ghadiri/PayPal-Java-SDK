@@ -143,10 +143,12 @@ public class Payment  extends PayPalResource {
 	 * @throws PayPalRESTException
 	 */
 	public Payment create(APIContext apiContext) throws PayPalRESTException {
-
+		apiContext.setRequestId(null);
 		String resourcePath = "v1/payments/payment";
 		String payLoad = this.toJSON();
-		return configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, Payment.class);
+		Payment payment = configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, Payment.class);
+		apiContext.setRequestId(null);
+		return payment;
 	}
 
 
@@ -295,11 +297,13 @@ public class Payment  extends PayPalResource {
 		if (containerMap == null) {
 			throw new IllegalArgumentException("containerMap cannot be null");
 		}
+		apiContext.setRequestId(null);
 		Object[] parameters = new Object[] {containerMap};
 		String pattern = "v1/payments/payment?count={0}&start_id={1}&start_index={2}&start_time={3}&end_time={4}&payee_id={5}&sort_by={6}&sort_order={7}";
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = "";
 		PaymentHistory paymentHistory = configureAndExecute(apiContext, HttpMethod.GET, resourcePath, payLoad, PaymentHistory.class);
+		apiContext.setRequestId(null);
 		return paymentHistory;
 	}
 

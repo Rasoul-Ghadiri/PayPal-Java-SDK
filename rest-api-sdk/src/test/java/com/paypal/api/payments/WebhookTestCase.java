@@ -11,7 +11,6 @@ import org.testng.log4testng.Logger;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 
 public class WebhookTestCase {
@@ -109,7 +108,7 @@ public class WebhookTestCase {
 		webhookRequest.setUrl(WebhooksInputData.WEBHOOK_URL + uuid);
 		webhookRequest.setEventTypes(EventTypeListTestCase.createAuthEventTypeList());
 		logger.info("Request = " + webhookRequest.toJSON());
-		Webhook webhookResponse = webhookRequest.create(TestConstants.SANDBOXCONTEXT, webhookRequest);
+		Webhook webhookResponse = webhookRequest.create(TestConstants.SANDBOX_CONTEXT, webhookRequest);
 		logger.info("Response = " + webhookResponse.toJSON());
 		webhookId =  webhookResponse.getId();
 		webhookUrl = webhookResponse.getUrl();
@@ -126,7 +125,7 @@ public class WebhookTestCase {
 	@Test(groups = "integration", dependsOnMethods = { "testCreateWebhook" })
 	public void testGetWebhook() throws PayPalRESTException {
 		Webhook webhookRequest = new Webhook();
-		Webhook webhookGetResponse = webhookRequest.get(TestConstants.SANDBOXCONTEXT, webhookId);
+		Webhook webhookGetResponse = webhookRequest.get(TestConstants.SANDBOX_CONTEXT, webhookId);
 		logger.info("Response = " + webhookGetResponse.toJSON());
 		
 		Assert.assertNotNull(webhookGetResponse.getId());
@@ -165,7 +164,7 @@ public class WebhookTestCase {
 		logger.info("Request" + patchRequest);
 		
 		Webhook webhookRequest = new Webhook();
-		Webhook webhookGetResponse = webhookRequest.update(TestConstants.SANDBOXCONTEXT, webhookId, patchRequest);
+		Webhook webhookGetResponse = webhookRequest.update(TestConstants.SANDBOX_CONTEXT, webhookId, patchRequest);
 		logger.info("Response = " + webhookGetResponse.toJSON());
 		
 		Assert.assertNotNull(webhookGetResponse);
@@ -178,7 +177,7 @@ public class WebhookTestCase {
 	@Test(groups = "integration", dependsOnMethods= { "testUpdateWebhook" }, expectedExceptions = {PayPalRESTException.class} )
 	public void testDeleteWebhook() throws PayPalRESTException {
 		Webhook webhookRequest = new Webhook();
-		webhookRequest.delete(TestConstants.SANDBOXCONTEXT, webhookId);
-		webhookRequest.get(TestConstants.SANDBOXCONTEXT, webhookId); //This should throw PayPalRESTException since Resource does not exist
+		webhookRequest.delete(TestConstants.SANDBOX_CONTEXT, webhookId);
+		webhookRequest.get(TestConstants.SANDBOX_CONTEXT, webhookId); //This should throw PayPalRESTException since Resource does not exist
 	}
 }

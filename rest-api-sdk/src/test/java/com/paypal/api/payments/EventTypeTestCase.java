@@ -7,7 +7,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
 
-import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 
 public class EventTypeTestCase {
@@ -48,10 +47,10 @@ public class EventTypeTestCase {
 		String uuid = UUID.randomUUID().toString();
 		webhookRequest.setUrl(WebhooksInputData.WEBHOOK_URL + uuid);
 		webhookRequest.setEventTypes(EventTypeListTestCase.createAuthEventTypeList());
-		Webhook webhookResponse = webhookRequest.create(TestConstants.SANDBOXCONTEXT, webhookRequest);
+		Webhook webhookResponse = webhookRequest.create(TestConstants.SANDBOX_CONTEXT, webhookRequest);
 		String webhookId =  webhookResponse.getId();
 		
-		EventTypeList eventTypeList = EventType.subscribedEventTypes(TestConstants.SANDBOXCONTEXT, webhookId);
+		EventTypeList eventTypeList = EventType.subscribedEventTypes(TestConstants.SANDBOX_CONTEXT, webhookId);
 		logger.info("Response = " + eventTypeList.toJSON());
 
 		Assert.assertNotNull(eventTypeList.getEventTypes());
@@ -63,7 +62,7 @@ public class EventTypeTestCase {
 	
 	@Test(groups = "integration")
 	public void testAvailableEventTypes() throws PayPalRESTException {
-		EventTypeList eventTypeList = EventType.availableEventTypes(TestConstants.SANDBOXCONTEXT);
+		EventTypeList eventTypeList = EventType.availableEventTypes(TestConstants.SANDBOX_CONTEXT);
 		Assert.assertNotNull(eventTypeList.getEventTypes());
 		Assert.assertTrue(eventTypeList.getEventTypes().size() > WebhooksInputData.availableEvents.length);
 	}

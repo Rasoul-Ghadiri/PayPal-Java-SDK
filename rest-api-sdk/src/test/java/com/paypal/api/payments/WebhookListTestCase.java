@@ -9,7 +9,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
 
-import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 
 public class WebhookListTestCase {
@@ -54,11 +53,11 @@ public class WebhookListTestCase {
 			String uuid = UUID.randomUUID().toString();
 			webhookRequest.setUrl(WebhooksInputData.WEBHOOK_URL + uuid);
 			webhookRequest.setEventTypes(EventTypeListTestCase.createAuthEventTypeList());
-			webhookRequest.create(TestConstants.SANDBOXCONTEXT, webhookRequest);
+			webhookRequest.create(TestConstants.SANDBOX_CONTEXT, webhookRequest);
 		}
 			
 		WebhookList webhookList = new WebhookList();
-		WebhookList webhookResponse = webhookList.getAll(TestConstants.SANDBOXCONTEXT);
+		WebhookList webhookResponse = webhookList.getAll(TestConstants.SANDBOX_CONTEXT);
 		logger.info("Response = " + webhookResponse.toJSON());
 		
 		Assert.assertTrue(webhookResponse.getWebhooks().size() >= 2, "Webhook List contains Two or More Webhooks");
@@ -67,14 +66,14 @@ public class WebhookListTestCase {
 	@Test(groups = "integration")
 	public void testDeleteAllWebhooks() throws PayPalRESTException {
 		WebhookList webhookList = new WebhookList();
-		WebhookList webhookRequest = webhookList.getAll(TestConstants.SANDBOXCONTEXT);
+		WebhookList webhookRequest = webhookList.getAll(TestConstants.SANDBOX_CONTEXT);
 		
 		for(int i=0; i<webhookRequest.getWebhooks().size(); i++) {
 			Webhook webhook = new Webhook();
-			webhook.delete(TestConstants.SANDBOXCONTEXT, webhookRequest.getWebhooks().get(i).getId());
+			webhook.delete(TestConstants.SANDBOX_CONTEXT, webhookRequest.getWebhooks().get(i).getId());
 		}
 		
-		webhookRequest = webhookList.getAll(TestConstants.SANDBOXCONTEXT);
+		webhookRequest = webhookList.getAll(TestConstants.SANDBOX_CONTEXT);
 		logger.info("Response = " + webhookRequest.toJSON());
 		Assert.assertEquals(webhookRequest.getWebhooks().size(), 0);
 	}

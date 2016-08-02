@@ -1,6 +1,5 @@
 package com.paypal.api.payments;
 
-import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import com.paypal.base.util.TestConstants;
 import org.testng.Assert;
@@ -58,7 +57,7 @@ public class SaleTestCase {
 	@Test(groups = "integration")
 	public void testSaleRefundAPI() throws PayPalRESTException {
 		Payment payment = PaymentTestCase.createCallPayment();
-		Payment createdPayment = payment.create(TestConstants.SANDBOXCONTEXT);
+		Payment createdPayment = payment.create(TestConstants.SANDBOX_CONTEXT);
 
 		List<Transaction> transactions = createdPayment.getTransactions();
 		List<RelatedResources> subTransactions = transactions.get(0)
@@ -75,7 +74,7 @@ public class SaleTestCase {
 		Refund refund = new Refund();
 		refund.setAmount(amount);
 		refund.setSaleId(id);
-		Refund returnRefund = sale.refund(TestConstants.SANDBOXCONTEXT, refund);
+		Refund returnRefund = sale.refund(TestConstants.SANDBOX_CONTEXT, refund);
 		ObjectHolder.refundId = returnRefund.getId();
 		Assert.assertEquals(true, "completed".equalsIgnoreCase(returnRefund.getState()));
 	}
@@ -84,7 +83,7 @@ public class SaleTestCase {
 	public void testGetSale() {
 		Sale sale = null;
 		try {
-			sale = Sale.get(TestConstants.SANDBOXCONTEXT, this.SALE_ID);
+			sale = Sale.get(TestConstants.SANDBOX_CONTEXT, this.SALE_ID);
 			Assert.assertNotNull(sale);
 			Assert.assertEquals(this.SALE_ID, sale.getId());
 		} catch (PayPalRESTException ppx) {
@@ -97,7 +96,7 @@ public class SaleTestCase {
 		Sale sale = new Sale();
 		Refund refund = null;
 		try {
-			sale.refund(TestConstants.SANDBOXCONTEXT, refund);
+			sale.refund(TestConstants.SANDBOX_CONTEXT, refund);
 		} catch (IllegalArgumentException e) {
 			Assert.assertTrue(e != null, "IllegalArgument exception not thrown for null Refund");
 		} catch (PayPalRESTException e) {
@@ -115,7 +114,7 @@ public class SaleTestCase {
 		refund.setAmount(amount);
 		refund.setSaleId("123");
 		try {
-			sale.refund(TestConstants.SANDBOXCONTEXT, refund);
+			sale.refund(TestConstants.SANDBOX_CONTEXT, refund);
 		} catch (IllegalArgumentException e) {
 			Assert.assertTrue(e != null, "IllegalArgument exception not thrown for null Id");
 		} catch (PayPalRESTException e) {
@@ -126,7 +125,7 @@ public class SaleTestCase {
 	@Test(groups = "integration", dependsOnMethods = { "testSaleRefundAPIForNullID" })
 	public void testGetSaleForNullId() {
 		try {
-			Sale.get(TestConstants.SANDBOXCONTEXT, null);
+			Sale.get(TestConstants.SANDBOX_CONTEXT, null);
 		} catch (IllegalArgumentException e) {
 			Assert.assertTrue(e != null, "IllegalArgument exception not thrown for null Id");
 		} catch (PayPalRESTException e) {

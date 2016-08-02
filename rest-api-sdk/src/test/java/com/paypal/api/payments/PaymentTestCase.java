@@ -45,7 +45,7 @@ public class PaymentTestCase {
 		creditCard.setBillingAddress(billingAddress);
 		creditCard.setCvv2(617);
 		creditCard.setExpireMonth(01);
-		creditCard.setExpireYear(2017);
+		creditCard.setExpireYear(2020);
 		creditCard.setFirstName("Joe");
 		creditCard.setLastName("Shopper");
 		creditCard.setNumber("4422009910903049");
@@ -218,7 +218,7 @@ public class PaymentTestCase {
 	@Test(groups = "integration")
 	public void testCreatePaymentAPI() throws PayPalRESTException {
 		Payment payment = createCallPayment();
-		Payment createdPayment = payment.create(TestConstants.SANDBOXCONTEXT);
+		Payment createdPayment = payment.create(TestConstants.SANDBOX_CONTEXT);
 		createdPaymentID = createdPayment.getId();
 		String json = Payment.getLastResponse();
 		JsonParser parser = new JsonParser();
@@ -236,27 +236,27 @@ public class PaymentTestCase {
 
 	@Test(groups = "integration", dependsOnMethods = { "testCreatePaymentAPI" })
 	public void testGetPaymentAPI() throws PayPalRESTException {
-		payment = Payment.get(TestConstants.SANDBOXCONTEXT, createdPaymentID);
+		payment = Payment.get(TestConstants.SANDBOX_CONTEXT, createdPaymentID);
 	}
 
 	@Test(groups = "integration", enabled = false, dependsOnMethods = { "testGetPaymentAPI" })
 	public void testExecutePayment() throws PayPalRESTException, IOException {
 		Payment exPayment = createPaymentForExecution();
-		exPayment = exPayment.create(TestConstants.SANDBOXCONTEXT);
+		exPayment = exPayment.create(TestConstants.SANDBOX_CONTEXT);
 		InputStreamReader converter = new InputStreamReader(System.in);
 		BufferedReader in = new BufferedReader(converter);
 		String payerId = in.readLine();
 		PaymentExecution paymentExecution = new PaymentExecution();
 		paymentExecution.setPayerId(payerId);
 		exPayment = exPayment
-				.execute(TestConstants.SANDBOXCONTEXT, paymentExecution);
+				.execute(TestConstants.SANDBOX_CONTEXT, paymentExecution);
 	}
 
 	@Test(groups = "integration", dependsOnMethods = { "testGetPaymentAPI" })
 	public void testGetPaymentHistoryAPI() throws PayPalRESTException {
 		Map<String, String> containerMap = new HashMap<String, String>();
 		containerMap.put("count", "10");
-		PaymentHistory paymentHistory = Payment.list(TestConstants.SANDBOXCONTEXT,
+		PaymentHistory paymentHistory = Payment.list(TestConstants.SANDBOX_CONTEXT,
 				containerMap);
 	}
 
@@ -264,7 +264,7 @@ public class PaymentTestCase {
 	public void testFailCreatePaymentAPI() {
 		Payment payment = new Payment();
 		try {
-			payment.create(TestConstants.SANDBOXCONTEXT);
+			payment.create(TestConstants.SANDBOX_CONTEXT);
 		} catch (PayPalRESTException e) {
 			Assert.assertEquals(e.getCause().getClass().getSimpleName(),
 					"HttpErrorException");
@@ -274,54 +274,12 @@ public class PaymentTestCase {
 	@Test(groups = "integration", dependsOnMethods = { "testFailCreatePaymentAPI" })
 	public void testFailGetPaymentAPI() {
 		try {
-			Payment.get(TestConstants.SANDBOXCONTEXT, (String) null);
+			Payment.get(TestConstants.SANDBOX_CONTEXT, (String) null);
 		} catch (IllegalArgumentException e) {
 			Assert.assertTrue(e != null,
 					"Illegal Argument Exception not thrown for null arguments");
 		} catch (PayPalRESTException e) {
 			logger.error("response code: " + e.getResponsecode());
-			logger.error("message: " + e.getMessage());
-			Assert.fail();
-		}
-	}
-	
-	@Test(groups = "integration", dependsOnMethods = { "testCreatePaymentAPI" })
-	public void testUpdatePayment() throws PayPalRESTException {
-
-		// set update values
-		//        {
-		//		  "op": "replace",
-		//        "path": "/transactions/0/amount",
-		//        "value": {
-		//            "total": "18.37",
-		//            "currency": "EUR",
-		//            "details": {
-		//                "subtotal": "13.37",
-		//                "shipping": "5.00"
-		//            }
-		//        }
-		Details details = new Details();
-		details.setSubtotal("13.37");
-		details.setShipping("5.00");
-		details.setHandlingFee("1.00");
-		Amount value = new Amount();
-		value.setTotal("18.37");
-		value.setCurrency("EUR");
-		value.setDetails(details);
-		Patch patch = new Patch();
-		patch.setOp("replace");
-		patch.setPath("/transactions/0/amount");
-		patch.setValue(value);
-		List<Patch> patchRequest = new ArrayList<Patch>();
-		patchRequest.add(patch);
-		
-		try {
-			Payment payment = Payment.get(TestConstants.SANDBOXCONTEXT, createdPaymentID);
-			payment.update(TestConstants.SANDBOXCONTEXT, patchRequest);
-		} catch (PayPalRESTException e) {
-			logger.info("Payment ID = " + createdPaymentID);
-			logger.error("response code: " + e.getResponsecode());
-			logger.info("Request = " + Payment.getLastRequest());
 			logger.error("message: " + e.getMessage());
 			Assert.fail();
 		}

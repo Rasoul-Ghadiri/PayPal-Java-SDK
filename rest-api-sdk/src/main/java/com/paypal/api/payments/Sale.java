@@ -215,9 +215,9 @@ public class Sale  extends PayPalResource {
 		String pattern = "v1/payments/sale/{0}/refund";
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = refund.toJSON();
-		Refund refund1 = configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, Refund.class);
+		Refund refundResponse = configureAndExecute(apiContext, HttpMethod.POST, resourcePath, payLoad, Refund.class);
 		apiContext.setRequestId(null);
-		return refund1;
+		return refundResponse;
 	}
 
 

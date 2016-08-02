@@ -1,6 +1,5 @@
 package com.paypal.api.payments;
 
-import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import com.paypal.base.util.TestConstants;
 import org.testng.Assert;
@@ -44,21 +43,22 @@ public class CreditCardTestCase {
 
 	public static final String VALIDUNTIL = "2020";
 
-	public static final Address BILLINGADDRESS = AddressTestCase.createAddress();
+	public static final Address BILLING_ADDRESS = AddressTestCase.createAddress();
 
 	public static CreditCard createCreditCard() {
 		CreditCard creditCard = new CreditCard();
-		creditCard.setBillingAddress(BILLINGADDRESS).setExpireMonth(EXPMONTH)
+
+		creditCard.setBillingAddress(BILLING_ADDRESS).setExpireMonth(EXPMONTH)
 				.setExpireYear(EXPYEAR).setFirstName(FIRSTNAME)
 				.setLastName(LASTNAME).setNumber(NUMBER).setType(TYPE)
-				.setCvv2(CVV2).setBillingAddress(BILLINGADDRESS).setId(ID)
+				.setCvv2(CVV2).setBillingAddress(BILLING_ADDRESS).setId(ID)
 				.setState(STATE).setValidUntil(VALIDUNTIL);
 		return creditCard;
 	}
 
 	public static CreditCard createDummyCreditCard() {
 		CreditCard creditCard = new CreditCard();
-		creditCard.setBillingAddress(BILLINGADDRESS);
+		creditCard.setBillingAddress(BILLING_ADDRESS);
 		creditCard.setExpireMonth(EXPMONTH);
 		creditCard.setExpireYear(EXPYEAR);
 		creditCard.setFirstName(FIRSTNAME);
@@ -66,7 +66,7 @@ public class CreditCardTestCase {
 		creditCard.setNumber(NUMBER);
 		creditCard.setType(TYPE);
 		creditCard.setCvv2(CVV2);
-		creditCard.setBillingAddress(BILLINGADDRESS);
+		creditCard.setBillingAddress(BILLING_ADDRESS);
 		creditCard.setId(ID);
 		creditCard.setExternalCustomerId(EXTERNAL_CUSTOMER_ID);
 		creditCard.setState(STATE);
@@ -118,7 +118,7 @@ public class CreditCardTestCase {
 		creditCard.setExpireYear(EXPYEAR);
 		creditCard.setNumber(NUMBER);
 		creditCard.setType(TYPE);
-		this.creditCard = creditCard.create(TestConstants.SANDBOXCONTEXT);
+		this.creditCard = creditCard.create(TestConstants.SANDBOX_CONTEXT);
 		Assert.assertEquals(true,
 				"ok".equalsIgnoreCase(this.creditCard.getState()));
 		logger.info("Created Credit Card status = "
@@ -128,7 +128,7 @@ public class CreditCardTestCase {
 
 	@Test(groups = "integration", dependsOnMethods = { "createCreditCardTest" })
 	public void testGetCreditCard() throws PayPalRESTException {
-		CreditCard retrievedCreditCard = CreditCard.get(TestConstants.SANDBOXCONTEXT, createdCreditCardId);
+		CreditCard retrievedCreditCard = CreditCard.get(TestConstants.SANDBOX_CONTEXT, createdCreditCardId);
 		Assert.assertEquals(
 				true,
 				this.creditCard.getId().equalsIgnoreCase(
@@ -148,7 +148,7 @@ public class CreditCardTestCase {
 		// send patch request
 		CreditCard creditCard = new CreditCard();
 		creditCard.setId(createdCreditCardId);
-		CreditCard retrievedCreditCard = creditCard.update(TestConstants.SANDBOXCONTEXT, patchRequest);
+		CreditCard retrievedCreditCard = creditCard.update(TestConstants.SANDBOX_CONTEXT, patchRequest);
 		Assert.assertEquals(2020, retrievedCreditCard.getExpireYear());
 
 	}
@@ -156,10 +156,10 @@ public class CreditCardTestCase {
 	
 	@Test(groups = "integration", dependsOnMethods = { "testUpdateCreditCard" })
 	public void deleteCreditCard() throws PayPalRESTException {
-		CreditCard retrievedCreditCard = CreditCard.get(TestConstants.SANDBOXCONTEXT, createdCreditCardId);
-		retrievedCreditCard.delete(TestConstants.SANDBOXCONTEXT);
+		CreditCard retrievedCreditCard = CreditCard.get(TestConstants.SANDBOX_CONTEXT, createdCreditCardId);
+		retrievedCreditCard.delete(TestConstants.SANDBOX_CONTEXT);
 		try {
-			CreditCard.get(TestConstants.SANDBOXCONTEXT, createdCreditCardId);
+			CreditCard.get(TestConstants.SANDBOX_CONTEXT, createdCreditCardId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -168,7 +168,7 @@ public class CreditCardTestCase {
 	// Pass empty HashMap
 	@Test(groups = "integration", dependsOnMethods = { "createCreditCardTest" })
 	public void testListCreditCardContextOnly() throws PayPalRESTException {
-		CreditCardHistory creditCards = CreditCard.list(TestConstants.SANDBOXCONTEXT);
+		CreditCardHistory creditCards = CreditCard.list(TestConstants.SANDBOX_CONTEXT);
 		Assert.assertTrue(creditCards.getTotalItems() > 0);
 
 	}
@@ -177,7 +177,7 @@ public class CreditCardTestCase {
 	@Test(groups = "integration", dependsOnMethods = { "createCreditCardTest" })
 	public void testListCreditCard() throws PayPalRESTException {
 		Map<String, String> containerMap = new HashMap<String, String>();
-		CreditCardHistory creditCards = CreditCard.list(TestConstants.SANDBOXCONTEXT, containerMap);
+		CreditCardHistory creditCards = CreditCard.list(TestConstants.SANDBOX_CONTEXT, containerMap);
 		Assert.assertTrue(creditCards.getTotalItems() > 0);
 
 	}
@@ -187,14 +187,14 @@ public class CreditCardTestCase {
 	public void testListCreditCardwithCount() throws PayPalRESTException {
 		Map<String, String> containerMap = new HashMap<String, String>();
 		containerMap.put("count", "10");
-		CreditCardHistory creditCards = CreditCard.list(TestConstants.SANDBOXCONTEXT, containerMap);
+		CreditCardHistory creditCards = CreditCard.list(TestConstants.SANDBOX_CONTEXT, containerMap);
 		Assert.assertTrue(creditCards.getTotalItems() > 0);
 	}
 
 	@Test(groups = "integration", dependsOnMethods = { "testGetCreditCard" })
 	public void getCreditCardForNull() {
 		try {
-			CreditCard.get(TestConstants.SANDBOXCONTEXT, null);
+			CreditCard.get(TestConstants.SANDBOX_CONTEXT, null);
 		} catch (IllegalArgumentException e) {
 			Assert.assertTrue(e != null,
 					"Illegal Argument Exception not thrown for null arguments");

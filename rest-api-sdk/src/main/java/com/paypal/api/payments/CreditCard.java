@@ -288,12 +288,13 @@ public class CreditCard  extends PayPalResource {
 		if (containerMap == null) {
 			throw new IllegalArgumentException("containerMap cannot be null");
 		}
+		apiContext.setRequestId(null);
 		Object[] parameters = new Object[] {containerMap};
 		String pattern = "v1/vault/credit-cards?merchant_id={0}&external_card_id={1}&external_customer_id={2}&start_time={3}&end_time={4}&page={5}&page_size={6}&sort_order={7}&sort_by={8}&total_required={9}";
 		String resourcePath = RESTUtil.formatURIPath(pattern, parameters);
 		String payLoad = "";
 		CreditCardHistory creditCardHistory = configureAndExecute(apiContext, HttpMethod.GET, resourcePath, payLoad, CreditCardHistory.class);
-
+		apiContext.setRequestId(null);
 		return creditCardHistory;
 	}
 
@@ -307,7 +308,6 @@ public class CreditCard  extends PayPalResource {
 	public static CreditCardHistory list(APIContext apiContext) throws PayPalRESTException {
 		Map<String, String> containerMap = new HashMap<String, String>();
 		CreditCardHistory creditCardHistory = CreditCard.list(apiContext, containerMap);
-
  		return creditCardHistory;
 	}
 
@@ -333,7 +333,6 @@ public class CreditCard  extends PayPalResource {
 		parameters.put("sort_order", "asc");
 		parameters.put("sort_by", "create_time");
 		parameters.put("total_required", "true");
-
 		return list(apiContext, parameters);
 	}
 

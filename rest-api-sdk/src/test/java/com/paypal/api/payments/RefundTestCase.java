@@ -1,6 +1,5 @@
 package com.paypal.api.payments;
 
-import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import com.paypal.base.util.TestConstants;
 import org.testng.Assert;
@@ -69,7 +68,7 @@ public class RefundTestCase {
 			new SaleTestCase().testSaleRefundAPI();
 		}
 		try {
-			Refund refund = Refund.get(TestConstants.SANDBOXCONTEXT, ObjectHolder.refundId);
+			Refund refund = Refund.get(TestConstants.SANDBOX_CONTEXT, ObjectHolder.refundId);
 			logger.info("Refund ID = " + refund.getId());
 
 		} catch (PayPalRESTException e) {
@@ -80,7 +79,7 @@ public class RefundTestCase {
 	@Test(groups = "integration", dependsOnMethods = { "testGetRefund" })
 	public void testGetRefundForNull() {
 		try {
-			Refund.get(TestConstants.SANDBOXCONTEXT, null);
+			Refund.get(TestConstants.SANDBOX_CONTEXT, null);
 		} catch (IllegalArgumentException e) {
 			Assert.assertTrue(e != null,
 					"IllegalArgument exception not thrown for null Refund Id");

@@ -17,10 +17,6 @@ import com.paypal.base.rest.PayPalRESTException;
 public class PayoutsTestCase {
 	
 	PayoutBatch result;
-
-	public static String clientID = "AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS";
-	public static String clientSecret = "EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL";
-	public static final APIContext SANDBOXCONTEXTPAYOUTS = new APIContext(clientID, clientSecret, "sandbox");
 	private static final Logger logger = Logger.getLogger(PayoutsTestCase.class);
 
 	public static String getJson() {
@@ -59,7 +55,7 @@ public class PayoutsTestCase {
 		items.add(senderItem);
 		Payout payout = new Payout();
 		payout.setSenderBatchHeader(senderBatchHeader).setItems(items);
-		this.result = payout.create(SANDBOXCONTEXTPAYOUTS, null);
+		this.result = payout.create(TestConstants.SANDBOX_CONTEXT, null);
 		
 		Assert.assertNotNull(this.result);
 		Assert.assertNotNull(this.result.getBatchHeader());
@@ -86,7 +82,7 @@ public class PayoutsTestCase {
 		items.add(senderItem);
 		Payout payout = new Payout();
 		payout.setSenderBatchHeader(senderBatchHeader).setItems(items);
-		PayoutBatch result = payout.createSynchronous(SANDBOXCONTEXTPAYOUTS);
+		PayoutBatch result = payout.createSynchronous(TestConstants.SANDBOX_CONTEXT);
 		
 		Assert.assertNotNull(result);
 		Assert.assertNotNull(result.getBatchHeader());
@@ -97,7 +93,7 @@ public class PayoutsTestCase {
 	public void testGetPayout() throws PayPalRESTException {
 		String payoutBatchId = "XR3H37QDELPZS";
 		
-		this.result = Payout.get(SANDBOXCONTEXTPAYOUTS, payoutBatchId);
+		this.result = Payout.get(TestConstants.SANDBOX_CONTEXT, payoutBatchId);
 		
 		Assert.assertNotNull(this.result);
 		Assert.assertEquals(this.result.getBatchHeader().getPayoutBatchId(), payoutBatchId);
@@ -111,7 +107,7 @@ public class PayoutsTestCase {
 		PayoutItemDetails payoutItem = this.result.getItems().get(0);
 		String payoutItemId = "BYGU98D9Z8SQG";
 		
-		PayoutItemDetails result = PayoutItem.get(SANDBOXCONTEXTPAYOUTS, payoutItemId);
+		PayoutItemDetails result = PayoutItem.get(TestConstants.SANDBOX_CONTEXT, payoutItemId);
 		
 		Assert.assertNotNull(result);
 		Assert.assertEquals(result.getPayoutItemId(), payoutItemId);
@@ -127,7 +123,7 @@ public class PayoutsTestCase {
 		PayoutItemDetails payoutItem = this.result.getItems().get(0);
 		String payoutItemId = payoutItem.getPayoutItemId();
 		
-		PayoutItemDetails result = PayoutItem.get(SANDBOXCONTEXTPAYOUTS, payoutItemId);
+		PayoutItemDetails result = PayoutItem.get(TestConstants.SANDBOX_CONTEXT, payoutItemId);
 		
 		Assert.assertNotNull(result);
 		Assert.assertEquals(result.getPayoutItemId(), payoutItemId);
@@ -141,7 +137,7 @@ public class PayoutsTestCase {
 		String payoutItemId = payoutItem.getPayoutItemId();
 		
 		if (payoutItem.getTransactionStatus() == "UNCLAIMED") {
-			PayoutItemDetails result = PayoutItem.cancel(SANDBOXCONTEXTPAYOUTS, payoutItemId);
+			PayoutItemDetails result = PayoutItem.cancel(TestConstants.SANDBOX_CONTEXT, payoutItemId);
 			
 			Assert.assertNotNull(result);
 			Assert.assertEquals(result.getPayoutItemId(), payoutItemId);

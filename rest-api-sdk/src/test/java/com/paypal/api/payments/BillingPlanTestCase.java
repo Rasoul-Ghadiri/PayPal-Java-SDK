@@ -20,9 +20,6 @@ import com.paypal.base.rest.PayPalRESTException;
 
 public class BillingPlanTestCase {
 	private String id = null;
-	public static String clientID = "AUASNhD7YM7dc5Wmc5YE9pEsC0o4eVOyYWO9ezXWBu2XTc63d3Au_s9c-v-U";
-	public static String clientSecret = "EBq0TRAE-4R9kgCDKzVh09sm1TeNcuY-xJirid7LNtheUh5t5vlOhR0XSHt3";
-	public static final APIContext SANDBOXCONTEXTBILLINGPLAN = new APIContext(clientID, clientSecret, "sandbox");
 
 	public static Plan loadPlan() {
 	    try {
@@ -47,7 +44,7 @@ public class BillingPlanTestCase {
 	@Test(groups = "integration")
 	public void testCreatePlan() throws PayPalRESTException {
 		Plan plan = loadPlan();
-		plan = plan.create(SANDBOXCONTEXTBILLINGPLAN);
+		plan = plan.create(TestConstants.SANDBOX_CONTEXT);
 		this.id = plan.getId();
 		Assert.assertNotNull(plan.getId());
 	}
@@ -73,15 +70,15 @@ public class BillingPlanTestCase {
 		patchRequest.add(patch);
 		
 		// execute update
-		plan.update(SANDBOXCONTEXTBILLINGPLAN, patchRequest);
-		Plan updatedPlan = Plan.get(SANDBOXCONTEXTBILLINGPLAN, plan.getId());
+		plan.update(TestConstants.SANDBOX_CONTEXT, patchRequest);
+		Plan updatedPlan = Plan.get(TestConstants.SANDBOX_CONTEXT, plan.getId());
 		Assert.assertEquals(plan.getId(), updatedPlan.getId());
 		Assert.assertEquals(updatedPlan.getState(), "ACTIVE");
 	}
 	
 	@Test(groups = "integration", dependsOnMethods = {"testUpdatePlan"})
 	public void testRetrievePlan() throws PayPalRESTException {
-		Plan plan = Plan.get(SANDBOXCONTEXTBILLINGPLAN, this.id);
+		Plan plan = Plan.get(TestConstants.SANDBOX_CONTEXT, this.id);
 		Assert.assertEquals(plan.getId(), this.id);
 	}
 	
@@ -95,7 +92,7 @@ public class BillingPlanTestCase {
 		parameters.put("total_required", "yes");
 		
 		// retrieve plans that match the specified criteria
-		PlanList planList = Plan.list(SANDBOXCONTEXTBILLINGPLAN, parameters);
+		PlanList planList = Plan.list(TestConstants.SANDBOX_CONTEXT, parameters);
 		List<Plan> plans = planList.getPlans();
 		Assert.assertEquals(plans.size(), 0);
 	}
@@ -110,7 +107,7 @@ public class BillingPlanTestCase {
 		parameters.put("total_required", "yes");
 		
 		// retrieve plans that match the specified criteria
-		PlanList planList = Plan.list(SANDBOXCONTEXTBILLINGPLAN, parameters);
+		PlanList planList = Plan.list(TestConstants.SANDBOX_CONTEXT, parameters);
 		List<Plan> plans = planList.getPlans();
 		for (int i = 0; i < plans.size(); ++i) {
 			Assert.assertEquals(plans.get(i).getState(), "ACTIVE");
